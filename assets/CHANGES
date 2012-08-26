@@ -1,0 +1,99 @@
+Version 12.8.26
+    *) Feature: add custom Data and Time format
+    *) Feature: disable the 4.0 or later version of the spelling check.
+    *) Feature: preview mail attachment
+
+    *) Change: the right-click menu to copy / paste failure problem
+    *) Change: Optimized toolbars and Symbol bar UI
+    *) Change: update HTML highlight
+    Thank to Randy Santo
+    *) Change: update VHDL highlight
+    *) Change: fixed when you click on symbols, symbols bar to jump back to the original position BUG.
+    *) Change: add file loading progress bar (ineffective)
+
+Version 12.4.25
+    *) Feature: Add "Duplicate Line Or Selected text" menu
+    *) Feature: Add Fortran, ColdFusion, VHDL syntax highlighting
+    *) Feature: Add "Document Statistics" menu
+
+    *) Change: Add a color indicator for the document Tab
+
+    *) Bug Fix: Open multiple documents, one document has to change and switch to other Tab, and then exit the app, not prompted to save
+    *) Bug Fix: Fixed some of the phone, context menu is no copy, cut, paste menu
+    *) Bug Fix: The same as the length of the text, but the document changes, not prompted to save
+
+Version 12.3.27
+    *) Bug Fix: fixed click on the text area under the 4.0 system crash bug
+
+Version 12.3.24
+    *) Feature: new color theme
+    *) Feature: the toolbar to add access the menu button (only >=android3.0)
+    *) Feature: touch to enlarge or reduce text size
+    *) Feature: Remember last open tabs
+    *) Feature: Add Matlab and GO syntax highlighting
+    *) Feature: Ctrl + S to quick save (not tested)
+    *) Feature: Add french language support
+    Thank to Edouard MARCHAL
+    
+    *) Change: no longer supported android1.6
+    
+    *) Bug Fix: Fixed not correctly identify the GBK encoding
+    *) Bug Fix: Fixed a javascript highlight problems
+    *) Bug Fix: Find or replace the contents of removal of the space
+    *) Bug Fix: When a call is not automatically saved!
+    *) Bug Fix: File browser always scroll to the top
+
+Version 12.3.6.2
+    *) Bug Fix: fixed enable the "open last file" led to the program may not start bug
+Version 12.3.6.1
+    *) Bug Fix: close all tab error!
+    
+Version 12.3.6
+
+    *) Feature: new shortcut to use other programs to open or shared the current document
+    *) Feature: Add to open the file specified encoding
+    *) Feature: add "tab" right menu(long click to show)
+    *) Feature: support for receiving the text content or files from other programs to share
+    
+    *) Change: beautification of the main menu
+    *) Change: Adjust the symbol column size
+    *) Change: Remember last open files to edit the location and coding
+    *) Change: Remember the symbol column position of the current Session
+    
+    *) Bug Fix: Fixed the last edit location button to display the error
+    *) Bug Fix: Fixed "Save As" does not work Bug
+    *) Bug Fix: Enter a Tab character may appear two tab characters
+
+
+Version 12.2.25beta2
+
+    *) Feature: Symbol bar to add "?" Symbol
+    
+    *) Change: adjust the symbol bar close button size
+    *) Change: updated Russian translation
+    Thank to Калакин Алексей
+    
+    *) Bug Fix: Fixed some phone can not use the hard keyboard
+    Thanks for all the feedback guy
+    *) Bug Fix: Tab and text content is lost after the screen rotation
+    Thank to Fabio Voltattorni
+    
+    
+Changes with 12.2.25beta
+
+    *) Feature: multi-tab (the great update)
+    *) Feature: convert line breaks to solve the Android2.0 following version does not correctly display the \r symbol bug
+    *) Feature: display a new version of the changes log
+    *) Feature: add Pascal syntax highlighting
+    
+    *) Change: add right-click menu to switch to show or hide the input method
+    *) Change: Adjust the Help menu and add the "Help" manual (keyboard shortcuts and customize the syntax highlighting)
+    *) Change: The default font "Monospace"
+    *) Change: the non-wrap mode, move to the right display line numbers
+    
+    *) Bug Fix: Fixed file manager does not correctly display the file or folder contains spaces, such as: Ubuntu One
+    Thank to howard@lowndes.name
+    *) Bug Fix: Fixed different themes button is too wide
+    *) Bug Fix: Fixed some Chinese string encoding auto-detection error
+    *) Bug Fix: Fixed not automatically select the installation path cause can not be moved App to Sdcard the problem
+    Thank to Marcos Fernández

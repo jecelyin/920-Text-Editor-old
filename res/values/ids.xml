@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="show_ime" type="id"></item>
+    <item name="to_lower" type="id"></item>
+    <item name="to_upper" type="id"></item>
+    <item name="goto_line" type="id"></item>
+    <item name="home_notification" type="id"></item>
+    <item type="id" name="go_to_end"/>
+    <item type="id" name="go_to_begin"/>
+    <item name="hide_ime" type="id"/>
+    <item type="id" name="menu_reopen"/>
+    <item type="id" name="menu_pipe"/>
+    <item type="id" name="menu_saveas"/>
+    <item type="id" name="menu_highlight"/>
+    <item type="id" name="menu_encoding"/>
+    <item type="id" name="menu_search_replace"/>
+    <item type="id" name="menu_preferences"/>
+    <item type="id" name="menu_exit"/>
+    <item name="insert_datetime" type="id"></item>
+    <item type="id" name="duplicate_line"/>
+    <item type="id" name="doc_stat"/>
+</resources>

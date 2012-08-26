@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="screen_orientation_name">
+        <item>@string/screen_orientation_auto</item>
+        <item>@string/screen_orientation_portrait</item>
+        <item>@string/screen_orientation_landscape</item>
+    </array>
+    <string-array name="screen_orientation_value">
+        <item>Авто поворот</item>
+        <item>Портрет</item>
+        <item>Альбом</item>
+    </string-array>
+    <string-array name="toolbar_rows">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="linebreak_chars">
+        <item>Не изменять</item>
+        <item>CR+LF (Windows)</item>
+        <item>LF Only(Unix/Android)</item>
+        <item>CR Only(Macintosh)</item>
+    </string-array>
+</resources>

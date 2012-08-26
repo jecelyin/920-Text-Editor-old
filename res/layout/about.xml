@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <LinearLayout android:paddingTop="30dip" android:paddingBottom="10dip" android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <ImageView android:paddingLeft="40dip" android:paddingRight="20dp" android:layout_width="wrap_content" android:src="@drawable/icon" android:layout_height="wrap_content" android:id="@+id/imageView1"></ImageView>
+        <LinearLayout android:id="@+id/linearLayout2" android:layout_height="wrap_content" android:orientation="vertical" android:layout_width="fill_parent">
+            <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/field_app_name" android:textSize="24dip" android:text="@string/app_name"></TextView>
+            <TextView android:id="@+id/field_version" android:layout_width="wrap_content" android:layout_height="22dip" android:text="@string/app_name"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/linearLayout3" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingLeft="30dip" android:paddingTop="10dip" android:paddingBottom="10dip">
+        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView1" android:text="@string/label_author" android:textSize="16dip"></TextView>
+        <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="14dip" android:paddingLeft="15dip" android:text="@string/myname"></TextView>
+        <TextView android:text="@string/label_email" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView3" android:textSize="16dip" android:paddingTop="10dip"></TextView>
+        <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:autoLink="all" android:linksClickable="true" android:paddingLeft="15dip" android:textSize="14dip" android:text="@string/myemail"></TextView>
+        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView4" android:text="@string/label_homepage" android:textSize="16dip" android:paddingTop="10dip"></TextView>
+        <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:autoLink="all" android:linksClickable="true" android:paddingLeft="15dip" android:textSize="14dip" android:text="@string/myhomepage"></TextView>
+        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView5" android:text="@string/qq_group" android:textSize="16dip" android:paddingTop="10dip"></TextView>
+        <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="87272821" android:paddingLeft="15dip" android:textSize="12dip"></TextView>
+        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView6" android:text="@string/label_license" android:textSize="16dip" android:paddingTop="10dip"></TextView>
+        <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/field_license" android:paddingLeft="15dip" android:paddingRight="15dip" android:textSize="12dip"></TextView>
+        
+    </LinearLayout>
+    
+    
+</LinearLayout>

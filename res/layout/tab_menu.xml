@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/left_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/menu_bg_left" />
+
+        <ImageView
+            android:id="@+id/right_line"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/menu_bg_right" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/tips_content_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/menu_bg_down" >
+
+        <LinearLayout
+            android:id="@+id/menuparent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/linearLayout_closeothers"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/menu_item_height"
+                android:background="@drawable/menu_selector" >
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dip"
+                    android:layout_marginRight="3dip"
+                    android:src="@drawable/tab_menu_closeothers" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingRight="5dip"
+                    android:text="@string/tab_close_other"
+                    android:textColor="#ff55595d"
+                    android:textSize="@dimen/menu_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pop_menu_icon_line" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout_closeright"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/menu_item_height"
+                android:background="@drawable/menu_selector" >
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dip"
+                    android:layout_marginRight="3dip"
+                    android:src="@drawable/tab_menu_closeright" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingRight="5dip"
+                    android:text="@string/tab_close_right"
+                    android:textColor="#ff55595d"
+                    android:textSize="@dimen/menu_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pop_menu_icon_line" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout_closeall"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/menu_item_height"
+                android:background="@drawable/menu_selector" >
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dip"
+                    android:layout_marginRight="3dip"
+                    android:src="@drawable/tab_menu_closeall" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingRight="5dip"
+                    android:text="@string/tab_close_all"
+                    android:textColor="#ff55595d"
+                    android:textSize="@dimen/menu_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">920文本编辑器</string>
+    <string name="open">打开</string>
+    <string name="select_file">选择一个文件</string>
+    <string name="confirm_exit">确认要关闭程序吗?</string>
+    <string name="ok">确定</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="cancel">取消</string>
+    <string name="encoding">编码</string>
+    <string name="save_succ">保存成功!</string>
+    <string name="confirm_save">文档已经改变，是否保存?</string>
+    <string name="save_changes">保存改动?</string>
+    <string name="save">保存</string>
+    <string name="filename_is_empty">文件名不能为空!</string>
+    <string name="new_filename">无标题</string>
+    <string name="highlight">高亮</string>
+    <string name="search_replace">查找/替换</string>
+    <string name="options">选项</string>
+    <string name="preferences">参数设置</string>
+    <string name="saveas">另存为</string>
+    <string name="reopen">重新打开</string>
+    <string name="history">最近打开的文件...</string>
+    <string name="file_not_exists">文件不存在!</string>
+    <string name="replace">替换</string>
+    <string name="replace_all">全部</string>
+    <string name="spinner_message">处理中</string>
+    <string name="searching">正在查找...</string>
+    <string name="not_found">没有发现!</string>
+    <string name="replace_finish">替换完毕!</string>
+    <string name="font">字体</string>
+    <string name="font_size">字体大小</string>
+    <!-- 查看设置 -->
+    <string name="view">查看</string>
+    <string name="word_wrap">自动换行</string>
+    <string name="show_line_num">显示行号</string>
+    <string name="show_tab">显示空白字符</string>
+    <string name="screen_orientation">屏幕方向</string>
+    <string name="screen_orientation_auto">自动旋转</string>
+    <string name="screen_orientation_portrait">纵向</string>
+    <string name="screen_orientation_landscape">横向</string>
+    <!-- 高亮设置 -->
+    <string name="enable_highlight">语法高亮</string>
+    <string name="highlight_limit">高亮的文件大小限制</string>
+    <string name="highlight_limit_message">当打开的文件大小大于下面大小，则不进行高亮显示；单位：kb</string>
+    <string name="request_restart">* 需要重启</string>
+    
+    <!-- about activity -->
+    <string name="label_version">版本</string>
+    <string name="label_author">作者</string>
+    <string name="label_email">Email</string>
+    <string name="label_homepage">主页</string>
+    <string name="label_license">授权</string>
+    <string name="field_license">
+版本所有 (C) 2011-2012  Jecelyin Peng\n
+920编辑器为自由软件；您可依据自由软件基金会所发表的GNU通用公共授权条款规定，就本程序再为散布与／或修改；无论您依据的是本授权的第三版或（您自行选择的）任一日后发行的版本。
+920编辑器是基于使用目的而加以散布，然而不负任何担保责任；亦无对适售性或特定目的适用性所为的默示性担保。详情请参照GNU通用公共授权 http://www.gnu.org/licenses。
+    </string>
+    <string name="about">关于</string>
+    <string name="loading">正在加载文件...</string>
+    <string name="highlight_stop_msg">文件大小超出“高亮文件大小限制”，高亮功能已经停止</string>
+    <!-- 搜索设置 -->
+    <string name="search">搜索</string>
+    <string name="search_regex">正式表达式</string>
+    <string name="search_ignore_case">忽略大小写</string>
+    <string name="search_error">搜索关键字有错误，可能是你使用了正则表达式但是没有在设置选项中开启它</string>
+    <!-- 其它设置 -->
+    <string name="Other">其它</string>
+    <string name="open_last_file">记住最后打开的文件</string>
+    <string name="open_last_file_summary">当启动编辑器时，自动打开最后打开的文件</string>
+    <string name="hide_soft_keyboard">隐藏输入法</string>
+    <string name="hide_soft_keyboard_summary">可以长按编辑区域后在弹出菜单打开输入法\n需要重启</string>
+    <string name="auto_indent">自动缩进</string>
+    <string name="clear_history">清除历史记录</string>
+    <string name="clear_history_ok">已经清空历史记录</string>
+    <string name="exit">退出</string>
+    <string name="keep_screen_on_summary">保持屏幕常亮</string>
+    <string name="keep_screen_on">保持屏幕常亮，不会变暗</string>
+    <string name="help">帮助</string>
+    <string name="donate">捐赠...</string>
+    <!-- 菜单 -->
+    <string name="show_ime">显示输入法</string>
+    <string name="to_lower">转为小写</string>
+    <string name="to_upper">转为大写</string>
+    <string name="out_of_memory">无法打开文件，没有足够的内存!</string>
+    <string name="exception">异常错误，操作失败</string>
+    <string name="back_button_exit">按 \"返回键\" 退出程序</string>
+    <string name="pref_sort_clicks">按使用频率排序</string>
+    <string name="toolbar_rows">工具栏行数</string>
+    <string name="preview_msg">预览之前必须先保存文件！</string>
+    <string name="goto_line">跳转到指定行...</string>
+    <string name="can_not_gotoline">无法跳转到指定行！</string>
+    <string name="have_not_saved_doc">您有未保存的文档！</string>
+    <string name="get_root_title">尝试获取ROOT权限</string>
+    <string name="open_with">打开方式...</string>
+    <string name="rename">重命名...</string>
+    <string name="delete">删除...</string>
+    <string name="qq_group">QQ群</string>
+    <string name="rename_failed">重命名失败!</string>
+    <string name="confirm_delete">确认要删除这个文件吗?</string>
+    <string name="save_failed">保存失败!</string>
+    <string name="can_not_create_temp_path">无法创建临时路径，请检查您的SD卡!</string>
+    <string name="donate_summary">使用浏览器打开捐赠页面</string>
+    <string name="get_root_summary">*您可能需要使用其它工具挂载该分区为rw</string>
+    <string name="volume_up_toolbar_msg">工具栏已经隐藏，您可以按“音量下键”显示它</string>
+    <string name="volume_up_fullscreen_msg">已经切换到全屏模式，您可以按“音量下键”切换到正常模式</string>
+    <string name="autosave">自动保存</string>
+    <string name="autosave_summery">当编辑器不是当前活动窗口时将自动保存</string>
+    <string name="has_autosave">当前文档已经被自动保存</string>
+    <string name="overwrite_confirm">该文件已经存在，您确认覆盖它吗？</string>
+    <string name="use_custom_hl_color">使用自定义高亮色彩</string>
+    <string name="use_custom_hl_color_msg">禁用将使用系统默认的色彩方案</string>
+    <string name="custom_hl_color">自定义高亮色彩</string>
+    <string name="string_color">字符串颜色</string>
+    <string name="keyword_color">关键字颜色</string>
+    <string name="comment_color">注释颜色</string>
+    <string name="tag_color">标签颜色 (例 &lt;?php)</string>
+    <string name="function_color">函数颜色</string>
+    <string name="attr_color">属性名称颜色</string>
+    <string name="current_color">当前颜色： </string>
+    <string name="invalid_color">无效的颜色值</string>
+    <string name="insert_color">插入一个颜色</string>
+    <string name="font_color">字体颜色</string>
+    <string name="backgroup_color">背景颜色</string>
+    <string name="can_not_create_synfile">无法解压语法文件，请检查你的SD卡是否有足够的空间！</string>
+    <string name="can_not_list_file">不能读取文件列表，请尝试打开/关闭ROOT权限在“参数设置”菜单</string>
+    <string name="go_to_begin">跳转到开头</string>
+    <string name="go_to_end">跳转到结尾</string>
+    <string name="not_need_back">不需要返回上一个编辑位置</string>
+    <string name="not_need_forward">不需要返回下一个编辑位置</string>
+    <string name="report_bug">报告问题</string>
+    <string name="project_homepage">帮助翻译它</string>
+    <string name="convert_linebreak_char">转换断行符</string>
+    <string-array name="linebreak_chars">
+        <item>保持原样</item>
+        <item>CR+LF (Windows)</item>
+        <item>仅LF (Unix/Android)</item>
+        <item>仅CR (Macintosh)</item>
+    </string-array>
+    <string name="hide_ime">隐藏输入法</string>
+    <string name="changelog">更新日志</string>
+    <string name="open_pipe">打开于</string>
+    <string name="donate_info">如果你喜欢它，你可以捐助它！</string>
+    <string name="share">共享(发送文本)</string>
+    <string name="open_mode">打开方式</string>
+    <string name="auto_detection">自动检测</string>
+    <string name="tab_close_other">关闭其它标签</string>
+    <string name="tab_close_right">关闭右侧标签</string>
+    <string name="tab_close_all">关闭全部标签</string>
+    <string name="insert_datetime">插入时间：</string>
+    <string name="default_color_scheme">系统默认</string>
+    <string name="color_scheme">色彩方案</string>
+    <string name="touch_zoom">触摸放大缩小文字大小</string>
+    <!-- edittext context menu -->
+    <string name="selectAll">全选</string>
+    <string name="selectText">选择文本</string>
+    <string name="stopSelectingText">停止选择文本</string>
+    <string name="cut">剪切</string>
+    <string name="cutAll">剪切全部</string>
+    <string name="copy">复制</string>
+    <string name="copyAll">复制全部</string>
+    <string name="paste">粘贴</string>
+    <string name="copyUrl">复制URL链接</string>
+    <string name="editTextMenuTitle">编码文本</string>
+    <string name="duplicate_line">重复当前行</string>
+    <string name="duplicate_selected_text">重复选中的文本</string>
+    <string name="doc_stat">文档统计</string>
+    <!-- 文档统计 -->
+    <string name="filename">文件: </string>
+    <string name="total_chars">字符数: </string>
+    <string name="total_lines">行数: </string>
+    <string name="total_words">单词数: </string>
+    
+    <string name="auto_capitalize">首字母自动大写</string>
+    <string name="auto_capitalize_summary">每句第一个单词的首字母大写。\n此功能依赖于输入法。\n需要重启。</string>
+    <string name="can_not_open_file">无法打开文件！</string>
+    <string name="date_format">日期和时间格式</string>
+    <string name="use_selected_format">使用选中的格式</string>
+    <string name="use_custom_format">使用自定义格式</string>
+    <string name="date_format_title">使用java.text.SimpleDateFormat的日期和时间规则</string>
+    <string name="date_format_summary">yyyy:Year, MM:Month, dd:Date, HH:Hour, mm:Minute, ss:Second</string>
+    <string name="editors">编辑器</string>
+    <string name="disable_spell">禁止拼写检查</string>
+    <string name="use_system_menu">使用系统菜单</string>
+    <string name="use_system_menu_summary">尝试修复右键无法复制/粘贴的问题</string>
+</resources>

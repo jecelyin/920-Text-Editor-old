@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="highlight"
+        android:title="@string/highlight" >
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="enable_highlight"
+            android:summary="@string/request_restart"
+            android:title="@string/enable_highlight" >
+        </CheckBoxPreference>
+
+        <EditTextPreference
+            android:defaultValue="400"
+            android:dialogMessage="@string/highlight_limit_message"
+            android:dialogTitle="@string/highlight_limit"
+            android:key="highlight_limit"
+            android:negativeButtonText="@string/cancel"
+            android:positiveButtonText="@string/ok"
+            android:title="@string/highlight_limit" >
+        </EditTextPreference>
+        <CheckBoxPreference android:key="use_custom_hl_color" android:title="@string/use_custom_hl_color" android:summary="@string/use_custom_hl_color_msg" android:defaultValue="false"/>
+        <ListPreference
+            android:defaultValue="@string/default_color_scheme"
+            android:key="hl_colorscheme"
+            android:summary="@string/request_restart"
+            android:title="@string/color_scheme" >
+        </ListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/custom_hl_color" android:key="custom_highlight_color">
+        <Preference android:key="hlc_font" android:title="@string/font_color" /><Preference android:key="hlc_backgroup" android:title="@string/backgroup_color" /><Preference android:key="hlc_string" android:title="@string/string_color"/>
+        <Preference android:key="hlc_keyword" android:title="@string/keyword_color"/>
+        <Preference android:key="hlc_comment" android:title="@string/comment_color"/>
+        <Preference android:key="hlc_tag" android:title="@string/tag_color"/>
+        <Preference android:key="hlc_attr_name" android:title="@string/attr_color"/>
+        <Preference android:key="hlc_function" android:title="@string/function_color"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

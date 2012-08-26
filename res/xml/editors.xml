@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="editors"
+        android:title="@string/editors" >
+        <Preference android:title="@string/date_format" android:key="date_format"/>
+        <CheckBoxPreference android:key="spellcheck" android:title="@string/disable_spell"/>
+        <CheckBoxPreference android:key="use_system_menu" android:summary="@string/use_system_menu_summary" android:title="@string/use_system_menu" android:defaultValue="true"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

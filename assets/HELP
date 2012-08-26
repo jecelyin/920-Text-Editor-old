@@ -1,0 +1,35 @@
+Shortcuts: 
+  1. Vol+Up: switch to full screen and hide the toolbar;
+  2. Vol+Down: switch to non-full screen and display the toolbar;
+  3. Search: open the Find window.
+
+Custom syntax highlighting(recommended to submit your work to us(jecelyin@gmail.com) update it in the next version) : 
+  Editor default in the work directory "/sdcard/.920TextEditor" read the rules of syntax highlighting; file definitions: 
+     lang.conf: 
+        1): format: [name : the rules of syntax file path : extensions]; extension use spaces to separate 
+         Such as: HTML / XML: syntax / html.conf: the html htm shtml xhtml xml the tpl;
+        2): If an version occurred to change, the editor will restore lang.conf to their default values.
+        
+     version:
+        save the current version number of syntax rules, to change it after the editor from the binary packages;
+        unzip new lang.conf to overwrite the current file or folder.
+        
+     syntax: 
+        the rules of syntax file in the folder: 
+          1): line comment symbol: #
+          2): command (which is similar to VIM syntax rules:-D, but it VALUE only supports some simple regular expressions): 
+          
+            #1: syn case VALUE: switch below whether to ignore case 
+              VALUE: ignore, or the match
+              
+            #2: syn keyword GROUPNAME KEYWORDLIST: some keywords, only a-zA-Z_ 
+              GROUPNAME: it is associated with color, define the command HiLink 
+              KEYWORDLIST: some keywords 
+              
+            #3: syn region GROUPNAME ATTRIBUTE(format: key=#value#; # is any delimiter):  definition code range 
+              ATTRIBUTE: start, skip, end, tag(value: other, keepend, skipend) 
+              
+            #4: syn match GROUPNAME the VALUE match some keywords, it can contain any characters
+            
+            #5: HiLink GROUPNAME COLORTYPE: color of links on GROUPNAME 
+              COLORTYPE(case-sensitive): Keyword, String, Comment, Function, Tag

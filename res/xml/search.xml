@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="search"
+        android:title="@string/search" >
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="search_regex"
+            android:title="@string/search_regex" >
+        </CheckBoxPreference>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="search_ignore_case"
+            android:title="@string/search_ignore_case" >
+        </CheckBoxPreference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

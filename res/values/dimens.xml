@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Width of the fastscroll thumb -->
+    <dimen name="fastscroll_thumb_width">64dp</dimen>
+    <!-- Height of the fastscroll thumb -->
+    <dimen name="fastscroll_thumb_height">52dp</dimen>
+    <!-- toobar -->
+    <dimen name="toolbar_height">36dip</dimen>
+    <dimen name="toolbar_button_wh">32dip</dimen>
+    <dimen name="toolbar_button_4">4dip</dimen>
+    <!-- tab menu -->
+    <dimen name="menu_width">165.0dip</dimen>
+    <dimen name="menu_text_size">15.0sp</dimen>
+    <dimen name="menu_item_height">42.0dip</dimen>
+    <dimen name="menu_dropdown_y">10.0dip</dimen>
+</resources>

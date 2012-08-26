@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference
+        android:key="donate"
+        android:summary="@string/donate_summary"
+        android:title="@string/donate" >
+    </Preference>
+
+    <Preference
+        android:key="opt_view"
+        android:title="@string/view" />
+    
+    <Preference
+        android:key="opt_editors"
+        android:title="@string/editors" />
+
+    <Preference
+        android:key="opt_highlight"
+        android:title="@string/highlight" />
+
+    <Preference
+        android:key="opt_search"
+        android:title="@string/search" />
+
+    <Preference
+        android:key="opt_other"
+        android:title="@string/Other" />
+
+    <Preference
+        android:key="clear_history"
+        android:title="@string/clear_history" >
+    </Preference>
+
+    <Preference
+        android:key="opt_help"
+        android:title="@string/help" >
+    </Preference>
+
+</PreferenceScreen>

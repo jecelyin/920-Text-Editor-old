@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:id="@+id/reopen" android:title="@string/reopen"></item>
+  <item android:id="@+id/highlight" android:title="@string/highlight"></item>
+  <item android:id="@+id/encoding" android:title="@string/encoding"></item>
+  <item android:id="@+id/search_replace" android:title="@string/search_replace"></item>
+  <item android:id="@+id/preferences" android:title="@string/preferences"></item>
+  <item android:id="@+id/exit" android:title="@string/exit"></item>
+</menu>
