@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">920 Text Editor</string>
+    <string name="app_name_intent">Text Editor</string>
     <string name="open">Open</string>
     <string name="select_file">Select a file</string>
     <string name="confirm_exit">Are you sure you want to exit?</string>
