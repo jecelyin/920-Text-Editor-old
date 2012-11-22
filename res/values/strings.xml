@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <string name="app_name">920 Text Editor</string>
     <string name="open">Open</string>
@@ -15,7 +15,7 @@
     <string name="save">Save</string>
     <string name="filename_is_empty">File name must not be empty!</string>
     <string name="new_filename">Untitled</string>
-    <string name="highlight">Highlighting</string>
+    <string name="highlight">Highlighting And Color Scheme</string>
     <string name="search_replace">Search/Replace</string>
     <string name="options">Options</string>
     <string name="preferences">Preferences</string>
@@ -55,7 +55,7 @@
     <string name="about">About</string>
     <string name="myname">Jecelyin</string>
     <string name="myemail">jecelyin@gmail.com</string>
-    <string name="myhomepage">https://github.com/jecelyin/920-Text-Editor</string>
+    <string name="myhomepage">http://www.jecelyin.com/</string>
     <string name="loading">Loading...</string>
     <string name="highlight_stop_msg">Highlighting has stopped beacause the file size exceeds the limit.</string>
     <string name="search">Search</string>
@@ -82,8 +82,6 @@
     <string name="out_of_memory">Not enough memory to open the file!</string>
     <string name="exception">Exception occurs, execution fails!</string>
     <string name="back_button_exit">Press the \"Back button\" to exit</string>
-    <string name="pref_sort_clicks">Sort by hits</string>
-    <string name="toolbar_rows">Toolbar rows</string>
     <string name="preview_msg">File must be saved before previewing</string>
     <string name="goto_line">Go to Line...</string>
     <string name="can_not_gotoline">Can not jump to the specified line</string>
@@ -111,7 +109,7 @@
     <string name="string_color">String Color</string>
     <string name="keyword_color">Keyword Color</string>
     <string name="comment_color">Comment Color</string>
-    <string name="tag_color">Tag Color (e.g. &lt;?php)</string>
+    <string name="tag_color">Tag Color (e.g. &amp;lt;?php)</string>
     <string name="function_color">Function Color</string>
     <string name="attr_color">Attribute name Color</string>
     <string name="current_color">Current Color:</string>
@@ -123,8 +121,6 @@
     <string name="can_not_list_file">Failed to read file list, please try to switch Root privileges in the Preferences menu</string>
     <string name="go_to_begin">Scroll to top</string>
     <string name="go_to_end">Scroll to bottom</string>
-    <string name="not_need_back"></string>
-    <string name="not_need_forward"></string>
     <string name="report_bug">Report an Issue</string>
     <string name="project_homepage">Help Translate it</string>
     <string name="convert_linebreak_char">Convert Line Break</string>
@@ -168,7 +164,6 @@
     <string name="total_chars">Total Characters: </string>
     <string name="total_lines">Total Lines: </string>
     <string name="total_words">Total Words: </string>
-    
     <string name="auto_capitalize">Auto capitalize</string>
     <string name="auto_capitalize_summary">Capitalize the first word of each sentence.\nThis feature depends on IME.\nRequest restart.</string>
     <string name="can_not_open_file">Can not open file!</string>
@@ -181,4 +176,14 @@
     <string name="disable_spell">Disable spell checking</string>
     <string name="use_system_menu">Using the system menu</string>
     <string name="use_system_menu_summary">Try to fix not be able to copy and paste.</string>
+    <string name="run_in_sl4a_terminal">Run in SL4A (Terminal)</string>
+    <string name="run_in_sl4a_background">Run in SL4A (Background)</string>
+    <string name="run_before_save_file">Run the file must be saved before it.</string>
+    <string name="not_found_up">Cannot find %s above the current position!</string>
+    <string name="not_found_next">Cannot find %s below the current position!</string>
+    <string name="keyword">Keyword: </string>
+    <string name="path_not_correct">The path is not correct! </string>
+    <string name="keyword_notbe_empty">Keywords can not be empty!</string>
+    <string name="find_result">Found %s results!</string>
+    <string name="line_num">Line %s: </string>
 </resources>

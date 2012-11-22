@@ -240,9 +240,9 @@ public class TabHost extends LinearLayout
         mJecEditor.registerForContextMenu(mEditText);
         mEditText.setKeepScreenOn(mPref.getBoolean("keep_screen_on", false));
         mEditText.setAutoIndent(mPref.getBoolean("auto_indent", false));
-        boolean disablespell = mPref.getBoolean("spellcheck", false);
+        boolean disablespell = mPref.getBoolean("spellcheck", true);
         JecEditText.setDisableSpellCheck(disablespell);
-        JecEditText.setUseSystemMenu(mPref.getBoolean("use_system_menu", true));
+        JecEditText.setUseSystemMenu(mPref.getBoolean("use_system_menu", false));
         if(disablespell)
         {
             mEditText.setInputType(mEditText.getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);

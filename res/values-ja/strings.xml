@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="app_name">920 Text Editor</string>
+    <string name="open">開く</string>
+    <string name="select_file">ファイルを選択</string>
+    <string name="confirm_exit">終了してよろしいですか？</string>
+    <string name="ok">OK</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+    <string name="cancel">キャンセル</string>
+    <string name="encoding">文字コード</string>
+    <string name="save_succ">保存しました!</string>
+    <string name="save_changes_to">%sへの変更を保存しますか？</string>
+    <string name="save_changes">変更を保存しますか？</string>
+    <string name="save">保存</string>
+    <string name="filename_is_empty">ファイル名を指定してください！</string>
+    <string name="new_filename">無題</string>
+    <string name="highlight">ハイライト</string>
+    <string name="search_replace">検索/置換</string>
+    <string name="options">オプション</string>
+    <string name="preferences">設定</string>
+    <string name="saveas">名前を付けて保存</string>
+    <string name="reopen">ファイル履歴</string>
+    <string name="history">ファイル履歴を参照...</string>
+    <string name="file_not_exists">ファイルが見つかりません！</string>
+    <string name="replace">置換</string>
+    <string name="replace_all">すべて</string>
+    <string name="spinner_message">処理中</string>
+    <string name="searching">検索中。しばらくお待ちください...</string>
+    <string name="not_found">見つかりませんでした！</string>
+    <string name="replace_finish">すべての単語を置換しました</string>
+    <string name="font">フォント</string>
+    <string name="font_size">フォントの大きさ</string>
+    <string name="view">表示</string>
+    <string name="word_wrap">ワードラップ</string>
+    <string name="show_line_num">行番号を表示</string>
+    <string name="show_tab">タブ/改行記号を表示</string>
+    <string name="screen_orientation">画面の回転</string>
+    <string name="screen_orientation_auto">画面の自動回転</string>
+    <string name="screen_orientation_portrait">縦画面</string>
+    <string name="screen_orientation_landscape">横画面</string>
+    <string name="enable_highlight">構文のハイライト表示</string>
+    <string name="highlight_limit">ハイライト表示するファイルの上限サイズ</string>
+    <string name="highlight_limit_message">ハイライト表示できるファイルサイズの上限を超えています</string>
+    <string name="request_restart">要再起動</string>
+    <string name="label_version">バージョン</string>
+    <string name="label_author">作者</string>
+    <string name="label_email">メール</string>
+    <string name="label_homepage">ホームページ</string>
+    <string name="label_license">ライセンス</string>
+    <string name="field_license">"Copyright (C) 2011-2012 Jecelyin Peng
+920 Text Editor is a free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+920 Text Editor is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with this program; if not, see http://www.gnu.org/licenses."
+
+邦訳：（Copyright (C) 2011-2012 Jecelyin Peng
+920 Text Editor はフリーソフトウェアです。利用者はフリーソフトウェア財団が発行するGNU General Public License（version 3 またはそれ以上の版）に定められる範囲内でこのソフトウェアを改変または再配布することができます。
+920 Text Editor は有用であることを願って配布されていますが、個々の目的への合致や商用利用性への暗黙の保証を含め、完全に無保証です。詳細はGNU General Public License を参照してください。あなたはこのコピー(ソフトウェア)とともにGNU General Public Licenseをうけとっているはずですが、もしそうでない場合、http://www.gnu.org/licensesを参照してください。）</string>
+    <string name="about">このソフトについて</string>
+    <string name="myname">Jecelyin</string>
+    <string name="myemail">jecelyin@gmail.com</string>
+    <string name="myhomepage">http://www.jecelyin.com/</string>
+    <string name="loading">読み込み中...</string>
+    <string name="highlight_stop_msg">ファイルサイズが上限に達したためハイライト表示を中止しました</string>
+    <string name="search">検索</string>
+    <string name="search_regex">正規表現</string>
+    <string name="search_ignore_case">大文字小文字を無視</string>
+    <string name="search_error">検索に失敗しました。正規表現を使用している場合、設定が有効でないかもしれません</string>
+    <string name="Other">その他</string>
+    <string name="open_last_file">最後に開いていたファイルを記憶する</string>
+    <string name="open_last_file_summary">起動時に最後に開いていたファイルを開く</string>
+    <string name="hide_soft_keyboard">ソフトキーボードを非表示</string>
+    <string name="hide_soft_keyboard_summary">エディットエリア長押しでポップアップメニューを表示
+*再起動後に有効</string>
+    <string name="auto_indent">オートインデント</string>
+    <string name="clear_history">履歴をクリア</string>
+    <string name="clear_history_ok">履歴がクリアされました</string>
+    <string name="exit">終了</string>
+    <string name="keep_screen_on_summary">作業中はスクリーンをスリープしない</string>
+    <string name="keep_screen_on">スクリーン表示を保持</string>
+    <string name="help">ヘルプ</string>
+    <string name="donate">寄付する</string>
+    <string name="show_ime">入力方法を表示</string>
+    <string name="to_lower">小文字に変換</string>
+    <string name="to_upper">大文字に変換</string>
+    <string name="out_of_memory">ファイルを開くためのメモリが足りません</string>
+    <string name="exception">例外が発生しました。実行に失敗しました</string>
+    <string name="back_button_exit">戻るボタンで終了</string>
+    <string name="preview_msg">プレビューの前にファイルを保存する必要があります</string>
+    <string name="goto_line">指定行に移動</string>
+    <string name="can_not_gotoline">指定された行に移動できませんでした</string>
+    <string name="have_not_saved_doc">ファイルを保存できませんでした</string>
+    <string name="get_root_title">ルート管理者として実行</string>
+    <string name="open_with">他のアプリで開く</string>
+    <string name="rename">ファイル名変更</string>
+    <string name="delete">削除</string>
+    <string name="qq_group">QQ グループ</string>
+    <string name="rename_failed">ファイル名変更に失敗しました</string>
+    <string name="confirm_delete">このファイルを削除してよろしいですか？</string>
+    <string name="save_failed">保存できませんでした</string>
+    <string name="can_not_create_temp_path">一時ディレクトリを作成できません。SDカードをチェックしてください</string>
+    <string name="donate_summary">ブラウザで寄付のページを開く</string>
+    <string name="get_root_summary">他のツールを使うには、パーティションを読み書き属性(rw)でマウントしてください</string>
+    <string name="volume_up_toolbar_msg">ツールバー非表示中。音量を下げるキーを押すと再表示します</string>
+    <string name="volume_up_fullscreen_msg">フルスクリーン表示中。音量を下げるキーを押すと元に戻ります</string>
+    <string name="autosave">自動保存</string>
+    <string name="autosave_summery">エディタがアクティブでない時に自動保存する</string>
+    <string name="has_autosave">現在のファイルは自動保存されました</string>
+    <string name="overwrite_confirm">同名のファイルが存在します。上書きしますか？</string>
+    <string name="use_custom_hl_color">カスタムハイライト設定を使用する</string>
+    <string name="use_custom_hl_color_msg">無効の場合、標準の色設定が使用されます</string>
+    <string name="custom_hl_color">カスタムハイライト色</string>
+    <string name="string_color">文字列の色</string>
+    <string name="keyword_color">キーワードの色</string>
+    <string name="comment_color">コメントの色</string>
+    <string name="tag_color">タグの色(e.g. &amp;lt;?php)</string>
+    <string name="function_color">関数名の色</string>
+    <string name="attr_color">属性名の色</string>
+    <string name="current_color">現在の色</string>
+    <string name="invalid_color">無効な値の色</string>
+    <string name="insert_color">色値を挿入</string>
+    <string name="font_color">フォントの色</string>
+    <string name="backgroup_color">背景の色</string>
+    <string name="can_not_create_synfile">構文設定の抽出に失敗しました。SDカードの容量をチェックしてください</string>
+    <string name="can_not_list_file">ファイルリストの読み込みに失敗しました。設定メニューの“ルート管理者として実行”を切り替えてみてください</string>
+    <string name="go_to_begin">最上部にスクロール</string>
+    <string name="go_to_end">最下部にスクロール</string>
+    <string name="report_bug">問題を報告する</string>
+    <string name="project_homepage">改善を提案する</string>
+    <string name="convert_linebreak_char">改行コードを変換</string>
+    <string-array name="linebreak_chars">
+        <item>変更なし</item>
+        <item>CR+LF(Windows)</item>
+        <item>LF (Unix/Android)</item>
+        <item>CR (Macintosh)</item>
+    </string-array>
+    <string name="hide_ime">IMEを非表示</string>
+    <string name="changelog">変更履歴</string>
+    <string name="open_pipe">他のアプリで開く</string>
+    <string name="donate_info">このアプリが気に入ったら私たちに寄付してください！</string>
+    <string name="share">共有（テキストを送る）</string>
+    <string name="open_mode">オープンモード</string>
+    <string name="auto_detection">自動検出</string>
+    <string name="tab_close_other">他のタブを閉じる</string>
+    <string name="tab_close_right">右のタブを閉じる</string>
+    <string name="tab_close_all">全てのタブを閉じる</string>
+    <string name="insert_datetime">時間を挿入：</string>
+    <string name="default_color_scheme">標準</string>
+    <string name="color_scheme">色設定</string>
+    <string name="touch_zoom">タッチしてテキストサイズを調整</string>
+    <!-- edittext context menu -->
+    <string name="selectAll">すべて選択</string>
+    <string name="selectText">テキストを選択</string>
+    <string name="stopSelectingText">テキスト選択を中止</string>
+    <string name="cut">切り取り</string>
+    <string name="cutAll">すべて切り取り</string>
+    <string name="copy">コピー</string>
+    <string name="copyAll">すべてコピー</string>
+    <string name="paste">貼り付け</string>
+    <string name="copyUrl">URLをコピー</string>
+    <string name="editTextMenuTitle">テキストを編集</string>
+    <string name="duplicate_line">現在の行を複製</string>
+    <string name="duplicate_selected_text">選択したテキストを複製</string>
+    <string name="doc_stat">ファイルの統計情報</string>
+    <!-- end -->
+    <!-- 文档统计 -->
+    <string name="filename">ファイル名：</string>
+    <string name="total_chars">文字数：</string>
+    <string name="total_lines">行数：</string>
+    <string name="total_words">単語数：</string>
+    <string name="auto_capitalize">自動大文字変換</string>
+    <string name="auto_capitalize_summary">単語の開始文字を自動で大文字に変換します。\nこの設定はIMEに依存します。\n要再起動</string>
+    <string name="can_not_open_file">ファイルを開けませんでした</string>
+    <string name="date_format">日付と時刻の書式</string>
+    <string name="use_selected_format">選択した書式を使用する</string>
+    <string name="use_custom_format">カスタム書式を使用する</string>
+    <string name="date_format_title">日付と時刻の書式を指定</string>
+    <string name="date_format_summary">書式: yyyy:年, MM:月, dd:曜日, HH:時, mm:分, ss:秒</string>
+    <string name="editors">エディタの設定</string>
+    <string name="disable_spell">スペルチェックを無効</string>
+</resources>

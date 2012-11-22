@@ -19,6 +19,7 @@ import com.jecelyin.editor.EncodingList;
 import com.jecelyin.editor.JecEditor;
 import com.jecelyin.editor.R;
 import com.jecelyin.widget.JecButton;
+import com.stericson.RootTools.RootTools;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,7 +71,7 @@ public class FileBrowser extends ListActivity
     private SharedPreferences pref;
     private LinearLayout pathButtons;
     private String default_filename = "";
-    private int request_mode = 0; //0打开， 1保存模式
+    private int request_mode = 0; //0打开， 1保存模式，2选择路径
     private String current_path = ""; //当前路径
     private boolean isRoot = false;
     private EditText editTextFilename;
@@ -80,6 +81,8 @@ public class FileBrowser extends ListActivity
     private Spinner encoding_list;
     private static int OPEN_WITH_CODE = 0;
     private int lastPos;
+    
+    public static final int MODE_BROWSE = 2;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -115,15 +118,30 @@ public class FileBrowser extends ListActivity
         request_mode = mIntent.getIntExtra("mode", 0);
         isRoot = mIntent.getBooleanExtra("isRoot", false);
         editTextFilename.setText(default_filename);
+        
+        LinearLayout filenameLinearLayout = (LinearLayout)findViewById(R.id.filenameLinearLayout);
         if(request_mode == JecEditor.FILE_BROWSER_OPEN_CODE)
         {
-            LinearLayout filenameLinearLayout = (LinearLayout)findViewById(R.id.filenameLinearLayout);
             filenameLinearLayout.setVisibility(View.GONE);
             linebreakLinearLayout.setVisibility(View.VISIBLE);
             encodingLinearLayout.setVisibility(View.VISIBLE);
-        } else {
+        } else if(request_mode == MODE_BROWSE) {
+            LinearLayout okLinearLayout = (LinearLayout)findViewById(R.id.okLinearLayout);
+            okLinearLayout.setVisibility(View.VISIBLE);
+            filenameLinearLayout.setVisibility(View.GONE);
             linebreakLinearLayout.setVisibility(View.GONE);
             encodingLinearLayout.setVisibility(View.GONE);
+            Button btnOK = (Button)findViewById(R.id.btnOK);
+            btnOK.setOnClickListener(new OnClickListener() {
+                
+                @Override
+                public void onClick(View v)
+                {
+                    mIntent.putExtra("path", current_path);
+                    setResult(RESULT_OK, mIntent);
+                    finish();
+                }
+            });
         }
         //requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         showFileList(new File(current_path));
@@ -140,6 +158,8 @@ public class FileBrowser extends ListActivity
                 Toast.makeText(getApplicationContext(), R.string.filename_is_empty, Toast.LENGTH_LONG).show();
             }else{
                 mIntent.putExtra("file", current_path+File.separator+filename);
+                mIntent.putExtra("linebreak", linebreakSpinner.getSelectedItemPosition());
+                mIntent.putExtra("encoding", encoding_list.getSelectedItemPosition());
                 setResult(RESULT_OK, mIntent);
                 finish();
             }
@@ -311,24 +331,29 @@ public class FileBrowser extends ListActivity
             pathButtons.addView(mButton);
         }
         
-        //files = new ArrayList<FileLists>();
-        files = FileUtil.getFileList(curPath, isRoot); //path.listFiles();
+        //不能读取的才开启ROOT权限访问
+        files = FileUtil.getFileList(curPath, isRoot && !path.canRead() && RootTools.isAccessGiven()); //path.listFiles();
         if(files == null)
         {
             Toast.makeText(FileBrowser.this, R.string.can_not_list_file, Toast.LENGTH_LONG).show();
             return;
         }
 
-        fileListAdapter = new FileListAdapter(this, R.layout.file_list, files);
-        setListAdapter(fileListAdapter);
-        if(lastPos > 0)
-        {
-            if(files.size() > lastPos)
+        try {
+            fileListAdapter = new FileListAdapter(this, R.layout.file_list, files);
+            setListAdapter(fileListAdapter);
+            if(lastPos > 0)
             {
-                setSelection(lastPos);
-            }else if(--lastPos < files.size()){
-                setSelection(lastPos);
+                if(files.size() > lastPos)
+                {
+                    setSelection(lastPos);
+                }else if(--lastPos < files.size()){
+                    setSelection(lastPos);
+                }
             }
+        } catch(OutOfMemoryError ome) {
+            Toast.makeText(FileBrowser.this, R.string.out_of_memory, Toast.LENGTH_LONG).show();
+            return;
         }
         
     }
@@ -346,7 +371,11 @@ public class FileBrowser extends ListActivity
         if(file.isDirectory())
         {
             showFileList(file);
-        }else{
+        }else if(request_mode == MODE_BROWSE) {//same btnOK button
+            mIntent.putExtra("path", file.getPath());
+            setResult(RESULT_OK, mIntent);
+            finish();
+        }else {
             mIntent.putExtra("file", file.getPath());
             mIntent.putExtra("linebreak", linebreakSpinner.getSelectedItemPosition());
             mIntent.putExtra("encoding", encoding_list.getSelectedItemPosition());

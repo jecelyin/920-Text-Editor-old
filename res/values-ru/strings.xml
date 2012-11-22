@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <!-- 俄罗斯 -->
     <string name="app_name">920 Text Editor</string>
@@ -11,8 +11,8 @@
     <string name="cancel">Отмена</string>
     <string name="encoding">Кодировка</string>
     <string name="save_succ">Сохранено!</string>
-    <string name="confirm_save">Документ изменён, сохранить изменения?</string>
     <string name="save_changes">Сохранить изменения?</string>
+    <string name="save_changes_to">Сохранить изменени в %s ?</string>
     <string name="save">Сохранить</string>
     <string name="filename_is_empty">Имя файла не может быть пустым!</string>
     <string name="new_filename">Новый</string>
@@ -77,14 +77,11 @@
     <string name="help">Помощь</string>
     <string name="donate">Пожертвование...</string>
     <string name="show_ime">Показать панель ввода</string>
-    <string name="hide_ime">Скрыть панель ввода</string>
     <string name="to_lower">Заменить на строчные</string>
     <string name="to_upper">Заменить на прописные</string>
     <string name="out_of_memory">Ошибка открытия файла. Недостаточно памяти!</string>
     <string name="exception">Произошло исключение, ошибка выполнения!</string>
     <string name="back_button_exit">Клавиша \"назад\" для выхода</string>
-    <string name="pref_sort_clicks">Сортировать кликом</string>
-    <string name="toolbar_rows">Панель инструментов</string>
     <string name="preview_msg">Необходимо сохранить перед просмотром!</string>
     <string name="goto_line">Перейти на строку...</string>
     <string name="can_not_gotoline">Невозможно перейти на указаную строку</string>
@@ -112,7 +109,7 @@
     <string name="string_color">Строка</string>
     <string name="keyword_color">Ключевое слово</string>
     <string name="comment_color">Коментарий</string>
-    <string name="tag_color">Заголовок (e.g. &lt;?php)</string>
+    <string name="tag_color">Заголовок (e.g. &amp;lt;?php)</string>
     <string name="function_color">Функция</string>
     <string name="attr_color">Атрибут</string>
     <string name="current_color">Текущий цвет:</string>
@@ -124,11 +121,11 @@
     <string name="can_not_list_file">Невозможно прочитать список файлов, попробуйте открыть / закрыть ROOT привилегии в настройках программы!</string>
     <string name="go_to_begin">Перейти в начало</string>
     <string name="go_to_end">Перейти в конец</string>
-    <string name="not_need_back">Невозможно вернуться в предыдущее место редактирования</string>
-    <string name="not_need_forward">Невозможно вернуться в следующее место редактирования</string>
     <string name="report_bug">Отчёт об ошибках</string>
-    <string name="convert_linebreak_char">Разрывы строк</string>
     <string name="project_homepage">Помогите перевести его</string>
+    <string name="convert_linebreak_char">Разрывы строк</string>
+    <string name="hide_ime">Скрыть панель ввода</string>
+    <string name="changelog">Изменения</string>
     <string name="open_pipe">Открыть с помощью</string>
     <string name="donate_info">Если Вам нравится эта программа, поддержите её!</string>
     <string name="share">Отправить текст</string>
@@ -137,4 +134,37 @@
     <string name="tab_close_other">Закрыть другие вкладки</string>
     <string name="tab_close_right">Закрыть вкладки справа</string>
     <string name="tab_close_all">Закрыть все вкладки</string>
+    <string name="insert_datetime">Вставить дату / время:</string>
+    <string name="default_color_scheme">Цветовая схема по умолчанию</string>
+    <string name="color_scheme">Цветовая схема</string>
+    <string name="touch_zoom">Изменять размер текста сдвигом пальцев</string>
+    <string name="selectAll">Выделить все</string>
+    <string name="selectText">Выделить текст</string>
+    <string name="stopSelectingText">Остановить выделение текста</string>
+    <string name="cut">Вырезать</string>
+    <string name="cutAll">Вырезать все</string>
+    <string name="copy">Копировать</string>
+    <string name="copyAll">Копировать все</string>
+    <string name="paste">Вставить</string>
+    <string name="copyUrl">Копировать URL</string>
+    <string name="editTextMenuTitle">Правка</string>
+    <string name="duplicate_line">Копировать текущую строку</string>
+    <string name="duplicate_selected_text">Копировать выделеный текст</string>
+    <string name="doc_stat">Статистика документа</string>
+    <string name="filename">Имя файла: </string>
+    <string name="total_chars">Символов: </string>
+    <string name="total_lines">Строк: </string>
+    <string name="total_words">Слов: </string>
+    <string name="auto_capitalize">Начинать строку с прописной буквы</string>
+    <string name="auto_capitalize_summary">Заменять первый символ в строке на прописной.\nЭта функция зависит от IME.\nТребуется перезапуск.</string>
+    <string name="can_not_open_file">Невозможно открыть файл!</string>
+    <string name="date_format">Формат даты / времени</string>
+    <string name="use_selected_format">Использовать стандартный формат</string>
+    <string name="use_custom_format">Использовать свой формат</string>
+    <string name="date_format_title">Задать вручную значения даты / времени</string>
+    <string name="date_format_summary">yyyy:Год, MM:Месяц, dd:День, HH:Час, mm:Минута, ss:Секунда</string>
+    <string name="editors">Редактор</string>
+    <string name="disable_spell">Отключение проверки орфографии</string>
+    <string name="use_system_menu">Использование системного меню</string>
+    <string name="use_system_menu_summary">Используйте,если не работает правка текста.</string>
 </resources>

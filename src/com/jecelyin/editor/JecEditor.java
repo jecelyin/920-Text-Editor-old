@@ -65,6 +65,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -78,10 +79,11 @@ public class JecEditor extends Activity
 {
     public final static int FILE_BROWSER_OPEN_CODE = 0; // 打开
     public final static int FILE_BROWSER_SAVEAS_CODE = 1; // 另存为
+    public final static int SEARCH_CODE = 3;
     private final static String TAG = "JecEditor";
     public final static String PREF_HISTORY = "history"; // 保存打开文件记录
     private final static String PREF_LAST_FILE = "last_files"; // 最后打开的文件
-    private final static String SYNTAX_SIGN = "20";
+    private final static String SYNTAX_SIGN = "25";
     public static String version = "";
     public static String TEMP_PATH = "";
     private JecEditText mEditText;
@@ -137,6 +139,7 @@ public class JecEditor extends Activity
     private Drawable last_edit_forward_d;
     private Drawable last_edit_forward_s;
     private JecMenu mMenu;
+    private ArrayList<String> mLastFiles = new ArrayList<String>();
 
     /** Called when the activity is first created. */
     @Override
@@ -350,6 +353,15 @@ public class JecEditor extends Activity
     @Override
     protected void onNewIntent(Intent mIntent)
     {
+        try {
+            doNewIntent(mIntent);
+        }catch(Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    
+    protected void doNewIntent(Intent mIntent)
+    {
         //super.onNewIntent(intent);
         if(isLoading != false)
             return;
@@ -429,13 +441,26 @@ public class JecEditor extends Activity
                     {
                         Object val = entry.getValue();
                         if (val instanceof String) {
-                            readFileToEditText((String)val);
+                            //readFileToEditText((String)val);
+                            mLastFiles.add((String)val);
                         }
                     }
+                    loadLastOpenFiles();
                 }
             }
         }
         
+    }
+    
+    /**
+     * 递归方式打开最后打开的文件列表
+     */
+    private void loadLastOpenFiles()
+    {
+        if(mLastFiles.size() < 1)
+            return;
+        String file = mLastFiles.remove(0);
+        readFileToEditText(file);
     }
 
     /**
@@ -535,7 +560,7 @@ public class JecEditor extends Activity
         {
             setTitle((new File(mEditText.getPath())).getName() + "(" + mEditText.getPath() + ")");
         }*/
-
+        //Grep.find(new String[] {"-r", "print", "/mnt/sdcard/"});
     }
 
     @Override
@@ -632,7 +657,7 @@ public class JecEditor extends Activity
         isRoot = mPref.getBoolean("get_root", false);
         if(isRoot)
         {
-            if(!LinuxShell.isRoot())
+            if(!LinuxShell.canRoot())
             {
                 isRoot = false;
                 Toast.makeText(this, "Root Fail", Toast.LENGTH_LONG).show();
@@ -770,6 +795,7 @@ public class JecEditor extends Activity
                 if(findLayout.getVisibility() == View.GONE)
                 {
                     findLayout.setVisibility(View.VISIBLE);
+                    replaceShowButton.setVisibility(View.VISIBLE);
                 }
                 find("next");
                 return true;
@@ -828,6 +854,19 @@ public class JecEditor extends Activity
             {
                 ColorPicker cp = new ColorPicker(JecEditor.this, new ColorListener(), "edittext", JecEditor.this.getString(R.string.insert_color), Color.GREEN);
                 cp.show();
+            }
+        });
+        ImageButton foldersearchButton = (ImageButton) findViewById(R.id.folder_search);
+        foldersearchButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent();
+                intent.putExtra("keyword", mEditText.getText().subSequence(mEditText.getSelectionStart(), mEditText.getSelectionEnd()).toString());
+                intent.putExtra("path", mEditText.getPath());
+                intent.putExtra("isRoot", isRoot);
+                intent.setClass(JecEditor.this, Grep.class);
+                startActivityForResult(intent, SEARCH_CODE);
             }
         });
     }
@@ -999,14 +1038,41 @@ public class JecEditor extends Activity
                 }).show();
 
     }
-
+    
     private void save()
+    {
+        save(mEditText.getEncoding(), mEditText.getLineBreak());
+    }
+
+    private void save(String encoding, int linebreak)
     {
         if("".equals(mEditText.getPath()) || isLoading)
             return;
         
         String content = mEditText.getString();
-        boolean ok = FileUtil.writeFile(mEditText.getPath(), content, mEditText.getEncoding(), isRoot);
+        if(linebreak == 2)
+        {// unix
+            content = content.replaceAll("\r\n|\r", "\n");
+        }else if(linebreak == 3)
+        {
+            // CR Only(Macintosh)
+            content = content.replaceAll("\r\n|\r", "\r");
+        }
+        if("".equals(encoding))
+            encoding = "utf-8";
+        boolean ok = true;
+
+        String failMsg = "";
+        
+        try
+        {
+            ok = FileUtil.writeFile(mEditText.getPath(), content, encoding, isRoot);
+        }catch (Exception e)
+        {
+            failMsg = e.getMessage();
+            ok = false;
+        }
+        
         if(ok)
         {
             mEditText.setTextFinger();
@@ -1014,7 +1080,7 @@ public class JecEditor extends Activity
             Toast.makeText(JecEditor.this, R.string.save_succ, Toast.LENGTH_LONG).show();
         }else
         {
-            Toast.makeText(JecEditor.this, R.string.save_failed, Toast.LENGTH_LONG).show();
+            Toast.makeText(JecEditor.this, JecEditor.this.getString(R.string.save_failed)+failMsg, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -1089,13 +1155,17 @@ public class JecEditor extends Activity
         }
         
         final String path;
+        final int lineBreak;
+        final int encoding;
+        final String charset;
+        
         switch(requestCode)
         {
             case FILE_BROWSER_OPEN_CODE: // 打开
                 path = data.getStringExtra("file");
-                int lineBreak = data.getIntExtra("linebreak", 0);
-                int encoding = data.getIntExtra("encoding", 0);
-                String charset;
+                lineBreak = data.getIntExtra("linebreak", 0);
+                encoding = data.getIntExtra("encoding", 0);
+
                 if(encoding < 1)
                 {
                     charset = "";
@@ -1107,6 +1177,16 @@ public class JecEditor extends Activity
             case FILE_BROWSER_SAVEAS_CODE:
                 isLoading = false;
                 path = data.getStringExtra("file");
+                lineBreak = data.getIntExtra("linebreak", 0);
+                encoding = data.getIntExtra("encoding", 0);
+                
+                if(encoding < 1)
+                {
+                    charset = "";
+                } else {
+                    charset = EncodingList.list[encoding];
+                }
+                
                 final File file = new File(path);
                 if(file.exists())
                 {
@@ -1116,22 +1196,28 @@ public class JecEditor extends Activity
                         {
                             mEditText.setPath(path);
                             setTitle(file.getName());
-                            save();
+                            save(charset, lineBreak);
                         }
                     }).setNegativeButton(android.R.string.no, null).show();
                 }else
                 {
                     mEditText.setPath(path);
                     setTitle(file.getName());
-                    save();
+                    save(charset, lineBreak);
                 }
 
+                break;
+            case SEARCH_CODE:
+                path = data.getStringExtra("file");
+                int offset = (int)data.getLongExtra("offset", 0);
+                //readFileToEditText(path, encoding, linebreak, selstart, selend);
+                readFileToEditText(path, "", 0, offset, offset); //
                 break;
         }
         fileBrowserCallbackRunnable.run();
     }
 
-    public void onLoaded()
+    public void onLoaded(int selstart, int selend)
     {
         String msg = getString(R.string.encoding) + ": " + mEditText.getEncoding();
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
@@ -1142,13 +1228,17 @@ public class JecEditor extends Activity
         switchPreviewButton(name);
         //记住最后位置
         SharedPreferences sp = getSharedPreferences(PREF_HISTORY, MODE_PRIVATE);
-        String[] selinfo = sp.getString(mEditText.getPath(), "").split(",");
-        if(selinfo.length >= 3)
+        if(selstart==0 && selend==0)
         {
-            mEditText.setSelection(Integer.valueOf(selinfo[0]), Integer.valueOf(selinfo[1]));
+            String[] selinfo = sp.getString(mEditText.getPath(), "").split(",");
+            if(selinfo.length >= 3)
+            {
+                mEditText.setSelection(Integer.valueOf(selinfo[0]), Integer.valueOf(selinfo[1]));
+            }
         }
         //注意顺序
         saveHistory();
+        loadLastOpenFiles();
     }
 
     public void setTitle(String title)
@@ -1253,12 +1343,18 @@ public class JecEditor extends Activity
         String[] selinfo = sp.getString(path, "").split(",");
         int linebreak=0;
         String encoding = "";
+        int selstart=0;
+        int selend=0;
         if(selinfo.length >= 5)
         {
             linebreak = Integer.valueOf(selinfo[3]);
             encoding = selinfo[4];
+            selstart = Integer.valueOf(selinfo[0]);
+            selend = Integer.valueOf(selinfo[1]);
         }
-        readFileToEditText(path, encoding, linebreak, Integer.valueOf(selinfo[0]), Integer.valueOf(selinfo[1]));
+        //readFileToEditText(path, encoding, linebreak, selstart, selend);
+        //修正另存为其它编码后，在历史列表打开会乱码的问题
+        readFileToEditText(path, "", linebreak, selstart, selend);
     }
 
     public void readFileToEditText(String path, String encoding, int lineBreak, int selstart, int selend)
@@ -1446,11 +1542,24 @@ public class JecEditor extends Activity
                     replaceShowButton.setVisibility(View.VISIBLE);
                     break;
                 case R.id.menu_pipe:
-                    final String [] items=new String []{
+                    final String [] items;
+                    // Python, Perl, JRuby, Lua, BeanShell, JavaScript, Tcl, and shell are currently supported
+                    String ext = mEditText.getCurrentFileExt();
+                    if("py".equals(ext) || "pl".equals(ext) || "lua".equals(ext) || "sh".equals(ext) || "js".equals(ext) || "tcl".equals(ext))
+                    {
+                        items=new String []{
                             getString(R.string.view)
                             ,getString(R.string.share)
-                            //,getString(R.string.run_script)
+                            ,getString(R.string.run_in_sl4a_terminal)
+                            ,getString(R.string.run_in_sl4a_background)
                          };
+                    } else {
+                        items=new String []{
+                            getString(R.string.view)
+                            ,getString(R.string.share)
+                         };
+                    }
+                    
                     AlertDialog.Builder builder=new AlertDialog.Builder(JecEditor.this);
                     builder.setTitle(R.string.open_mode);
                     builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -1483,17 +1592,23 @@ public class JecEditor extends Activity
                                     text=mEditText.getString();
                                 }
                                 intent.putExtra(Intent.EXTRA_TEXT, text);
-                            }/*else if(getString(R.string.run_script).equals(items[which])) {
+                            } else if(getString(R.string.run_in_sl4a_background).equals(items[which]) || getString(R.string.run_in_sl4a_terminal).equals(items[which])) {
                                 String file = mEditText.getPath();
                                 if("".equals(file))
                                 {
-                                    Toast.makeText(JecEditor.this, R.string.preview_msg, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(JecEditor.this, R.string.run_before_save_file, Toast.LENGTH_LONG).show();
                                     return;
                                 }
-                                intent.setAction("com.googlecode.android_scripting.action.LAUNCH_BACKGROUND_SCRIPT");
-                                intent.setClassName("com.googlecode.android_scripting", "com.googlecode.android_scripting.activity.ScriptingLayerServiceLauncher");
-                                intent.putExtra("com.googlecode.android_scripting.extra.SCRIPT_PATH", file);
-                            }*/
+                                ComponentName SL4A_SERVICE_LAUNCHER_COMPONENT_NAME = new ComponentName("com.googlecode.android_scripting", "com.googlecode.android_scripting.activity.ScriptingLayerServiceLauncher");
+                                intent.setComponent(SL4A_SERVICE_LAUNCHER_COMPONENT_NAME);
+                                if(getString(R.string.run_in_sl4a_terminal).equals(items[which])) {
+                                    intent.setAction("com.googlecode.android_scripting.action.LAUNCH_FOREGROUND_SCRIPT");
+                                    intent.putExtra("com.googlecode.android_scripting.extra.SCRIPT_PATH", file);
+                                } else {
+                                    intent.setAction("com.googlecode.android_scripting.action.LAUNCH_BACKGROUND_SCRIPT");
+                                    intent.putExtra("com.googlecode.android_scripting.extra.SCRIPT_PATH", file);
+                                }
+                            }
                             try
                             {
                                 startActivity(intent);
@@ -1543,7 +1658,7 @@ public class JecEditor extends Activity
         int size = paths.size();
         //for(String path : paths)
         String path;
-        for(int i=size; --i >= 0;)
+        for(int i=0; i<size; i++)
         {
             path = paths.get(i);
             editor.putString(path, path);

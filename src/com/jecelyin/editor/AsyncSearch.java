@@ -85,14 +85,14 @@ public class AsyncSearch
     {
         if(data.size() == 0)
         {
-            int resid;
+            String msg;
             if(replaceAll)
             {
-                resid = R.string.replace_finish;
+                msg = mJecEditor.getString(R.string.replace_finish);
             } else {
-                resid = R.string.not_found;
+                msg = mJecEditor.getString(next ? R.string.not_found_next : R.string.not_found_up).replaceAll("%s", mPattern);
             }
-            Toast.makeText(mJecEditor.getApplicationContext(), mJecEditor.getText(resid), Toast.LENGTH_LONG).show();
+            Toast.makeText(mJecEditor.getApplicationContext(), msg, Toast.LENGTH_LONG).show();
         } else if(replaceAll) {
             Editable mText = mJecEditor.getEditText().getText();
             //一定要从后面开始替换,不然会有问题

@@ -16,6 +16,8 @@
 package com.jecelyin.editor;
 
 
+import java.net.URLEncoder;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -100,7 +102,13 @@ public class Options extends PreferenceActivity
             public boolean onPreferenceClick(Preference arg0)
             {
                 Uri uri;
-                uri = Uri.parse("https://github.com/jecelyin/920-Text-Editor/issues");
+                try
+                {
+                    uri = Uri.parse("http://www.jecelyin.com/920report.php?ver=" + URLEncoder.encode(JecEditor.version+"/"+android.os.Build.MODEL+"/"+android.os.Build.VERSION.RELEASE, "utf-8"));
+                }catch (Exception e)
+                {
+                    uri = Uri.parse("http://www.jecelyin.com/920report.php?var=badver");
+                }
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 // Intent intent = new Intent(Options.this, Donate.class);
                 startActivity(intent);

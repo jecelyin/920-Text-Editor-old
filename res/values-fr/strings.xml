@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-	<!-- 法语 -->
+    <!-- 法语 -->
     <string name="app_name">920 Text Editor</string>
     <string name="open">Ouvrir</string>
     <string name="select_file">Ouvrir un fichier</string>
@@ -11,7 +11,6 @@
     <string name="cancel">Annuler</string>
     <string name="encoding">Encodage</string>
     <string name="save_succ">Enregistrement effectué !</string>
-    <string name="confirm_save">Ce document à été modifié, Enregistrer les modifications ?</string>
     <string name="save_changes">Enregistrer les modifications ?</string>
     <string name="save">Enregistrer</string>
     <string name="filename_is_empty">Le nom de fichier ne peut être vide !</string>
@@ -46,7 +45,6 @@
     <string name="highlight_limit">Taille limite du fichier pour coloration</string>
     <string name="highlight_limit_message">Si la taille du fichier ouvert est plus grande que cette valeure, arret de la coloration; Unité: kb</string>
     <string name="request_restart">* Nécessite un redémarrage</string>
-    
     <!-- about activity -->
     <string name="label_version">Version</string>
     <string name="label_author">Auteur</string>
@@ -88,8 +86,6 @@ You should have received a copy of the GNU General Public License along with thi
     <string name="out_of_memory">Echec de l\'ouverture, Mémoire insuffisante !</string>
     <string name="exception">Une erreur s\'est produite, Echec de l\'execution !</string>
     <string name="back_button_exit">Appuyer sur le \"Bouton retour\" pour quitter</string>
-    <string name="pref_sort_clicks">Trier par clics</string>
-    <string name="toolbar_rows">Lignes barre d\'outils</string>
     <string name="preview_msg">Vous devez enregistrer avant de prévisualiser</string>
     <string name="goto_line">Aller à la ligne...</string>
     <string name="can_not_gotoline">Impossible d\'aller à la ligne spécifiée</string>
@@ -117,7 +113,7 @@ You should have received a copy of the GNU General Public License along with thi
     <string name="string_color">Couleur String </string>
     <string name="keyword_color">Couleur Mot-clé</string>
     <string name="comment_color">Couleur Commentaire </string>
-    <string name="tag_color">Couleur Tag (ex: &lt;?php)</string>
+    <string name="tag_color">Couleur Tag (ex: &amp;lt;?php)</string>
     <string name="function_color">Couleur Fonction</string>
     <string name="attr_color">Couleur nom d\'attribut</string>
     <string name="current_color">Couleur actuelle : </string>
@@ -129,8 +125,6 @@ You should have received a copy of the GNU General Public License along with thi
     <string name="can_not_list_file">Impossible de lire la liste des fichiers, Essayer d\'ouvrir/fermer les accès ROOT dans le menu "Préférences"</string>
     <string name="go_to_begin">Aller au début</string>
     <string name="go_to_end">Aller à la fin</string>
-    <string name="not_need_back">Pas d\'annulation possible</string>
-    <string name="not_need_forward">Pas de répétition possible</string>
     <string name="report_bug">Signaler un bug</string>
     <string name="project_homepage">L\'aider à traduire</string>
     <string name="convert_linebreak_char">Convertir retour chariot</string>

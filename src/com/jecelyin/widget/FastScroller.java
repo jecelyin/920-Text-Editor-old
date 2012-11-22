@@ -266,9 +266,13 @@ class FastScroller {
         int count = mList.getLineCount();
         //mScrollCompleted = false;
         int index = (int) (position * count);
-        int offset = mList.getLayout().getLineStart(index);
-        //Log.v(TAG, "scrollTo:"+String.valueOf(index)+" offset:"+String.valueOf(offset));
-        mList.setSelection(offset, offset);
+        try {
+            int offset = mList.getLayout().getLineStart(index);
+            //Log.v(TAG, "scrollTo:"+String.valueOf(index)+" offset:"+String.valueOf(offset));
+            mList.setSelection(offset, offset);
+        }catch(Exception e) {
+            
+        }
 
     }
 

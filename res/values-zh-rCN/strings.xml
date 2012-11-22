@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <string name="app_name">920文本编辑器</string>
     <string name="open">打开</string>
@@ -10,12 +10,12 @@
     <string name="cancel">取消</string>
     <string name="encoding">编码</string>
     <string name="save_succ">保存成功!</string>
-    <string name="confirm_save">文档已经改变，是否保存?</string>
+    <string name="save_changes_to">保存改动到 %s ?</string>
     <string name="save_changes">保存改动?</string>
     <string name="save">保存</string>
     <string name="filename_is_empty">文件名不能为空!</string>
     <string name="new_filename">无标题</string>
-    <string name="highlight">高亮</string>
+    <string name="highlight">高亮与色彩方案</string>
     <string name="search_replace">查找/替换</string>
     <string name="options">选项</string>
     <string name="preferences">参数设置</string>
@@ -45,7 +45,6 @@
     <string name="highlight_limit">高亮的文件大小限制</string>
     <string name="highlight_limit_message">当打开的文件大小大于下面大小，则不进行高亮显示；单位：kb</string>
     <string name="request_restart">* 需要重启</string>
-    
     <!-- about activity -->
     <string name="label_version">版本</string>
     <string name="label_author">作者</string>
@@ -86,8 +85,6 @@
     <string name="out_of_memory">无法打开文件，没有足够的内存!</string>
     <string name="exception">异常错误，操作失败</string>
     <string name="back_button_exit">按 \"返回键\" 退出程序</string>
-    <string name="pref_sort_clicks">按使用频率排序</string>
-    <string name="toolbar_rows">工具栏行数</string>
     <string name="preview_msg">预览之前必须先保存文件！</string>
     <string name="goto_line">跳转到指定行...</string>
     <string name="can_not_gotoline">无法跳转到指定行！</string>
@@ -115,7 +112,7 @@
     <string name="string_color">字符串颜色</string>
     <string name="keyword_color">关键字颜色</string>
     <string name="comment_color">注释颜色</string>
-    <string name="tag_color">标签颜色 (例 &lt;?php)</string>
+    <string name="tag_color">标签颜色 (例 &amp;lt;?php)</string>
     <string name="function_color">函数颜色</string>
     <string name="attr_color">属性名称颜色</string>
     <string name="current_color">当前颜色： </string>
@@ -127,8 +124,6 @@
     <string name="can_not_list_file">不能读取文件列表，请尝试打开/关闭ROOT权限在“参数设置”菜单</string>
     <string name="go_to_begin">跳转到开头</string>
     <string name="go_to_end">跳转到结尾</string>
-    <string name="not_need_back">不需要返回上一个编辑位置</string>
-    <string name="not_need_forward">不需要返回下一个编辑位置</string>
     <string name="report_bug">报告问题</string>
     <string name="project_homepage">帮助翻译它</string>
     <string name="convert_linebreak_char">转换断行符</string>
@@ -171,7 +166,6 @@
     <string name="total_chars">字符数: </string>
     <string name="total_lines">行数: </string>
     <string name="total_words">单词数: </string>
-    
     <string name="auto_capitalize">首字母自动大写</string>
     <string name="auto_capitalize_summary">每句第一个单词的首字母大写。\n此功能依赖于输入法。\n需要重启。</string>
     <string name="can_not_open_file">无法打开文件！</string>
@@ -184,4 +178,14 @@
     <string name="disable_spell">禁止拼写检查</string>
     <string name="use_system_menu">使用系统菜单</string>
     <string name="use_system_menu_summary">尝试修复右键无法复制/粘贴的问题</string>
+    <string name="run_in_sl4a_terminal">运行于SL4A (命令行)</string>
+    <string name="run_in_sl4a_background">运行于SL4A (后台)</string>
+    <string name="run_before_save_file">运行之前必须先保存！</string>
+    <string name="not_found_up">在当前位置之前找不到 %s</string>
+    <string name="not_found_next">在当前位置之后找不到 %s</string>
+    <string name="keyword">关键字：</string>
+    <string name="line_num">行 %s：</string>
+    <string name="path_not_correct">路径不正确</string>
+    <string name="keyword_notbe_empty">关键字不能为空</string>
+    <string name="find_result">发现 %s  条结果！</string>
 </resources>

@@ -23,8 +23,8 @@ import com.jecelyin.highlight.Highlight;
 import com.jecelyin.util.LinuxShell;
 import com.jecelyin.util.TimerUtil;
 import com.jecelyin.widget.JecEditText;
+import com.stericson.RootTools.RootTools;
 
-import android.R.integer;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -50,6 +50,7 @@ public class AsyncReadFile
     private ProgressDialog mProgressDialog;
     private int mSelStart = 0;
     private int mSelEnd = 0;
+    private ReadHandler mReadHandler;
 
     public AsyncReadFile(final JecEditor mJecEditor, final String path, final String encoding, final int lineBreak, int selStart, int selEnd)
     {
@@ -60,7 +61,7 @@ public class AsyncReadFile
         mSelStart = selStart;
         mSelEnd = selEnd;
         isRoot = JecEditor.isRoot;
-        
+        mReadHandler  = new ReadHandler(AsyncReadFile.this);
         showProgress();
         
         Thread thread = new Thread(new Runnable() {
@@ -77,35 +78,45 @@ public class AsyncReadFile
                     File file = new File(fileString);
                     fileString = file.getAbsolutePath();
 
-                    String tempFile = JecEditor.TEMP_PATH + "/temp.root.file";
+                    String tempFile = JecEditor.TEMP_PATH + "/root_file_buffer.tmp";
                     boolean root = false;
-                    if(!file.canRead() && isRoot)
+                    if(!file.canRead() && isRoot && RootTools.isAccessGiven())
                     {
                         // 需要Root权限处理
-                        LinuxShell.execute("cat " + LinuxShell.getCmdPath(fileString) + " > " + LinuxShell.getCmdPath(tempFile));
-                        LinuxShell.execute("chmod 777 " + LinuxShell.getCmdPath(tempFile));
+                        //RootTools.sendShell("busybox cp " + LinuxShell.getCmdPath(fileString) + " " + tempFile, 1000);
+                        RootTools.copyFile(LinuxShell.getCmdPath(fileString), tempFile, true, true);
+                        RootTools.sendShell("busybox chmod 777 " + tempFile, 1000);
                         fileString = tempFile;
+                        file = new File(fileString);
                         root = true;
                     }
                     if("".equals(enc))
                         enc = getEncoding(fileString);
                     if("GB18030".equals(enc.toUpperCase()))
                         enc = "GBK";
-                    String mData = Highlight.readFile(fileString, enc);
-                    if(lineBreak == 2)
-                    {// unix
-                        mData = mData.replaceAll("\r\n|\r", "\n");
-                    }else if(lineBreak == 3)
+                    
+                    if(file.isFile())
                     {
-                        // CR Only(Macintosh)
-                        mData = mData.replaceAll("\r\n|\r", "\r");
+                        String mData = Highlight.readFile(fileString, enc);
+                        if(lineBreak == 2)
+                        {// unix
+                            mData = mData.replaceAll("\r\n|\r", "\n");
+                        }else if(lineBreak == 3)
+                        {
+                            // CR Only(Macintosh)
+                            mData = mData.replaceAll("\r\n|\r", "\r");
+                        }
+                        if(root)
+                        {
+                            LinuxShell.execute("rm -rf " + tempFile);
+                        }
+                        msg.what = RESULT_OK;
+                        b.putString("data", mData);
+                    } else {
+                        msg.what = RESULT_FAIL;
+                        b.putString("error", AsyncReadFile.this.mJecEditor.getString(R.string.can_not_open_file));
                     }
-                    if(root)
-                    {
-                        LinuxShell.execute("rm -rf " + LinuxShell.getCmdPath(tempFile));
-                    }
-                    msg.what = RESULT_OK;
-                    b.putString("data", mData);
+                    
                 }catch (Exception e)
                 {
                     final String errorMsg = e.getMessage();// R.string.exception;
@@ -146,14 +157,22 @@ public class AsyncReadFile
         mProgressDialog.show();
     }
     
-    private void dismissProgress()
+    public void dismissProgress()
     {
         if(mProgressDialog != null)
             mProgressDialog.dismiss();
     }
     
-    private Handler mReadHandler  = new Handler()
+    static class ReadHandler extends Handler
     {
+        private AsyncReadFile mAsyncReadFile;
+        
+        public ReadHandler(AsyncReadFile arf)
+        {
+            super();
+            mAsyncReadFile = arf;
+        }
+        
         @Override
         public void handleMessage(Message msg)
         {
@@ -161,13 +180,13 @@ public class AsyncReadFile
             String path = b.getString("path");
             String encoding = b.getString("encoding");
             int lineBreak = b.getInt("lineBreak");
-            dismissProgress();
+            mAsyncReadFile.dismissProgress();
             if(msg.what == RESULT_OK) {
-                finish(b.getString("data"), path, encoding, lineBreak);
+                mAsyncReadFile.finish(b.getString("data"), path, encoding, lineBreak);
             } else {
                 JecEditor.isLoading = false;
                 Log.d(TAG, b.getString("error"));
-                Toast.makeText(mJecEditor, b.getString("error"), Toast.LENGTH_LONG).show();
+                Toast.makeText(mAsyncReadFile.mJecEditor, b.getString("error"), Toast.LENGTH_LONG).show();
             }
         }
     };
@@ -182,7 +201,7 @@ public class AsyncReadFile
             mData = null;
             mEditText.setTextFinger();
             TimerUtil.stop(TAG + "1");
-            // scroll to top
+            // scroll to topprivate
             //mEditText.setSelection(0, 0);
             mEditText.setSelection(mSelStart, mSelEnd);
             mEditText.clearFocus();
@@ -190,7 +209,7 @@ public class AsyncReadFile
             mEditText.setEncoding(encoding);
             mEditText.setLineBreak(lineBreak);
             mEditText.setPath(path);
-            mJecEditor.onLoaded();
+            mJecEditor.onLoaded(mSelStart, mSelEnd);
            
         }catch (OutOfMemoryError e)
         {

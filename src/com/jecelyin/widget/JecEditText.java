@@ -151,9 +151,9 @@ public class JecEditText extends EditText
     //首字母大写
     private static boolean mAutoCapitalize = false;
     //禁止拼写检查
-    private static boolean mDisableSpellCheck = false;
+    private static boolean mDisableSpellCheck = true;
     //是否使用系统菜单
-    private static boolean USE_SYSTEM_MENU = true;
+    private static boolean USE_SYSTEM_MENU = false;
 
     // we need this constructor for LayoutInflater
     public JecEditText(Context context, AttributeSet attrs)
@@ -1255,6 +1255,8 @@ public class JecEditText extends EditText
             return false;
         mLastEditIndex--;
         int offset = mLastEditBuffer.get(mLastEditIndex);
+        if(getText().length() < offset)
+            return false;
         setSelection(offset, offset);
         return true;
     }
@@ -1265,6 +1267,8 @@ public class JecEditText extends EditText
             return false;
         mLastEditIndex++;
         int offset = mLastEditBuffer.get(mLastEditIndex);
+        if(getText().length() < offset)
+            return false;
         setSelection(offset, offset);
         return true;
     }
@@ -1297,7 +1301,7 @@ public class JecEditText extends EditText
         if(mAutoIndent && keyCode == KeyEvent.KEYCODE_ENTER)
         {
             Editable mEditable = (Editable) mText;
-            if(mEditable == null)
+            if(mEditable == null || mEditable.length() < 1)
                 return result;
 
             int start = getSelectionStart();
@@ -1460,7 +1464,7 @@ public class JecEditText extends EditText
             }
             if( mDisableSpellCheck )
             {
-                type |= ~InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+                type |= InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
             }
             setInputType(type);
             if(imm != null)
@@ -1874,20 +1878,23 @@ public class JecEditText extends EditText
                     {
                         if(mText.charAt(s) == '\n')
                         {
+                            s++;
                             break;
                         }
                     }
                     int textlen = mText.length();
-                    for(;e++<textlen;)
-                    {
+                    //thanks to:WSGwsg13@163.com
+                    while(e<textlen){
                         if(mText.charAt(e) == '\n')
                         {
                             break;
                         }
+                        e++;
                     }
                     if(s<0)s=0;
-                    if(e>=textlen)e=textlen-1;
-                    text2=mText.subSequence(s, e);
+                    if(e>=textlen)e=textlen;
+                    if(s==e || e<1)break;
+                    text2="\n"+mText.subSequence(s, e);
                     offset=e;
                 } else {
                     //重复选中的文本

@@ -32,8 +32,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import com.jecelyin.editor.JecEditor;
+import com.stericson.RootTools.RootTools;
 
 
 public class FileUtil
@@ -180,7 +182,7 @@ public class FileUtil
         return b.toString();
     }
 
-    public static void writeFile(String path, String text)
+    public static void writeFile(String path, String text) throws IOException
     {
         writeFile(path, text, "UTF-8", true);
     }
@@ -192,40 +194,34 @@ public class FileUtil
      * @param text
      * @param encoding
      * @return
+     * @throws IOException 
      */
-    public static boolean writeFile(String path, String text, String encoding, boolean isRoot)
+    public static boolean writeFile(String path, String text, String encoding, boolean isRoot) throws IOException
     {
-        try
+        File file = new File(path);
+        String tempFile = JecEditor.TEMP_PATH + "/root_file_buffer.tmp";
+        String fileString = path;
+        boolean root = false;
+        if(!file.canWrite() && isRoot && RootTools.isAccessGiven())
         {
-            File file = new File(path);
-            String tempFile = JecEditor.TEMP_PATH + "/temp.root.file";
-            String fileString = path;
-            boolean root = false;
-            if(!file.canWrite() && isRoot)
-            {
-                //需要Root权限处理
-                fileString = tempFile;
-                root = true;
-            }
-            BufferedWriter bw = null;
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileString), Charset.forName(encoding)));
-            bw.write(text);
-            bw.close();
-            if(root)
-            {
-                BufferedReader ret = LinuxShell.execute("ls " 
-                        + LinuxShell.getCmdPath(fileString) 
-                        + " " + LinuxShell.getCmdPath(path));
-                //LinuxShell.execute("rm -r " + LinuxShell.getCmdPath(tempFile));
-                if(ret == null)
-                    return false;
-            }
-            return true;
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-            return false;
+            //需要Root权限处理
+            fileString = tempFile;
+            root = true;
         }
+        BufferedWriter bw = null;
+        bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileString),encoding));
+        bw.write(text);
+        bw.close();
+        if(root)
+        {
+            //RootTools.remount(path, "RW");
+            //RootTools.sendShell("busybox cat " + fileString + " > " + LinuxShell.getCmdPath(path), 1000);
+            RootTools.copyFile(fileString, LinuxShell.getCmdPath(path), true, true);
+            if (RootTools.lastExitCode != 0)
+                return false;
+            new File(tempFile).delete();
+        }
+        return true;
     }
 
     public static String getExt(String path)
@@ -257,26 +253,25 @@ public class FileUtil
             }
         }else{
             /** 带 root */
-            BufferedReader reader = null; //errReader = null;
             try
             {
-                
-                reader = LinuxShell.execute("IFS='\n';CURDIR='"+LinuxShell.getCmdPath(path)+"';for i in `ls $CURDIR`; do if [ -d $CURDIR/$i ]; then echo \"d $CURDIR/$i\";else echo \"f $CURDIR/$i\"; fi; done");
-                if(reader == null)
-                    return null;
-                
-                File f;
-                String line;
-                while ((line = reader.readLine()) != null)
+                //-1    One column output
+                //-F    Append indicator (one of */=@|) to entries  * 表示普通的可执行文件； / 表示目录； @ 表示符号链接；| 表示FIFOs；= 表示套接字 (sockets) ；什么也没有则表示普通文件。
+                List<String> resultList = RootTools.sendShell("busybox ls -1 " + path, 1000);
+                File file;
+                for(String line: resultList)
                 {
-                    f = new File(line.substring(2));
-                    if(line.startsWith("d"))
+                    if("".equals(line.trim()) || "0".equals(line.trim()))
+                        continue;
+                    file = new File(path, line);
+                    if(line.endsWith("/") || file.isDirectory())
                     {
-                        folderList.add(f);
+                        folderList.add(file);
                     } else {
-                        fileList.add(f);
+                        fileList.add(file);
                     }
                 }
+                
             }catch (Exception e)
             {
                 e.printStackTrace();
