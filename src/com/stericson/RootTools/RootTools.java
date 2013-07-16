@@ -22,17 +22,17 @@
 
 package com.stericson.RootTools;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeoutException;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 
 public class RootTools {
 

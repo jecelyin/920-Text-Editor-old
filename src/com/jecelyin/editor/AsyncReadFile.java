@@ -15,16 +15,6 @@
 
 package com.jecelyin.editor;
 
-import java.io.File;
-
-import org.mozilla.charsetdetector.CharsetDetector;
-
-import com.jecelyin.highlight.Highlight;
-import com.jecelyin.util.LinuxShell;
-import com.jecelyin.util.TimerUtil;
-import com.jecelyin.widget.JecEditText;
-import com.stericson.RootTools.RootTools;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -32,6 +22,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
+import com.jecelyin.util.FileUtil;
+import com.jecelyin.util.JecLog;
+import com.jecelyin.util.LinuxShell;
+import com.jecelyin.util.TC;
+import com.stericson.RootTools.RootTools;
+
+import org.mozilla.charsetdetector.CharsetDetector;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import jecelyin.android.compat.TextViewBase;
 
 public class AsyncReadFile
 {
@@ -40,29 +43,23 @@ public class AsyncReadFile
     public static final int RESULT_OK = 0;
     public static final int RESULT_FAIL = 1;
 
-    /*
-     * private String path = ""; private String encoding = ""; private int
-     * lineBreak = 0;
-     */
-
-    private static boolean isRoot = false;
-
     private ProgressDialog mProgressDialog;
     private int mSelStart = 0;
     private int mSelEnd = 0;
     private ReadHandler mReadHandler;
+    private String mEncoding = "";
 
     public AsyncReadFile(final JecEditor mJecEditor, final String path, final String encoding, final int lineBreak, int selStart, int selEnd)
     {
-        // 加载文件不算改动，不能有撤销操作
         JecEditor.isLoading = true;
         // mJecEditor.text_content.requestFocus();
         this.mJecEditor = mJecEditor;
-        mSelStart = selStart;
-        mSelEnd = selEnd;
-        isRoot = JecEditor.isRoot;
+        mSelStart = selStart > 0 ? selStart : 0;
+        mSelEnd = selEnd > 0 ? selEnd : 0;
         mReadHandler  = new ReadHandler(AsyncReadFile.this);
         showProgress();
+        
+        mEncoding = encoding;
         
         Thread thread = new Thread(new Runnable() {
             
@@ -71,18 +68,17 @@ public class AsyncReadFile
             {
                 Message msg = mReadHandler.obtainMessage();
                 Bundle b = new Bundle();
-                String enc = encoding;
                 try
                 {
                     String fileString = path;
                     File file = new File(fileString);
                     fileString = file.getAbsolutePath();
 
-                    String tempFile = JecEditor.TEMP_PATH + "/root_file_buffer.tmp";
+                    String tempFile = JecEditor.TEMP_PATH + "/"+file.getName()+".tmp";
+                    //Log.d(TAG, "write:"+file.canWrite()+" rooted:"+isRoot+" access:"+RootTools.isAccessGiven());
                     boolean root = false;
-                    if(!file.canRead() && isRoot && RootTools.isAccessGiven())
+                    if(!file.canWrite() && EditorSettings.TRY_ROOT && RootTools.isAccessGiven())
                     {
-                        // 需要Root权限处理
                         //RootTools.sendShell("busybox cp " + LinuxShell.getCmdPath(fileString) + " " + tempFile, 1000);
                         RootTools.copyFile(LinuxShell.getCmdPath(fileString), tempFile, true, true);
                         RootTools.sendShell("busybox chmod 777 " + tempFile, 1000);
@@ -90,14 +86,11 @@ public class AsyncReadFile
                         file = new File(fileString);
                         root = true;
                     }
-                    if("".equals(enc))
-                        enc = getEncoding(fileString);
-                    if("GB18030".equals(enc.toUpperCase()))
-                        enc = "GBK";
-                    
+
                     if(file.isFile())
                     {
-                        String mData = Highlight.readFile(fileString, enc);
+                        String mData = readFile(file);
+                        
                         if(lineBreak == 2)
                         {// unix
                             mData = mData.replaceAll("\r\n|\r", "\n");
@@ -116,9 +109,25 @@ public class AsyncReadFile
                         msg.what = RESULT_FAIL;
                         b.putString("error", AsyncReadFile.this.mJecEditor.getString(R.string.can_not_open_file));
                     }
-                    
+                }catch (FileNotFoundException e){
+                    e.printStackTrace();
+                    String errorMsg = e.getMessage();
+                    if(errorMsg.contains("Permission denied")){
+                        EditorSettings.TRY_ROOT = true;
+                        errorMsg = mJecEditor.getString(R.string.try_root);
+                        try
+                        {
+                            RootTools.sendShell("busybox ls " + path, 1000);
+                        } catch (Exception e1)
+                        {
+                            e1.printStackTrace();
+                        }
+                    }
+                    msg.what = RESULT_FAIL;
+                    b.putString("error", errorMsg);
                 }catch (Exception e)
                 {
+                    e.printStackTrace();
                     final String errorMsg = e.getMessage();// R.string.exception;
                     msg.what = RESULT_FAIL;
                     b.putString("error", errorMsg);
@@ -129,7 +138,7 @@ public class AsyncReadFile
                     b.putString("error", errorMsg);
                 } finally {
                     b.putString("path", path);
-                    b.putString("encoding", enc);
+                    b.putString("encoding", mEncoding);
                     b.putInt("lineBreak", lineBreak);
                     msg.setData(b);
                     msg.sendToTarget();
@@ -185,8 +194,7 @@ public class AsyncReadFile
                 mAsyncReadFile.finish(b.getString("data"), path, encoding, lineBreak);
             } else {
                 JecEditor.isLoading = false;
-                Log.d(TAG, b.getString("error"));
-                Toast.makeText(mAsyncReadFile.mJecEditor, b.getString("error"), Toast.LENGTH_LONG).show();
+                JecLog.msg(b.getString("error"));
             }
         }
     };
@@ -195,12 +203,13 @@ public class AsyncReadFile
     {
         try
         {
-            TimerUtil.start();
-            JecEditText mEditText = mJecEditor.getEditText();
-            mEditText.setText2(mData);
+            TextViewBase mEditText = mJecEditor.getEditText();
+            mEditText.setText(mData);
+            mEditText.updateTextFinger();
+            int len = mData.length();
             mData = null;
-            mEditText.setTextFinger();
-            TimerUtil.stop(TAG + "1");
+            if(mSelEnd >= len || mSelStart >= len)
+                mSelStart = mSelEnd = 0;
             // scroll to topprivate
             //mEditText.setSelection(0, 0);
             mEditText.setSelection(mSelStart, mSelEnd);
@@ -216,26 +225,44 @@ public class AsyncReadFile
             Toast.makeText(mJecEditor, R.string.out_of_memory, Toast.LENGTH_LONG).show();
         }catch (Exception e)
         {
-            Toast.makeText(mJecEditor, e.getMessage(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(mJecEditor, e.getMessage(), Toast.LENGTH_LONG).show();
+            JecLog.e(e.getMessage(), e);
         } finally {
             JecEditor.isLoading = false;
         }
     }
 
-    private String getEncoding(String path)
+    private String readFile(File file) throws Exception
     {
-        String encoding = CharsetDetector.getEncoding(path).trim().toUpperCase();
+        //检测编码
+        if(mEncoding==null || "".equals(mEncoding))
+        {
+            FileInputStream fis = new FileInputStream(file);
+            byte[] buff = new byte[64*1024];
+            int buf_len = fis.read(buff);
+            fis.close();
+            if(buf_len <= 0)
+                return "";
 
-        if("".equals(encoding))
-        {
-            // 默认为utf-8
-            encoding = "UTF-8";
-        }else if("GB18030".equals(encoding))
-        {
-            // 转换下,不然无法正确解码
-            encoding = "GBK";
+            CharsetDetector cd = new CharsetDetector();
+            if(cd.isOK())
+            {
+                cd.handleData(buff, 0, buf_len);
+                cd.dataEnd();
+                mEncoding = cd.getCharset();
+                cd.destroy();
+                if ( mEncoding != null && mEncoding.length() > 0 )
+                {
+                    if("GB18030".equals(mEncoding.toUpperCase()))
+                        mEncoding = "GBK";
+                }else{
+                    mEncoding = "utf-8";
+                }
+            }else{
+                mEncoding = "utf-8";
+            }
         }
-
-        return encoding;
+        
+        return FileUtil.readFile(file, mEncoding);
     }
 }

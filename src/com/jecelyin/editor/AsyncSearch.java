@@ -15,228 +15,261 @@
 
 package com.jecelyin.editor;
 
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.text.Editable;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.jecelyin.util.JecLog;
+
 public class AsyncSearch
 {
-    private String mPattern = "";
+    private Pattern mPattern = null;
+    private String mKeyword = "";
     private JecEditor mJecEditor;
     private ArrayList<int[]> mData = new ArrayList<int[]>();
     private int start = 0;
     private boolean next = true;
     private boolean replaceAll = false;
     private CharSequence replaceText = "";
-    private boolean regexp = false;
-    private boolean ignoreCase = true;
-    
-    public void search(String pattern, boolean next, JecEditor mJecEditor)
+    public boolean regex = false;
+    public boolean ignorecase = false;
+
+    public void search(String keyword, boolean next, JecEditor mJecEditor)
     {
         replaceAll = false;
         mJecEditor.getEditText().requestFocus();
         this.mJecEditor = mJecEditor;
+        this.mKeyword = !regex ? escapeMetaChar(keyword) : keyword;
+        if(!this.compile())
+            return;
         this.next = next;
-        this.start = next ? mJecEditor.getEditText().getSelectionEnd() : mJecEditor.getEditText().getSelectionStart(); //光标位置
-        this.mPattern = !regexp ? escapeMetaChar(pattern) : pattern;
+        this.start = next ? mJecEditor.getEditText().getSelectionEnd()
+                : mJecEditor.getEditText().getSelectionStart(); // 光标位置
+
         mData.clear();
         SearchTask mSearchTask = new SearchTask();
         mSearchTask.execute();
     }
-    
-    public void setRegExp(boolean open)
+
+    private boolean compile()
     {
-        regexp = open;
+        try
+        {
+            if (ignorecase)
+            {
+                this.mPattern = Pattern.compile(mKeyword,
+                        Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.MULTILINE);
+            } else
+            {
+                this.mPattern = Pattern.compile(mKeyword);
+            }
+            return true;
+        } catch (Exception e)
+        {
+            JecLog.msg(mJecEditor.getString(R.string.error_accurs) + e.getMessage(), e);
+            return false;
+        }
     }
-    
-    public void setIgnoreCase(boolean open)
-    {
-        ignoreCase = open;
-    }
-    
+
     public void replace(String word)
     {
-        if(mData.size() == 0)
+        if (mData.size() == 0)
             return;
         int[] ret = mData.get(0);
-        mJecEditor.getEditText().getText().replace(ret[0], ret[1], (CharSequence)word);
+        try
+        {
+            mJecEditor.getEditText().getEditableText()
+                    .replace(ret[0], ret[1], (CharSequence) word);
+        } catch (Exception e)
+        {
+            JecLog.msg(mJecEditor.getString(R.string.error_accurs) + e.getMessage(), e);
+        }
     }
-    
-    public void replaceAll(String searchText, String replaceText, JecEditor mJecEditor)
+
+    public void replaceAll(String searchText, String replaceText,
+            JecEditor mJecEditor)
     {
         this.replaceAll = true;
-        this.replaceText = (CharSequence)replaceText;
+        this.replaceText = (CharSequence) replaceText;
         this.mJecEditor = mJecEditor;
         this.next = true;
-        this.start = 0; //光标位置
-        this.mPattern = !regexp ? escapeMetaChar(searchText) : searchText;
+        this.start = 0; // 光标位置
+        this.mKeyword = !regex ? escapeMetaChar(searchText) : searchText;
+        if(!this.compile())return;
         mData.clear();
         SearchTask mSearchTask = new SearchTask();
         mSearchTask.execute();
     }
-    
+
     private void onSearchFinished(ArrayList<int[]> data)
     {
-        if(data.size() == 0)
+        if (data.size() == 0)
         {
             String msg;
-            if(replaceAll)
+            if (replaceAll)
             {
                 msg = mJecEditor.getString(R.string.replace_finish);
-            } else {
-                msg = mJecEditor.getString(next ? R.string.not_found_next : R.string.not_found_up).replaceAll("%s", mPattern);
+            } else
+            {
+                msg = mJecEditor.getString(
+                        next ? R.string.not_found_next : R.string.not_found_up)
+                        .replaceAll("%s", mKeyword);
             }
-            Toast.makeText(mJecEditor.getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-        } else if(replaceAll) {
-            Editable mText = mJecEditor.getEditText().getText();
-            //一定要从后面开始替换,不然会有问题
+            Toast.makeText(mJecEditor.getApplicationContext(), msg,
+                    Toast.LENGTH_LONG).show();
+        } else if (replaceAll)
+        {
+            Editable mText = mJecEditor.getEditText().getEditableText();
+            // 一定要从后面开始替换,不然会有问题
             int end = data.size();
             int[] ret;
-            for(int i=end-1; i>=0; i--)
+            for (int i = end - 1; i >= 0; i--)
             {
                 ret = data.get(i);
                 mText.replace(ret[0], ret[1], replaceText);
             }
-        } else {
+        } else
+        {
             int[] ret = data.get(0);
-            //滚动当前找到的内容到中央，不然在底部看得不爽
-            //int end = mJecEditor.text_content.getText().length();
-            /*if(ret[1]+200 <= end)
-            {
-                mJecEditor.text_content.setSelection(ret[0], ret[1]+200);
-            } else {
-                mJecEditor.text_content.setSelection(ret[0], end);
-            }*/
+            // 滚动当前找到的内容到中央，不然在底部看得不爽
+            // int end = mJecEditor.text_content.getText().length();
+            /*
+             * if(ret[1]+200 <= end) {
+             * mJecEditor.text_content.setSelection(ret[0], ret[1]+200); } else
+             * { mJecEditor.text_content.setSelection(ret[0], end); }
+             */
             mJecEditor.getEditText().setSelection(ret[0], ret[1]);
             int x = mJecEditor.getEditText().getScrollX();
             int y = mJecEditor.getEditText().getScrollY();
-            mJecEditor.getEditText().scrollBy(x, y+40);
+            mJecEditor.getEditText().scrollBy(x, y + 40);
         }
     }
-    
-    private static String escapeMetaChar( String pattern )
+
+    private static String escapeMetaChar(String pattern)
     {
-        final String metachar = ".^$[]*+?|()\\";
+        final String metachar = ".^$[]*+?|()\\{}";
 
         StringBuilder newpat = new StringBuilder();
 
         int len = pattern.length();
 
-        for( int i=0;i<len;i++ ){
+        for (int i = 0; i < len; i++)
+        {
             char c = pattern.charAt(i);
-            if ( metachar.indexOf(c) >=0 ){
+            if (metachar.indexOf(c) >= 0)
+            {
                 newpat.append('\\');
             }
             newpat.append(c);
         }
         return newpat.toString();
     }
-    
+
     private class SearchTask extends AsyncTask<String, Boolean, Boolean>
     {
         private ProgressDialog mProgressDialog;
         private boolean mCancelled;
 
         @Override
-        protected void onPreExecute() {
-            mCancelled=false;
+        protected void onPreExecute()
+        {
+            mCancelled = false;
             mProgressDialog = new ProgressDialog(mJecEditor);
             mProgressDialog.setTitle(R.string.spinner_message);
             mProgressDialog.setMessage(mJecEditor.getText(R.string.searching));
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             mProgressDialog.setCancelable(true);
-            mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            mProgressDialog
+                    .setOnCancelListener(new DialogInterface.OnCancelListener()
+                    {
 
-                public void onCancel(DialogInterface dialog)
-                {
-                    mCancelled=true;
-                    cancel(false);
-                }
-            });
+                        public void onCancel(DialogInterface dialog)
+                        {
+                            mCancelled = true;
+                            cancel(false);
+                        }
+                    });
             mProgressDialog.show();
         }
 
         @Override
         protected Boolean doInBackground(String... params)
         {
-            if ( isCancelled() ){
+            if (isCancelled())
+            {
                 return true;
             }
-            try {
-                Pattern pattern;
-                if(ignoreCase)
+
+            Matcher m = mPattern.matcher(mJecEditor.getEditText().getString());
+
+            if (replaceAll)
+            {
+                while (m.find())
                 {
-                    pattern = Pattern.compile(mPattern, Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CASE|Pattern.MULTILINE);
-                } else {
-                    pattern = Pattern.compile(mPattern);
+                    if (mCancelled)
+                    {
+                        break;
+                    }
+                    mData.add(new int[] { m.start(), m.end() });
                 }
-                
-                Matcher m = pattern.matcher( mJecEditor.getEditText().getString() );
-                
-                if(replaceAll)
+            } else if (next)
+            {
+                if (m.find(start))
                 {
-                    while ( m.find() )
-                    {
-                        if ( mCancelled ){
-                            break;
-                        }
-                        mData.add(new int[] {m.start(), m.end()});
-                    }
-                }else if(next)
+                    mData.add(new int[] { m.start(), m.end() });
+                }
+            } else
+            {
+                // 查找上一个
+                if (start <= 0)
+                    return true;
+                // 从头开始搜索获取所有位置
+                while (m.find())
                 {
-                    if(m.find(start))
+                    if (mCancelled)
                     {
-                        mData.add(new int[] {m.start(), m.end()});
-                    }
-                } else {
-                    //查找上一个
-                    if( start <= 0 )
-                        return true;
-                    //从头开始搜索获取所有位置
-                    while ( m.find() )
+                        break;
+                    } else if (m.end() >= start)
                     {
-                        if ( mCancelled ){
-                            break;
-                        }else if( m.end() >= start )
+                        if (mData.size() > 0) // fixed: Caused by:
+                                              // java.lang.ArrayIndexOutOfBoundsException
                         {
-                            if(mData.size() > 0) //fixed: Caused by: java.lang.ArrayIndexOutOfBoundsException
-                            {
-                                int[] ret = mData.get(mData.size()-1);
-                                //考虑到会边搜索边修改的情况,所以只能每次都穷搜一下
-                                mData.clear();
-                                mData.add(ret);
-                            }
-                            
-                            break;
+                            int[] ret = mData.get(mData.size() - 1);
+                            // 考虑到会边搜索边修改的情况,所以只能每次都穷搜一下
+                            mData.clear();
+                            mData.add(ret);
                         }
-                        mData.add(new int[] {m.start(), m.end()});
+
+                        break;
                     }
+                    mData.add(new int[] { m.start(), m.end() });
                 }
-            }catch(Exception e) {
-                Toast.makeText(mJecEditor.getApplicationContext(), mJecEditor.getString(R.string.search_error), Toast.LENGTH_LONG).show();
             }
+
             return true;
         }
-        
+
         @Override
-        protected void onPostExecute(Boolean result) {
+        protected void onPostExecute(Boolean result)
+        {
             mProgressDialog.dismiss();
             mProgressDialog = null;
             AsyncSearch.this.onSearchFinished(mData);
         }
 
         @Override
-        protected void onCancelled() {
+        protected void onCancelled()
+        {
             super.onCancelled();
             onPostExecute(false);
         }
-        
+
     }
 }

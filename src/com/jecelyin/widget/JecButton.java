@@ -15,11 +15,11 @@
 
 package com.jecelyin.widget;
 
-import java.util.HashMap;
-
 import android.content.Context;
 import android.widget.Button;
 import android.widget.LinearLayout.LayoutParams;
+
+import java.util.HashMap;
 
 public class JecButton extends Button
 {

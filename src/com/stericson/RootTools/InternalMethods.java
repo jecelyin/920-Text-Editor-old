@@ -22,28 +22,18 @@
 
 package com.stericson.RootTools;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.LineNumberReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeoutException;
-import java.util.regex.Matcher;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
-
 import com.stericson.RootTools.RootTools.Result;
+
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
 
 //no modifier, this is package-private which means that no one but the library can access it.
 class InternalMethods
@@ -310,7 +300,7 @@ class InternalMethods
 
             // mount destination back to ro
             if (remountAsRw) {
-                RootTools.remount(destination, "RO");
+                //RootTools.remount(destination, "RO"); //jec- 感谢imtrasd@gmail.com的反馈
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -472,7 +462,7 @@ class InternalMethods
             	Shell.startRootShell().add(command).waitForFinish();
             }
 
-            RootTools.remount("/system", "ro");
+            //RootTools.remount("/system", "ro"); //jec-
         } catch (Exception e) {}
     }
     

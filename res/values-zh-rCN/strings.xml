@@ -31,7 +31,6 @@
     <string name="replace_finish">替换完毕!</string>
     <string name="font">字体</string>
     <string name="font_size">字体大小</string>
-    <!-- 查看设置 -->
     <string name="view">查看</string>
     <string name="word_wrap">自动换行</string>
     <string name="show_line_num">显示行号</string>
@@ -40,12 +39,11 @@
     <string name="screen_orientation_auto">自动旋转</string>
     <string name="screen_orientation_portrait">纵向</string>
     <string name="screen_orientation_landscape">横向</string>
-    <!-- 高亮设置 -->
     <string name="enable_highlight">语法高亮</string>
     <string name="highlight_limit">高亮的文件大小限制</string>
     <string name="highlight_limit_message">当打开的文件大小大于下面大小，则不进行高亮显示；单位：kb</string>
     <string name="request_restart">* 需要重启</string>
-    <!-- about activity -->
+    
     <string name="label_version">版本</string>
     <string name="label_author">作者</string>
     <string name="label_email">Email</string>
@@ -53,23 +51,20 @@
     <string name="label_license">授权</string>
     <string name="field_license">
 版本所有 (C) 2011-2012  Jecelyin Peng\n
-920编辑器为自由软件；您可依据自由软件基金会所发表的GNU通用公共授权条款规定，就本程序再为散布与／或修改；无论您依据的是本授权的第三版或（您自行选择的）任一日后发行的版本。
-920编辑器是基于使用目的而加以散布，然而不负任何担保责任；亦无对适售性或特定目的适用性所为的默示性担保。详情请参照GNU通用公共授权 http://www.gnu.org/licenses。
+920编辑器为自由软件；您可依据自由软件基金会所发表的GNU通用公共授权条款规定，就本程序再为发布与／或修改；无论您依据的是本授权的第三版或（您自行选择的）任一日后发行的版本。
+920编辑器是基于使用目的而加以发布，然而不负任何担保责任；亦无对适售性或特定目的适用性所为的默示性担保。详情请参照GNU通用公共授权 http://www.gnu.org/licenses。
     </string>
     <string name="about">关于</string>
     <string name="loading">正在加载文件...</string>
     <string name="highlight_stop_msg">文件大小超出“高亮文件大小限制”，高亮功能已经停止</string>
-    <!-- 搜索设置 -->
     <string name="search">搜索</string>
     <string name="search_regex">正式表达式</string>
     <string name="search_ignore_case">忽略大小写</string>
     <string name="search_error">搜索关键字有错误，可能是你使用了正则表达式但是没有在设置选项中开启它</string>
-    <!-- 其它设置 -->
     <string name="Other">其它</string>
     <string name="open_last_file">记住最后打开的文件</string>
     <string name="open_last_file_summary">当启动编辑器时，自动打开最后打开的文件</string>
-    <string name="hide_soft_keyboard">隐藏输入法</string>
-    <string name="hide_soft_keyboard_summary">可以长按编辑区域后在弹出菜单打开输入法\n需要重启</string>
+    <string name="readonly_mode">只读模式</string>
     <string name="auto_indent">自动缩进</string>
     <string name="clear_history">清除历史记录</string>
     <string name="clear_history_ok">已经清空历史记录</string>
@@ -78,7 +73,6 @@
     <string name="keep_screen_on">保持屏幕常亮，不会变暗</string>
     <string name="help">帮助</string>
     <string name="donate">捐赠...</string>
-    <!-- 菜单 -->
     <string name="show_ime">显示输入法</string>
     <string name="to_lower">转为小写</string>
     <string name="to_upper">转为大写</string>
@@ -147,7 +141,7 @@
     <string name="default_color_scheme">系统默认</string>
     <string name="color_scheme">色彩方案</string>
     <string name="touch_zoom">触摸放大缩小文字大小</string>
-    <!-- edittext context menu -->
+    
     <string name="selectAll">全选</string>
     <string name="selectText">选择文本</string>
     <string name="stopSelectingText">停止选择文本</string>
@@ -161,7 +155,6 @@
     <string name="duplicate_line">重复当前行</string>
     <string name="duplicate_selected_text">重复选中的文本</string>
     <string name="doc_stat">文档统计</string>
-    <!-- 文档统计 -->
     <string name="filename">文件: </string>
     <string name="total_chars">字符数: </string>
     <string name="total_lines">行数: </string>
@@ -188,4 +181,31 @@
     <string name="path_not_correct">路径不正确</string>
     <string name="keyword_notbe_empty">关键字不能为空</string>
     <string name="find_result">发现 %s  条结果！</string>
+    <string name="invalid_sign">无效的签名！请重新在谷歌Play下载920文本编辑器！</string>
+    <string name="check_for_updates">检查更新</string>
+    <string name="recurse">递归查找</string>
+    <string name="ignore_case">不区分大小写</string>
+    <string name="use_regex">使用正则</string>
+    <string name="use_space_for_tab">插入空格代替制表符</string>
+    <string name="indent_size">缩进大小</string>
+    <string name="new_folder">新建文件夹</string>
+    <string name="create_folder_fail">无法创建目录！</string>
+    <string name="error_accurs">发生错误：</string>
+    <string name="custom_toolbar">自定义工具栏</string>
+    <string name="undo">撤销</string>
+    <string name="redo">重做</string>
+    <string name="preview">预览文件</string>
+    <string name="symbol_bar">符号栏</string>
+    <string name="forward">下个修改</string>
+    <string name="back">上次修改</string>
+    <string name="find_in_files">在文件中查找...</string>
+    <string name="color">颜色</string>
+    <string name="settings_divider_text">上面的开关将被激活</string>
+    <string name="crash_report">崩溃报告</string>
+    <string name="comment">注释</string>
+    <string name="convert_to_titlecase">首字母大写</string>
+    <string name="linebreak">换行符: </string>
+    <string name="encoding2">编码: </string>
+    <string name="cursor_width">光标宽度</string>
+    <string name="try_root">你可能没有权限打开该文件，系统临时启用了ROOT模式，请重新打开它！</string>
 </resources>

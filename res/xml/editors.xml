@@ -1,12 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory
+        android:key="view"
+        android:title="@string/view" >
+        <ListPreference
+            android:defaultValue="Monospace"
+            android:key="font"
+            android:title="@string/font" >
+        </ListPreference>
+        <ListPreference
+            android:defaultValue="12"
+            android:key="font_size"
+            android:title="@string/font_size" >
+        </ListPreference>
+        <ListPreference
+            android:defaultValue="2"
+            android:key="cursor_width"
+            android:title="@string/cursor_width" >
+        </ListPreference>
 
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="touch_zoom"
+            android:title="@string/touch_zoom" >
+        </CheckBoxPreference>
+        
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="wordwrap"
+            android:title="@string/word_wrap" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_line_num"
+            android:title="@string/show_line_num" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="show_tab"
+            android:title="@string/show_tab" >
+        </CheckBoxPreference>
+        
+    </PreferenceCategory>
     <PreferenceCategory
         android:key="editors"
         android:title="@string/editors" >
-        <Preference android:title="@string/date_format" android:key="date_format"/>
-        <CheckBoxPreference android:key="spellcheck" android:title="@string/disable_spell" android:defaultValue="true" />
-        <CheckBoxPreference android:key="use_system_menu" android:summary="@string/use_system_menu_summary" android:title="@string/use_system_menu" android:defaultValue="false"/>
+        <Preference
+            android:key="date_format"
+            android:title="@string/date_format" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="spellcheck"
+            android:title="@string/disable_spell" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="auto_indent"
+            android:title="@string/auto_indent" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="use_space_for_tab"
+            android:title="@string/use_space_for_tab" />
+
+        <EditTextPreference
+            android:defaultValue="4"
+            android:inputType="number"
+            android:key="indent_size"
+            android:title="@string/indent_size" />
     </PreferenceCategory>
 
 </PreferenceScreen>

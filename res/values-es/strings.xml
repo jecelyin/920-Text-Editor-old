@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <!-- 西班牙语 -->
+    
     <string name="app_name">920 Text Editor</string>
     <string name="open">Abrir</string>
     <string name="select_file">Seleccionar archivo</string>
@@ -63,9 +63,6 @@
     <string name="Other">Otras</string>
     <string name="open_last_file">Recordar último archivo abierto</string>
     <string name="open_last_file_summary">Cuando el editor inicie, cargar automáticamente el último archivo abierto</string>
-    <string name="hide_soft_keyboard">Esconder teclado en pantalla(Método de entrada)</string>
-    <string name="hide_soft_keyboard_summary">"Mantenga presionada el área de edición para mostrar el menú pop-up para abrirlo
-* Requiere reiniciar"</string>
     <string name="auto_indent">Auto Indentar</string>
     <string name="clear_history">Eliminar historial</string>
     <string name="clear_history_ok">Historial removido.</string>
@@ -142,7 +139,7 @@
     <string name="default_color_scheme">Defecto</string>
     <string name="color_scheme">Color del tema</string>
     <string name="touch_zoom">Toca para ajustar el tamaño del texto</string>
-    <!-- edittext context menu -->
+    
     <string name="selectAll">Seleccionar todo</string>
     <string name="selectText">Seleccionar texto</string>
     <string name="stopSelectingText">Dejar de seleccionar el texto</string>
@@ -156,8 +153,8 @@
     <string name="duplicate_line">Duplicar línea actual</string>
     <string name="duplicate_selected_text">Duplicar texto seleccionado</string>
     <string name="doc_stat">Estadísticas del documento</string>
-    <!-- end -->
-    <!-- 文档统计 -->
+    
+    
     <string name="filename">Nombre del archivo: </string>
     <string name="total_chars">Total de caracteres: </string>
     <string name="total_lines">Total de líneas: </string>

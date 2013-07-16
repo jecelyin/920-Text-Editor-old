@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" >
 
    <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0" >
 
@@ -32,7 +32,7 @@
     </LinearLayout>
     
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0" >
 
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="..." />
+            android:text="@string/browse_button_text" />
 
     </LinearLayout>
 
@@ -68,21 +68,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="Recurse" />
+                android:text="@string/recurse" />
 
             <CheckBox
                 android:id="@+id/ignore_case"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="Ignore case" />
+                android:text="@string/ignore_case" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0" >
 
@@ -90,19 +90,19 @@
             android:id="@+id/use_regex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Use Regex" />
+            android:text="@string/use_regex" />
 
         <CheckBox
             android:id="@+id/match_whole_word"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Match whole word" />
+            android:text="@string/match_word" />
 
     </LinearLayout>
 
     <ListView
         android:id="@+id/filelists"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fastScrollEnabled="true" >

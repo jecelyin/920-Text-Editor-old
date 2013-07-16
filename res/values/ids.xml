@@ -19,4 +19,5 @@
     <item name="insert_datetime" type="id"></item>
     <item type="id" name="duplicate_line"/>
     <item type="id" name="doc_stat"/>
+    <item type="id" name="copyAll"/>
 </resources>

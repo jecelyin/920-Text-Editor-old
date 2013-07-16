@@ -15,19 +15,22 @@
 
 package com.jecelyin.highlight;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.graphics.Color;
-import android.text.Editable;
 import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.util.Log;
-
 import com.jecelyin.colorschemes.ColorScheme;
+import com.jecelyin.editor.EditorSettings;
 import com.jecelyin.editor.JecEditor;
 import com.jecelyin.util.FileUtil;
+import com.jecelyin.util.JecLog;
 import com.jecelyin.widget.ForegroundColorSpan;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 public class Highlight
 {
@@ -56,7 +59,6 @@ public class Highlight
     private int mEndOffset = -1;
     private int mStartOffset = -1;
     private boolean mStop = true;
-    private static boolean mEnabled = true; //是否开启语法高亮
     private static int mLimitFileSize = 0; //单位：KB
     private static ArrayList<ForegroundColorSpan> mSpans = new ArrayList<ForegroundColorSpan>();
     
@@ -75,22 +77,7 @@ public class Highlight
     {
         this.mStop = true;
     }
-    
-    public static void setLimitFileSize(int kb)
-    {
-        mLimitFileSize = kb;
-    }
-    
-    public static int getLimitFileSize()
-    {
-        return mLimitFileSize;
-    }
-    
-    public static void setEnabled(boolean enabled)
-    {
-        mEnabled = enabled;
-    }
-    
+
     public void redraw()
     {
         this.mStop = false;
@@ -104,9 +91,9 @@ public class Highlight
      * @param mLayout 
      * @return 返回[[高亮类型,开始offset, 结束offset],,]
      */
-    public boolean render(Editable mText, int startOffset, int endOffset)
+    public boolean render(Spannable mText, int startOffset, int endOffset)
     {
-        if(!mEnabled || langTab == null)
+        if(!EditorSettings.ENABLE_HIGHLIGHT || langTab == null)
             return false;
 
         if(this.mStop || "".equals(this.mExt))
@@ -201,7 +188,7 @@ public class Highlight
             
             ++index;
             try {
-                mText.setSpan(fcs, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                mText.setSpan(fcs, start, end, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
             } catch(Exception e) {
                 
             }
@@ -235,8 +222,7 @@ public class Highlight
 
         try
         {
-            byte[] mByte = readFile(langfile);
-            String mData = new String(mByte, "utf-8");
+            String mData = FileUtil.readFile(langfile, "utf-8");
             String[] lines = mData.split("\n");
             String[] cols;
             for(String line:lines)
@@ -255,7 +241,15 @@ public class Highlight
                     langTab.put(ext, new String[]{name, synfile});
                 }
             }
-            mByte = null;
+
+            Collections.sort(nameTab, new Comparator<String[]>() {
+
+                @Override
+                public int compare(String[] object1, String[] object2)
+                {
+                    return object1[0].compareToIgnoreCase(object2[2]);
+                }
+            });
         }catch (Exception e)
         {
             return false;
@@ -289,37 +283,7 @@ public class Highlight
         }
         return info[0];
     }
-    
-    public static byte[] readFile(String file)
-    {
-        byte[] ret;
-        ret = read_file(file);
-        return ret;
-    }
-    
-    public static String readFile(String file, String encoding)
-    {
-        try
-        {
-            byte[] mByte = readFile(file);
-            return new String(mByte, encoding);
-        }catch (Exception e)
-        {
-            try {
-                return FileUtil.ReadFile(file, encoding);
-            }catch (Exception e2) {
-                return "";
-            }
-        }
-    }
 
-    /**
-     * 读取文件
-     * @param file
-     * @return 返回一个char数组
-     */
-    private native static byte[] read_file(String file);
-    
     private native static int[] jni_parse(String text, String syntaxFile);
 
 }

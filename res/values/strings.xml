@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
+
     <string name="app_name">920 Text Editor</string>
     <string name="open">Open</string>
     <string name="select_file">Select a file</string>
@@ -65,9 +66,7 @@
     <string name="Other">Other</string>
     <string name="open_last_file">Remember last opened file</string>
     <string name="open_last_file_summary">When editor starts, automatically load the last opened file</string>
-    <string name="hide_soft_keyboard">Hide Soft Keyboard(Input Method)</string>
-    <string name="hide_soft_keyboard_summary">"Long press the edit area to show the pop-up menu to open it
-* Request restarting"</string>
+    <string name="readonly_mode">ReadOnly Mode</string>
     <string name="auto_indent">Auto Indent</string>
     <string name="clear_history">Clear History</string>
     <string name="clear_history_ok">History has been cleared.</string>
@@ -124,12 +123,14 @@
     <string name="report_bug">Report an Issue</string>
     <string name="project_homepage">Help Translate it</string>
     <string name="convert_linebreak_char">Convert Line Break</string>
+
     <string-array name="linebreak_chars">
         <item>No change</item>
         <item>CR+LF (Windows)</item>
         <item>LF Only(Unix/Android)</item>
         <item>CR Only(Macintosh)</item>
     </string-array>
+
     <string name="hide_ime">Hide Input Method</string>
     <string name="changelog">Change Log</string>
     <string name="open_pipe">Open With</string>
@@ -144,7 +145,6 @@
     <string name="default_color_scheme">Default</string>
     <string name="color_scheme">Color Scheme</string>
     <string name="touch_zoom">Touch to Adjust Text Size</string>
-    <!-- edittext context menu -->
     <string name="selectAll">Select all</string>
     <string name="selectText">Select text</string>
     <string name="stopSelectingText">Stop selecting text</string>
@@ -158,8 +158,6 @@
     <string name="duplicate_line">Duplicate Current Line</string>
     <string name="duplicate_selected_text">Duplicate Selected text</string>
     <string name="doc_stat">Document Statistics</string>
-    <!-- end -->
-    <!-- 文档统计 -->
     <string name="filename">Filename: </string>
     <string name="total_chars">Total Characters: </string>
     <string name="total_lines">Total Lines: </string>
@@ -186,4 +184,37 @@
     <string name="keyword_notbe_empty">Keywords can not be empty!</string>
     <string name="find_result">Found %s results!</string>
     <string name="line_num">Line %s: </string>
+    <string name="check_for_updates">Check for Updates</string>
+    <string name="invalid_sign">Invalid signature! Please re-download 920 Text Editor in Google Play!</string>
+    <string name="recurse">Recurse</string>
+    <string name="ignore_case">Ignore case</string>
+    <string name="use_regex">Use Regex</string>
+    <string name="use_space_for_tab">Insert spaces for tabs</string>
+    <string name="indent_size">Indent size</string>
+    <string name="new_folder">New folder</string>
+    <string name="create_folder_fail">Can\'t create folder!</string>
+    <string name="faq">FAQ</string>
+    <string name="error_accurs">Error occurs: </string>
+    <string name="custom_toolbar">Custom Toolbar</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="preview">Preview file</string>
+    <string name="symbol_bar">Symbols Bar</string>
+    <string name="forward">Forward</string>
+    <string name="back">Back</string>
+    <string name="find_in_files">Find in files...</string>
+    <string name="color">Color</string>
+    <string name="settings_divider_text">Above the toggles will be activated</string>
+    <string name="qq_group_num">87272821</string>
+    <string name="browse_button_text">...</string>
+    <string name="match_word">Match whole word</string>
+    <string name="text_pastelist">Paste List</string>
+    <string name="crash_report">Crash Report</string>
+    <string name="comment">Comment</string>
+    <string name="convert_to_titlecase">Convert to Titlecase</string>
+    <string name="linebreak">Line Break: </string>
+    <string name="encoding2">Encoding: </string>
+    <string name="cursor_width">Cursor Width</string>
+    <string name="try_root">You might not have permission to open the file, the system temporarily enable the ROOT mode, please re-open it!</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>

@@ -11,18 +11,18 @@
             android:summary="@string/open_last_file_summary"
             android:title="@string/open_last_file" >
         </CheckBoxPreference>
+        
+        <ListPreference
+            android:dialogTitle="@string/screen_orientation"
+            android:key="screen_orientation"
+            android:summary="@string/request_restart"
+            android:title="@string/screen_orientation" >
+        </ListPreference>
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="hide_soft_Keyboard"
-            android:summary="@string/hide_soft_keyboard_summary"
-            android:title="@string/hide_soft_keyboard" >
-        </CheckBoxPreference>
-
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="auto_indent"
-            android:title="@string/auto_indent" >
+            android:key="readonly_mode"
+            android:title="@string/readonly_mode" >
         </CheckBoxPreference>
 
         <CheckBoxPreference

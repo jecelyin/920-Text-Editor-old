@@ -180,7 +180,7 @@ extern uint32_t getopt32(const char **argv, const char *applet_opts, ...) FAST_F
 extern int grep_main(int argc, const char **argv);
 void add_match_result(const char *file, int linenum, const char *line, long offset);
 
-#define ANDROID_JNI 1
+//#define ANDROID_JNI 1
 #define DEBUGFMT  "\n##%s(%d):  %s %s"
 #define DEBUGARGS __FILE__,__LINE__
 #ifndef ANDROID_JNI

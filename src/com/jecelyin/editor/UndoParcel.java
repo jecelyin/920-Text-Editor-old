@@ -15,10 +15,10 @@
 
 package com.jecelyin.editor;
 
-import java.util.ArrayList;
-
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.ArrayList;
 
 public class UndoParcel implements Parcelable
 {
@@ -35,7 +35,7 @@ public class UndoParcel implements Parcelable
         }
     }
     
-    private ArrayList<TextChange> mBuffer;
+    private ArrayList<TextChange> mBuffer = new ArrayList<TextChange>();
     private int mCurrentSize=0;
     public static final int MAX_SIZE=512*1024;
     
@@ -48,6 +48,8 @@ public class UndoParcel implements Parcelable
     @Override
     public void writeToParcel(Parcel out, int flag)
     {
+        if(out == null)
+            return;
         out.writeInt( mBuffer.size() );
         for( TextChange item : mBuffer ){
             out.writeInt(item.start);
@@ -90,7 +92,7 @@ public class UndoParcel implements Parcelable
     }
 
     public UndoParcel() {
-        mBuffer = new ArrayList<TextChange>();
+        //mBuffer = new ArrayList<TextChange>();
         mCurrentSize = 0;
     }
     

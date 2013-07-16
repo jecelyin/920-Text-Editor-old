@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.jecelyin.widget.JecEditText xmlns:android="http://schemas.android.com/apk/res/android"
+<jecelyin.android.v2.widget.EditText xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/text_content"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -8,11 +8,8 @@
     android:fastScrollEnabled="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:gravity="top|left|center"
+    android:gravity="top|left"
     android:inputType="textMultiLine"
     android:maxLength="99999999"
-    android:scrollbarThumbVertical="@drawable/hidescrollbar"
     android:scrollbars="vertical"
-    android:textSize="18dip" >
-
-</com.jecelyin.widget.JecEditText>
+    android:textSize="12sp" />

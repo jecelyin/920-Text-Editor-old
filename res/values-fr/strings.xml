@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <!-- 法语 -->
+    
     <string name="app_name">920 Text Editor</string>
     <string name="open">Ouvrir</string>
     <string name="select_file">Ouvrir un fichier</string>
@@ -31,7 +31,7 @@
     <string name="replace_finish">Remplacement effectué !</string>
     <string name="font">Police</string>
     <string name="font_size">Taille de police</string>
-    <!-- æŸ¥çœ‹è®¾ç½® -->
+    
     <string name="view">Voir</string>
     <string name="word_wrap">Retour à la ligne</string>
     <string name="show_line_num">Afficher les numéros de lignes</string>
@@ -40,12 +40,12 @@
     <string name="screen_orientation_auto">Rotation auto</string>
     <string name="screen_orientation_portrait">Portrait</string>
     <string name="screen_orientation_landscape">Paysage</string>
-    <!-- é«˜äº®è®¾ç½® -->
+    
     <string name="enable_highlight">Coloration syntaxique</string>
     <string name="highlight_limit">Taille limite du fichier pour coloration</string>
     <string name="highlight_limit_message">Si la taille du fichier ouvert est plus grande que cette valeure, arret de la coloration; Unité: kb</string>
     <string name="request_restart">* Nécessite un redémarrage</string>
-    <!-- about activity -->
+    
     <string name="label_version">Version</string>
     <string name="label_author">Auteur</string>
     <string name="label_email">Email</string>
@@ -60,17 +60,15 @@ You should have received a copy of the GNU General Public License along with thi
     <string name="about">A Propos</string>
     <string name="loading">Chargement...</string>
     <string name="highlight_stop_msg">La taille du fichier dépasse la "taille maximum de coloration", arrêt de la coloration</string>
-    <!-- æœç´¢è®¾ç½® -->
+    
     <string name="search">Recherche</string>
     <string name="search_regex">Expression Régulière</string>
     <string name="search_ignore_case">Ignorer la casse</string>
     <string name="search_error">Erreur sur la recherche du mot clé, vous pouvez utilisez des expressions régulières</string>
-    <!-- å…¶å®ƒè®¾ç½® -->
+    
     <string name="Other">Autre</string>
     <string name="open_last_file">Se souvenir du dernier fichier</string>
     <string name="open_last_file_summary">A l\'ouverture, automatiquement ouvrir le dernier fichier.</string>
-    <string name="hide_soft_keyboard">Masquer le clavier virtuel</string>
-    <string name="hide_soft_keyboard_summary">Faire un appuie long sur la zone d\'édition pour l\'afficher\n* Nécessite un redémarrage</string>
     <string name="auto_indent">Auto Incrementer</string>
     <string name="clear_history">Vider l\'historique</string>
     <string name="clear_history_ok">L\'historique à été vidé.</string>
@@ -79,7 +77,7 @@ You should have received a copy of the GNU General Public License along with thi
     <string name="keep_screen_on">Garder l\'écran allumé</string>
     <string name="help">Aide</string>
     <string name="donate">Donner...</string>
-    <!-- èœå• -->
+    
     <string name="show_ime">Afficher l\'interface de saisie</string>
     <string name="to_lower">Convertir en minuscules</string>
     <string name="to_upper">Convertir en majuscules</string>

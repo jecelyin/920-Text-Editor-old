@@ -13,14 +13,6 @@ extern "C" {
 
 /*
  * Class:     com_jecelyin_highlight_Highlight
- * Method:    read_file
- * Signature: (Ljava/lang/String;)[B
- */
-JNIEXPORT jbyteArray JNICALL Java_com_jecelyin_highlight_Highlight_read_1file
-  (JNIEnv *, jclass, jstring);
-
-/*
- * Class:     com_jecelyin_highlight_Highlight
  * Method:    jni_parse
  * Signature: (Ljava/lang/String;Ljava/lang/String;)[[I
  */

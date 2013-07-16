@@ -1,3 +1,30 @@
+Version 13.7.16
+    *) Fixed: Some Bug....
+    *) Change: Performance Optimization.
+    
+Version 13.7.12
+    *) Fixed: Some Bug...
+    We're sorry, this version changed a lot, I will try to fix all the BUG. Thank you for your support!
+
+Version 13.7.10
+    *) Fixed: Some Bug...
+    PS: In the near future, It will be adding more new features and optimize its speed.
+
+Version 13.7.9
+    *) Fixed: Some devices can not select text
+    *) Fixed: Unable to delete directory
+    *) Fixed: Custom Date and time bug
+    *) Fixed: Crash when searching special characters
+    *) Feature: The new version detection
+    *) Feature: New Directory
+    *) Feature: Insert spaces instead of tabs
+    *) Feature: Document Properties Show encoding and newline
+    *) Feature: add 'Convert to Titlecase'
+
+Version 12.11.23 b3
+    *) Bug Fix: fixed the Tablet PC can not start the program BUG
+    Thanks to: J.Kohn
+
 Version 12.11.23
     *) Bug Fix: switch input method causes the text into a line
 

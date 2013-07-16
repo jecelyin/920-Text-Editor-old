@@ -22,10 +22,6 @@
 
 package com.stericson.RootTools;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.TimeoutException;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -36,6 +32,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 public class SanityCheckRootTools extends Activity {
     private ScrollView mScrollView;

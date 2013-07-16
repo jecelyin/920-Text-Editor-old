@@ -1,0 +1,60 @@
+# @author jecelyin<jecelyin@gmail.com>
+# build a apk file
+
+#build/core/package.mk 添加下面定义
+#   ifeq (,$(LOCAL_LIBS_DIR))
+#     LOCAL_LIBS_DIR := $(LOCAL_PATH)/libs
+#   endif
+
+#build/core/definitions.mk 修改下面函数
+#   define add-jni-shared-libs-to-package
+#    $(hide) rm -rf $(LOCAL_LIBS_DIR)
+#    $(hide) mkdir  $(LOCAL_LIBS_DIR)
+#    $(hide) rm -rf $(dir $@)lib
+#    ndk-build -C $(LOCAL_LIBS_DIR)/../
+#    $(hide) mv -f $(LOCAL_LIBS_DIR) $(dir $@)/lib
+#    $(hide) (cd $(dir $@) && zip -r $(notdir $@) lib)
+#    $(hide) rm -rf $(dir $@)lib
+#    endef
+
+export BUILD_MAC_SDK_EXPERIMENTAL=1
+
+app_name=`cat Android.mk | grep 'LOCAL_PACKAGE_NAME := ' | sed 's#LOCAL_PACKAGE_NAME := ##g'`
+AOSP="`dirname $0`/../../../"
+cd $AOSP
+AOSP="`pwd`"
+cd -
+SIGN_PATH=~/sign
+VERSION=`grep -E -e 'android:versionName=".+"' -o AndroidManifest.xml | sed 's/android:versionName="//' | sed 's/"//'`
+if [ "`grep -i 'ascii' ${AOSP}/build/core/definitions.mk`" != "" ];then
+  sed 's/ascii/utf-8/g' -i.bak ${AOSP}/build/core/definitions.mk
+fi
+if [ "`grep 'addprefix -c ' ${AOSP}/build/core/definitions.mk`" != "" ];then
+  #remove line:
+  #    $(addprefix -c , $(PRODUCT_AAPT_CONFIG)) \
+  #can't comment it
+  sed '/addprefix -c /d' -i.bak ${AOSP}/build/core/definitions.mk
+fi
+rm -rf /tmp/gen
+mv gen /tmp/
+source ${AOSP}/build/envsetup.sh
+product=`printconfig | grep 'TARGET_PRODUCT=' | sed 's#TARGET_PRODUCT=##g'`
+if [ "$product" = "full" ];then
+  product="generic"
+fi
+
+sed -i 's/android:debuggable="true"/android:debuggable="false"/' AndroidManifest.xml
+mm
+cp -f ${AOSP}/out/target/product/$product/obj/APPS/${app_name}_intermediates/package.apk.unsigned ./JecEditor.apk
+jarsigner -keystore ${SIGN_PATH}/JecEditor.cer -storepass `cat ${SIGN_PATH}/password` ./JecEditor.apk jeceditor
+rm -rf ${app_name}.v*.apk
+zipalign=${AOSP}/prebuilt/sdk/tools/linux/zipalign
+if [ ! -f $zipalign ];then
+  host_os=`printconfig | grep 'HOST_OS=' | sed 's#HOST_OS=##g'`
+  zipalign=${AOSP}/prebuilts/sdk/tools/$host_os/zipalign
+fi
+$zipalign -v 4 ./JecEditor.apk "${app_name}.v${VERSION}.apk"
+rm -f JecEditor.apk
+sed -i 's/android:debuggable="false"/android:debuggable="true"/' AndroidManifest.xml
+rm -rf gen
+mv /tmp/gen ./

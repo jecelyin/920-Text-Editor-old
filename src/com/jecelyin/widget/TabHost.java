@@ -18,11 +18,8 @@ package com.jecelyin.widget;
 
 import android.app.LocalActivityManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.preference.PreferenceManager;
-import android.text.InputType;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -31,16 +28,13 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-
-import com.jecelyin.colorschemes.ColorScheme;
 import com.jecelyin.editor.JecEditor;
-import com.jecelyin.editor.Options;
 import com.jecelyin.editor.R;
-import com.jecelyin.highlight.Highlight;
-import com.jecelyin.widget.JecEditText.OnTextChangedListener;
 import com.jecelyin.widget.TabWidget.OnMenuClickListener;
+
+import jecelyin.android.compat.JecOnTextChangedListener;
+import jecelyin.android.compat.TextViewBase;
+import java.util.ArrayList;
 
 /**
  * Container for a tabbed window view. This object holds two children: a set of
@@ -60,14 +54,14 @@ public class TabHost extends LinearLayout
     private TabWidget mTabWidget;
     private LinearLayout mTabContent;
     private JecEditor mJecEditor;
-    private ArrayList<JecEditText> mTabSpecs = new ArrayList<JecEditText>();
+    private ArrayList<TextViewBase> mTabSpecs = new ArrayList<TextViewBase>();
 
     /**
      * This field should be made private, so it is hidden from the SDK. {@hide
      * }
      */
     protected int mCurrentTab = -1;
-    private JecEditText mCurrentEditText = null;
+    private TextViewBase mCurrentEditText = null;
     /**
      * This field should be made private, so it is hidden from the SDK. {@hide
      * }
@@ -77,11 +71,11 @@ public class TabHost extends LinearLayout
     private HorizontalScrollView mScroller;
     private OnTabCloseListener mOnTabCloseListener;
     
-    private OnTextChangedListener mOnTextChangedListener = null;
+    private JecOnTextChangedListener mOnTextChangedListener = null;
     //是否自动创建tab
     public static boolean autoNewTab = true;
 
-    public void setOnTextChangedListener(OnTextChangedListener l)
+    public void setOnTextChangedListener(JecOnTextChangedListener l)
     {
         mOnTextChangedListener = l;
     }
@@ -153,7 +147,7 @@ public class TabHost extends LinearLayout
         if(mTabSpecs.size() > 0)
         {
             int index=0;
-            for(JecEditText et : mTabSpecs)
+            for(TextViewBase et : mTabSpecs)
             {
                 if("".equals(et.getPath()) && et.getText().length() == 0)
                 {//空白文档，没有内容时，则不打开新文件
@@ -189,9 +183,8 @@ public class TabHost extends LinearLayout
             }
         });
 
-        JecEditText jet = createEditText();
-        //jet.setPath(path);
-        setEditTextPref(jet);
+        TextViewBase jet = createEditText();
+
         mTabSpecs.add(jet);
         mTabContent.addView(jet);
         
@@ -201,10 +194,13 @@ public class TabHost extends LinearLayout
     
     public int closeTab(int tabId)
     {
+        if(tabId >= mTabSpecs.size())
+            return -1;
+        TextViewBase edittxt = mTabSpecs.get(tabId);
         mTabWidget.removeViewAt(tabId);
-        mTabContent.removeView(mTabSpecs.get(tabId));
+        mTabContent.removeView(edittxt);
         mTabSpecs.remove(tabId);
-        
+        edittxt=null;
         if(tabId == 0)
         {
             if(mTabWidget.getTabCount() == 0)
@@ -220,43 +216,10 @@ public class TabHost extends LinearLayout
         } else {
             setCurrentTab(--tabId);
         }
+        System.gc();
         return mCurrentTab;
     }
 
-    private void setEditTextPref(JecEditText mEditText)
-    {
-        SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(mJecEditor);
-        String font = mPref.getString("font", "Monospace");
-        mEditText.setTypeface(Options.getFont(font));
-        String font_size = mPref.getString("font_size", "12");
-        mEditText.setTextSize(Float.valueOf(font_size));
-        // 自动换行设置
-        mEditText.setHorizontallyScrolling(!mPref.getBoolean("wordwrap", true));
-        // 显示行数
-        mEditText.setShowLineNum(mPref.getBoolean("show_line_num", true));
-        // 显示空白字符
-        mEditText.setShowWhitespace(mPref.getBoolean("show_tab", false));
-
-        mJecEditor.registerForContextMenu(mEditText);
-        mEditText.setKeepScreenOn(mPref.getBoolean("keep_screen_on", false));
-        mEditText.setAutoIndent(mPref.getBoolean("auto_indent", false));
-        boolean disablespell = mPref.getBoolean("spellcheck", true);
-        JecEditText.setDisableSpellCheck(disablespell);
-        JecEditText.setUseSystemMenu(mPref.getBoolean("use_system_menu", false));
-        if(disablespell)
-        {
-            mEditText.setInputType(mEditText.getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        }
-
-        ColorScheme.set(mPref);
-        Highlight.loadColorScheme();
-        mEditText.setBackgroundColor(Color.parseColor(ColorScheme.color_backgroup));
-        mEditText.setTextColor(Color.parseColor(ColorScheme.color_font));
-        //首字母自动大写
-        mEditText.setAutoCapitalize(mPref.getBoolean("auto_capitalize", false));
-        mEditText.init();
-    }
-    
     public void setTabStatus(boolean ischanged)
     {
         TextView mTitleView = getTabTitleView();
@@ -274,22 +237,23 @@ public class TabHost extends LinearLayout
         mTitleView.setText(span);
     }
 
-    private JecEditText createEditText()
+    private TextViewBase createEditText()
     {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View tabIndicator = inflater.inflate(R.layout.edit_text, mTabContent, false);
 
-        JecEditText mEditText = (JecEditText) tabIndicator.findViewById(R.id.text_content);
-        mEditText.setOnTextChangedListener(new JecEditText.OnTextChangedListener() {
+        TextViewBase mEditText = (TextViewBase) tabIndicator.findViewById(R.id.text_content);
+        mEditText.addJecOnTextChangedListener(new JecOnTextChangedListener() {
             
             @Override
-            public void onTextChanged(JecEditText mEditText)
+            public void onTextChanged(TextViewBase mEditText)
             {
                 if(mOnTextChangedListener != null)
                     mOnTextChangedListener.onTextChanged(mEditText);
                 setTabStatus(mEditText.isTextChanged());
             }
         });
+        mJecEditor.registerForContextMenu(mEditText);
         return mEditText;
     }
 
@@ -302,7 +266,7 @@ public class TabHost extends LinearLayout
         return tabIndicator;// .findViewById(R.id.tab_indicator_layout);
     }
 
-    public JecEditText getCurrentEditText()
+    public TextViewBase getCurrentEditText()
     {
         return mCurrentEditText;
     }
@@ -467,11 +431,21 @@ public class TabHost extends LinearLayout
     public ArrayList<String> getAllPath()
     {
         ArrayList<String> ret = new ArrayList<String>();
-        for(JecEditText jec :mTabSpecs)
+        for(TextViewBase jec :mTabSpecs)
         {
             ret.add(jec.getPath());
         }
         return ret;
+    }
+    
+    public boolean isChanged(String path)
+    {
+        for(TextViewBase jec :mTabSpecs)
+        {
+            if(jec.getPath().equals(path))
+                return jec.isTextChanged();
+        }
+        return false;
     }
 
 }

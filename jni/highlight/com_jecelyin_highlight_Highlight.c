@@ -39,6 +39,7 @@ void msg(JNIEnv *env, char *str)
  * Method:    read_file
  * Signature: (Ljava/lang/String;)[B
  */
+/*
 JNIEXPORT jbyteArray JNICALL Java_com_jecelyin_highlight_Highlight_read_1file(JNIEnv *env, jclass cls, jstring file)
 {
 	char *buffer;
@@ -67,7 +68,7 @@ JNIEXPORT jbyteArray JNICALL Java_com_jecelyin_highlight_Highlight_read_1file(JN
 	_free(buffer);
 
 	return jb;
-}
+}*/
 
 /*
  * Class:     com_jecelyin_highlight_Highlight

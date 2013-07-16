@@ -3,6 +3,6 @@
   <ImageView android:id="@+id/f_icon" android:layout_gravity="center_vertical" android:layout_width="48dip" android:layout_height="48dip" android:paddingTop="10dip"></ImageView>
   <LinearLayout android:id="@+id/linearLayout2" android:layout_height="wrap_content" android:orientation="vertical" android:layout_width="fill_parent">
     <TextView android:id="@+id/f_title" android:layout_gravity="center_vertical" android:layout_width="fill_parent" android:textColor="#ff000000" android:layout_weight="2.0" android:layout_height="wrap_content" android:textSize="24dip" />
-    <TextView android:id="@+id/f_text" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_below="@+id/f_title" android:paddingBottom="0dip" android:layout_weight="1.0" android:textSize="13dip" />
+    <TextView android:id="@+id/f_text" android:layout_height="wrap_content" android:layout_width="fill_parent" android:paddingBottom="0dip" android:layout_weight="1.0" android:textSize="13dip" />
   </LinearLayout>
 </LinearLayout>

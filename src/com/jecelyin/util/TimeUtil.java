@@ -27,7 +27,7 @@ public class TimeUtil
             //yyyy年MM月dd日_HH时mm分ss秒
             Calendar cal = Calendar.getInstance();
             format = format.replaceAll("yyyy", String.valueOf(cal.get(Calendar.YEAR)));
-            format = format.replaceAll("MM", String.valueOf(cal.get(Calendar.MONTH)));
+            format = format.replaceAll("MM", String.valueOf(cal.get(Calendar.MONTH)+1));
             format = format.replaceAll("dd", String.valueOf(cal.get(Calendar.DATE)));
             format = format.replaceAll("HH", String.valueOf(cal.get(Calendar.HOUR_OF_DAY)));
             format = format.replaceAll("mm", String.valueOf(cal.get(Calendar.MINUTE)));

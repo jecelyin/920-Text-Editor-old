@@ -22,11 +22,11 @@
 
 package com.stericson.RootTools;
 
+import android.util.Log;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import android.util.Log;
 
 //no modifier, this means it is package-private. Only our internal classes can use this.
 class Remounter {

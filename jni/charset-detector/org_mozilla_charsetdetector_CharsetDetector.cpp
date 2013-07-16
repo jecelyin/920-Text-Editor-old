@@ -1,41 +1,61 @@
-
 #include "org_mozilla_charsetdetector_CharsetDetector.h"
 #include "include/chardetect.h"
 
 #include <stdio.h>
 
+JNIEXPORT jlong JNICALL Java_org_mozilla_charsetdetector_CharsetDetector_chardet_1create
+  (JNIEnv *env, jclass jclazz)
+{
+	chardet_t ret = NULL;
+	int result = chardet_create(&ret);
+	if ( result == CHARDET_RESULT_OK ){
+		return (jlong)(ret);
+	}
+	return 0;
+}
 
-JNIEXPORT jstring JNICALL Java_org_mozilla_charsetdetector_CharsetDetector_get_1encoding(
-		JNIEnv *env, jclass jclazz, jstring file) {
+JNIEXPORT void JNICALL Java_org_mozilla_charsetdetector_CharsetDetector_chardet_1destroy
+  (JNIEnv *env, jclass jclazz, jlong det)
+{
+	chardet_destroy((chardet_t) det);
+}
 
-	const char * path;
-    jboolean iscopy;
+JNIEXPORT jint JNICALL Java_org_mozilla_charsetdetector_CharsetDetector_chardet_1handle_1data
+  (JNIEnv *env , jclass jclazz , jlong det, jbyteArray data , jint offset , jint len)
+{
+	jint ret;
+	jbyte *ndata = (jbyte*)env->GetPrimitiveArrayCritical(data, 0);
+	if ( ndata != 0 ){
 
-	path = env->GetStringUTFChars(file, &iscopy);
-    
-    char buf[4096];
-    char encoding[CHARDET_MAX_ENCODING_NAME];
-    size_t len;
-    int res = 0;
-    chardet_t det = NULL;
-    FILE* fp = NULL;
+		ret = chardet_handle_data((chardet_t)det, (const char*)ndata+offset , len);
 
-    chardet_create(&det);
-    fp = fopen(path, "rb");
-    do {
-	len = fread(buf, 1, sizeof(buf), fp);
-	res = chardet_handle_data(det, buf, len);
-    } while (res==CHARDET_RESULT_OK && feof(fp)==0);
-    fclose(fp);
-    chardet_data_end(det);
+		env->ReleasePrimitiveArrayCritical( data, ndata, JNI_ABORT);
+		return ret;
+	}
+	return -1;
+}
 
-    int result = chardet_get_charset(det, encoding, CHARDET_MAX_ENCODING_NAME);
+JNIEXPORT jint JNICALL Java_org_mozilla_charsetdetector_CharsetDetector_chardet_1data_1end
+  (JNIEnv *env, jclass jclazz, jlong det)
+{
+	return chardet_data_end((chardet_t) det);
 
-    chardet_destroy(det);
-    env->ReleaseStringUTFChars(file, path);
+}
 
-	if (result == CHARDET_RESULT_OK) {
-		return env->NewStringUTF(encoding);
+JNIEXPORT jint JNICALL Java_org_mozilla_charsetdetector_CharsetDetector_chardet_1reset
+  (JNIEnv *env, jclass jclazz, jlong det)
+{
+	return chardet_reset((chardet_t) det);
+}
+
+JNIEXPORT jstring JNICALL Java_org_mozilla_charsetdetector_CharsetDetector_chardet_1get_1charset
+  (JNIEnv *env, jclass jclazz, jlong det)
+{
+	char	namebuf[256];
+
+	int result = chardet_get_charset((chardet_t) det, namebuf, sizeof(namebuf) );
+	if ( result == CHARDET_RESULT_OK ){
+		return env->NewStringUTF( namebuf);
 	}
 	return 0;
 }

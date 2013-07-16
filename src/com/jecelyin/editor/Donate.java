@@ -15,13 +15,12 @@
 
 package com.jecelyin.editor;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-public class Donate extends Activity
+public class Donate extends BaseActivity
 {
     //private String html_url = "file:///android_asset/donate.html";
     private String html_url = "http://www.jecelyin.com/donate.html";

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <!-- 意大利 -->
+    
     <string name="open">Apre</string>
     <string name="select_file">Selezionare un file</string>
     <string name="confirm_exit">Sicuro di voler uscire?</string>
@@ -61,9 +61,6 @@ Avreste dovuto ricevere una copia della GNU General Public License insieme a al 
     <string name="Other">Altro</string>
     <string name="open_last_file">Ricordare ultimo file aperto</string>
     <string name="open_last_file_summary">All\'avvio di editor carica automaticamente l"ultimo file aperto</string>
-    <string name="hide_soft_keyboard">Nasconde tastiera (metodo input)</string>
-    <string name="hide_soft_keyboard_summary">"Premere a lungo l\'area di editare per aprire il menu pop-up
-*Necessita\' riavvio"</string>
     <string name="auto_indent">Auto trattino</string>
     <string name="clear_history">Cancella cronologia</string>
     <string name="clear_history_ok">Cronologia e\' stato cancellato</string>
@@ -140,7 +137,7 @@ Avreste dovuto ricevere una copia della GNU General Public License insieme a al 
     <string name="default_color_scheme">Default</string>
     <string name="color_scheme">Schema Colore</string>
     <string name="touch_zoom">Toccare per aggiustare dimensioni testo</string>
-    <!-- edittext context menu -->
+    
     <string name="selectAll">Selezionare tutto</string>
     <string name="selectText">Selezionare testo</string>
     <string name="stopSelectingText">Ferma selezione testo</string>
@@ -154,8 +151,8 @@ Avreste dovuto ricevere una copia della GNU General Public License insieme a al 
     <string name="duplicate_line">Duplicare Linea Corrente</string>
     <string name="duplicate_selected_text">Duplicare Testo Selezionato</string>
     <string name="doc_stat">Statistiche documenti</string>
-    <!-- end -->
-    <!-- 文档统计 -->
+    
+    
     <string name="filename">Filenome: </string>
     <string name="total_chars">Caratteri totali: </string>
     <string name="total_lines">Linee Totale: </string>

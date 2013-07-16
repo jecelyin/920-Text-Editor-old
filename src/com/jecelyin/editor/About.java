@@ -15,17 +15,17 @@
 
 package com.jecelyin.editor;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class About extends Activity
+public class About extends BaseActivity
 {
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        JecApp.addActivity(this);
         setContentView(R.layout.about);
 
         TextView appNameField = (TextView) findViewById(R.id.field_app_name);

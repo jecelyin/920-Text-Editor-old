@@ -11,11 +11,11 @@
     <string name="encoding">文字コード</string>
     <string name="save_succ">保存しました!</string>
     <string name="save_changes_to">%sへの変更を保存しますか？</string>
-    <string name="save_changes">変更を保存しますか？</string>
+    <string name="save_changes">保存の確認</string>
     <string name="save">保存</string>
     <string name="filename_is_empty">ファイル名を指定してください！</string>
     <string name="new_filename">無題</string>
-    <string name="highlight">ハイライト</string>
+    <string name="highlight">ハイライトと色設定</string>
     <string name="search_replace">検索/置換</string>
     <string name="options">オプション</string>
     <string name="preferences">設定</string>
@@ -31,7 +31,7 @@
     <string name="replace_finish">すべての単語を置換しました</string>
     <string name="font">フォント</string>
     <string name="font_size">フォントの大きさ</string>
-    <string name="view">表示</string>
+    <string name="view">表示設定</string>
     <string name="word_wrap">ワードラップ</string>
     <string name="show_line_num">行番号を表示</string>
     <string name="show_tab">タブ/改行記号を表示</string>
@@ -41,7 +41,7 @@
     <string name="screen_orientation_landscape">横画面</string>
     <string name="enable_highlight">構文のハイライト表示</string>
     <string name="highlight_limit">ハイライト表示するファイルの上限サイズ</string>
-    <string name="highlight_limit_message">ハイライト表示できるファイルサイズの上限を超えています</string>
+    <string name="highlight_limit_message">ハイライト表示するファイルサイズの上限（単位：kb）</string>
     <string name="request_restart">要再起動</string>
     <string name="label_version">バージョン</string>
     <string name="label_author">作者</string>
@@ -62,16 +62,13 @@ You should have received a copy of the GNU General Public License along with thi
     <string name="myhomepage">http://www.jecelyin.com/</string>
     <string name="loading">読み込み中...</string>
     <string name="highlight_stop_msg">ファイルサイズが上限に達したためハイライト表示を中止しました</string>
-    <string name="search">検索</string>
+    <string name="search">検索設定</string>
     <string name="search_regex">正規表現</string>
     <string name="search_ignore_case">大文字小文字を無視</string>
     <string name="search_error">検索に失敗しました。正規表現を使用している場合、設定が有効でないかもしれません</string>
-    <string name="Other">その他</string>
+    <string name="Other">その他の設定</string>
     <string name="open_last_file">最後に開いていたファイルを記憶する</string>
     <string name="open_last_file_summary">起動時に最後に開いていたファイルを開く</string>
-    <string name="hide_soft_keyboard">ソフトキーボードを非表示</string>
-    <string name="hide_soft_keyboard_summary">エディットエリア長押しでポップアップメニューを表示
-*再起動後に有効</string>
     <string name="auto_indent">オートインデント</string>
     <string name="clear_history">履歴をクリア</string>
     <string name="clear_history_ok">履歴がクリアされました</string>
@@ -80,7 +77,7 @@ You should have received a copy of the GNU General Public License along with thi
     <string name="keep_screen_on">スクリーン表示を保持</string>
     <string name="help">ヘルプ</string>
     <string name="donate">寄付する</string>
-    <string name="show_ime">入力方法を表示</string>
+    <string name="show_ime">IMEを表示する</string>
     <string name="to_lower">小文字に変換</string>
     <string name="to_upper">大文字に変換</string>
     <string name="out_of_memory">ファイルを開くためのメモリが足りません</string>
@@ -113,7 +110,7 @@ You should have received a copy of the GNU General Public License along with thi
     <string name="string_color">文字列の色</string>
     <string name="keyword_color">キーワードの色</string>
     <string name="comment_color">コメントの色</string>
-    <string name="tag_color">タグの色(e.g. &amp;lt;?php)</string>
+    <string name="tag_color">タグの色(e.g. &amp; lt; ?php)</string>
     <string name="function_color">関数名の色</string>
     <string name="attr_color">属性名の色</string>
     <string name="current_color">現在の色</string>
@@ -126,7 +123,7 @@ You should have received a copy of the GNU General Public License along with thi
     <string name="go_to_begin">最上部にスクロール</string>
     <string name="go_to_end">最下部にスクロール</string>
     <string name="report_bug">問題を報告する</string>
-    <string name="project_homepage">改善を提案する</string>
+    <string name="project_homepage">翻訳を手伝う</string>
     <string name="convert_linebreak_char">改行コードを変換</string>
     <string-array name="linebreak_chars">
         <item>変更なし</item>
@@ -134,10 +131,10 @@ You should have received a copy of the GNU General Public License along with thi
         <item>LF (Unix/Android)</item>
         <item>CR (Macintosh)</item>
     </string-array>
-    <string name="hide_ime">IMEを非表示</string>
+    <string name="hide_ime">IMEを表示しない</string>
     <string name="changelog">変更履歴</string>
     <string name="open_pipe">他のアプリで開く</string>
-    <string name="donate_info">このアプリが気に入ったら私たちに寄付してください！</string>
+    <string name="donate_info">このアプリが気に入ったら寄付してください！</string>
     <string name="share">共有（テキストを送る）</string>
     <string name="open_mode">オープンモード</string>
     <string name="auto_detection">自動検出</string>
@@ -169,7 +166,7 @@ You should have received a copy of the GNU General Public License along with thi
     <string name="total_lines">行数：</string>
     <string name="total_words">単語数：</string>
     <string name="auto_capitalize">自動大文字変換</string>
-    <string name="auto_capitalize_summary">単語の開始文字を自動で大文字に変換します。\nこの設定はIMEに依存します。\n要再起動</string>
+    <string name="auto_capitalize_summary">単語の開始文字を自動で大文字に変換します。この設定はIMEに依存します。*要再起動</string>
     <string name="can_not_open_file">ファイルを開けませんでした</string>
     <string name="date_format">日付と時刻の書式</string>
     <string name="use_selected_format">選択した書式を使用する</string>
@@ -178,4 +175,16 @@ You should have received a copy of the GNU General Public License along with thi
     <string name="date_format_summary">書式: yyyy:年, MM:月, dd:曜日, HH:時, mm:分, ss:秒</string>
     <string name="editors">エディタの設定</string>
     <string name="disable_spell">スペルチェックを無効</string>
+    <string name="use_system_menu">システムメニューを使用</string>
+    <string name="use_system_menu_summary">コピー&amp;ペーストできない場合に修復を試みる</string>
+    <string name="run_in_sl4a_terminal">SL4Aで実行する（ターミナル）</string>
+    <string name="run_in_sl4a_background">SL4Aで実行する（バックグラウンド）</string>
+    <string name="run_before_save_file">実行の前にファイルを保存する必要があります</string>
+    <string name="not_found_up">現在の行より上に %s は見つかりませんでした。</string>
+    <string name="not_found_next">現在の行より下に %s は見つかりませんでした。</string>
+    <string name="keyword">キーワード：</string>
+    <string name="path_not_correct">パスが正しくありません!</string>
+    <string name="keyword_notbe_empty">キーワードは空にはできません!</string>
+    <string name="find_result">%s の検索結果!</string>
+    <string name="line_num">Line %s: </string>
 </resources>

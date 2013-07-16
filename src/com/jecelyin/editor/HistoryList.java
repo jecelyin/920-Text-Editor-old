@@ -15,14 +15,6 @@
 
 package com.jecelyin.editor;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +26,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class HistoryList
 {
@@ -58,18 +54,22 @@ public class HistoryList
             File mFile = new File(path);
             if(!mFile.exists())
             {
-                Toast.makeText(mJecEditor.getApplicationContext(), mJecEditor.getString(R.string.file_not_exists), Toast.LENGTH_LONG);
+                Toast.makeText(mJecEditor.getApplicationContext(), mJecEditor.getString(R.string.file_not_exists), Toast.LENGTH_LONG).show();
                 return;
             }
-            mJecEditor.saveConfirm(new Runnable() {
-                
-                @Override
-                public void run()
-                {
-                    mJecEditor.readFileToEditText(path);
-                    //mJecEditor.getEditText().setSelection(fi.sel_start, fi.sel_end);
-                }
-            });
+            if(mJecEditor.getTabHost().isChanged(path))
+            {
+                mJecEditor.saveConfirm(new Runnable() {
+                    
+                    @Override
+                    public void run()
+                    {
+                        mJecEditor.readFileToEditText(path);
+                    }
+                });
+            }else{
+                mJecEditor.readFileToEditText(path);
+            }
         }
         
     };

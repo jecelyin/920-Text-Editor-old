@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Width of the fastscroll thumb -->
     <dimen name="fastscroll_thumb_width">64dp</dimen>
     <!-- Height of the fastscroll thumb -->
@@ -13,4 +14,9 @@
     <dimen name="menu_text_size">15.0sp</dimen>
     <dimen name="menu_item_height">42.0dip</dimen>
     <dimen name="menu_dropdown_y">10.0dip</dimen>
+    <!-- textview float panel -->
+    <dimen name="float_panel_arrow_top_offset">2.6dip</dimen>
+    <dimen name="float_panel_arrow_bottom_offset">6.6dip</dimen>
+    <dimen name="text_select_handle_width">47.0dip</dimen>
+    <dimen name="text_select_handle_height">58.0dip</dimen>
 </resources>

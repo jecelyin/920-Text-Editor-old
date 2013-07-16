@@ -144,6 +144,16 @@
                     android:background="#00000000"
                     android:src="@drawable/forward_edit_location_d2" >
                 </ImageButton>
+                
+                <ImageButton
+                    android:id="@+id/search_file"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="35dip"
+                    android:background="#00000000"
+                    android:src="@drawable/folder_search_sel2" >
+                </ImageButton>
 
                 <ImageButton
                     android:id="@+id/color"
@@ -174,7 +184,31 @@
             android:id="@+id/findlinearLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:visibility="gone" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal" >
+
+                <CheckBox
+                    android:id="@+id/search_regex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_regex" />
+
+                <CheckBox
+                    android:id="@+id/search_ignore_case"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_ignore_case" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
 
             <EditText
                 android:id="@+id/find_editText"
@@ -203,6 +237,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/replace" >
             </Button>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

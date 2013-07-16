@@ -110,6 +110,10 @@ public class TextUtil
         return buf;
     }
     
-    
+    public static void printStacks(String msg)
+    {
+        Exception e = new Exception("PRINT STACKS: "+msg+" ======================================================");
+        e.printStackTrace();
+    }
 
 }

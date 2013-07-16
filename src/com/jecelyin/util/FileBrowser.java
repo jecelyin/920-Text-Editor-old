@@ -15,7 +15,23 @@
 
 package com.jecelyin.util;
 
+import android.app.AlertDialog;
+import android.app.ListActivity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.*;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View.OnClickListener;
+import android.widget.*;
+import com.jecelyin.editor.EditorSettings;
 import com.jecelyin.editor.EncodingList;
+import com.jecelyin.editor.JecApp;
 import com.jecelyin.editor.JecEditor;
 import com.jecelyin.editor.R;
 import com.jecelyin.widget.JecButton;
@@ -23,40 +39,10 @@ import com.stericson.RootTools.RootTools;
 
 import java.io.File;
 import java.io.IOException;
-//import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import java.util.List;
 
-import android.net.Uri;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.app.AlertDialog;
-import android.app.ListActivity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+//import java.text.SimpleDateFormat;
 
 /**
  * 文件选择器
@@ -68,7 +54,6 @@ public class FileBrowser extends ListActivity
 {
     private ArrayList<File> files; //当前文件列表
     private FileListAdapter fileListAdapter;
-    private SharedPreferences pref;
     private LinearLayout pathButtons;
     private String default_filename = "";
     private int request_mode = 0; //0打开， 1保存模式，2选择路径
@@ -87,6 +72,7 @@ public class FileBrowser extends ListActivity
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        JecApp.addActivity(this);
         setContentView(R.layout.file_bowsers);
         getListView().setFastScrollEnabled(true);
         registerForContextMenu(getListView());
@@ -110,8 +96,7 @@ public class FileBrowser extends ListActivity
         }*/
         
         File file = android.os.Environment.getExternalStorageDirectory();
-        pref = PreferenceManager.getDefaultSharedPreferences(this);
-        current_path = pref.getString("last_path", file.getPath());
+        current_path = EditorSettings.HIGHLIGHT_LAST_PATH.length()==0 ? file.getPath() : EditorSettings.HIGHLIGHT_LAST_PATH;
         //获取传来的数据
         mIntent = getIntent();
         default_filename = mIntent.getStringExtra("filename");
@@ -146,6 +131,12 @@ public class FileBrowser extends ListActivity
         //requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         showFileList(new File(current_path));
     }
+    
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        JecApp.removeActivity(this);
+    }
 
     private OnClickListener onSaveBtnClickListener = new OnClickListener() {
         
@@ -178,6 +169,8 @@ public class FileBrowser extends ListActivity
         menu.add(0, R.string.rename, 0, R.string.rename);
         //删除
         menu.add(0, R.string.delete, 0, R.string.delete);
+        //创建目录
+        menu.add(0, R.string.new_folder, 0, R.string.new_folder);
     }
     
     public boolean onContextItemSelected(MenuItem item)
@@ -255,12 +248,37 @@ public class FileBrowser extends ListActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
-                        f.delete();
+                        FileUtil.remove(f);
                         refresh();
                     }
                     
                 })
                 .show();
+                return true;
+            case R.string.new_folder:
+                final EditText filenameEditText = new EditText(this);
+                filenameEditText.setText(f.getName());
+                AlertDialog.Builder fbuilder = new AlertDialog.Builder(this);
+                fbuilder.setTitle(R.string.new_folder).setView(filenameEditText)
+                        .setNegativeButton(android.R.string.cancel, null);
+                fbuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            dialog.dismiss();
+                            String newname = filenameEditText.getText().toString().trim();
+                            String newfile = (f.isFile() ? f.getParent() : f.getPath()) + File.separator + newname;
+                            if("".equals(newname) || !(new File(newfile)).mkdirs())
+                            {
+                                Toast.makeText(FileBrowser.this, R.string.create_folder_fail, Toast.LENGTH_LONG).show();
+                            } else {
+                                refresh();
+                            }
+                        }catch(Exception e) {
+                            
+                        }
+                     }
+                });
+                fbuilder.show();
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -286,7 +304,7 @@ public class FileBrowser extends ListActivity
     public void finish()
     {
         //记住最后打开的路径
-        pref.edit().putString("last_path", current_path).commit();
+        EditorSettings.setLastPath(current_path);
         super.finish();
     }
 

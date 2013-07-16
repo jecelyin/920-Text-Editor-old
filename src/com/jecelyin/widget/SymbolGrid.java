@@ -15,26 +15,20 @@
 
 package com.jecelyin.widget;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.jecelyin.editor.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import com.jecelyin.editor.EditorSettings;
+import com.jecelyin.editor.R;
+import com.jecelyin.util.JecLog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SymbolGrid extends RelativeLayout
 {
@@ -122,6 +116,7 @@ public class SymbolGrid extends RelativeLayout
         mButtons.add("*");
         mButtons.add("_");
         mButtons.add("+");
+        mButtons.add("-");
 
         closeButton.setOnClickListener(new OnClickListener() {
              @Override
@@ -143,7 +138,7 @@ public class SymbolGrid extends RelativeLayout
                     if("\\n".equals(txt))
                         txt = "\n";
                     else if ("\\t".equals(txt)) {
-                        txt = "\t";
+                        txt = EditorSettings.INDENT_STRING;
                     }
                     mListener.OnClick(txt);
                 }

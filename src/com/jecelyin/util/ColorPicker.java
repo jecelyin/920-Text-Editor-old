@@ -15,9 +15,6 @@
 
 package com.jecelyin.util;
 
-import com.jecelyin.editor.R;
-import com.jecelyin.widget.ColorPickerView;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -26,6 +23,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.jecelyin.editor.R;
+import com.jecelyin.widget.ColorPickerView;
 
 public class ColorPicker extends Dialog {
     public interface OnColorChangedListener {

@@ -15,23 +15,20 @@
 
 package com.jecelyin.colorschemes;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-
+import com.jecelyin.editor.EditorSettings;
 import com.jecelyin.editor.JecEditor;
-import android.content.SharedPreferences;
+import com.jecelyin.util.JecLog;
+
+import java.io.*;
+import java.util.ArrayList;
 
 public class ColorScheme
 {
     private final static String FONT_COLOR = "#000000";
-    public static String color_font = FONT_COLOR; //文字颜色
+    public static String color_font = FONT_COLOR;
     
     private final static String BACKGROUP_COLOR = "#ffffff";
-    public static String color_backgroup = BACKGROUP_COLOR; //背景颜色
+    public static String color_backgroup = BACKGROUP_COLOR;
     
     private final static String STRING_COLOR = "#008800";
     public static String color_string = STRING_COLOR; //string content
@@ -54,38 +51,20 @@ public class ColorScheme
     private static ArrayList<SchemeTable> schemeTables = new ArrayList<SchemeTable>();
     private static String[] schemeNames;
     
-    public static void set(SharedPreferences mSharedPreferences)
+    public static void init()
     {
         loadAllScheme();
-        String cs = mSharedPreferences.getString("hl_colorscheme", "");
-        if(!cs.equals(""))
+        
+        if(EditorSettings.CUSTORM_HIGHLIGHT_COLOR)
         {
-            for(SchemeTable st:schemeTables)
-            {
-                if(cs.equals(st.colors_name))
-                {
-                    color_font = st.font;
-                    color_backgroup = st.backgroup;
-                    color_string = st.string;
-                    color_keyword = st.keyword;
-                    color_comment = st.comment;
-                    color_tag = st.tag;
-                    color_attr_name = st.attr_name;
-                    color_function = st.function;
-                    return;
-                }
-            }
-        }
-        if(mSharedPreferences.getBoolean("use_custom_hl_color", false))
-        {
-            color_font = mSharedPreferences.getString("hlc_font", color_font);
-            color_backgroup = mSharedPreferences.getString("hlc_backgroup", color_backgroup);
-            color_string = mSharedPreferences.getString("hlc_string", color_string);
-            color_keyword = mSharedPreferences.getString("hlc_keyword", color_keyword);
-            color_comment = mSharedPreferences.getString("hlc_comment", color_comment);
-            color_tag = mSharedPreferences.getString("hlc_tag", color_tag);
-            color_attr_name = mSharedPreferences.getString("hlc_attr_name", color_attr_name);
-            color_function = mSharedPreferences.getString("hlc_function", color_function);
+            color_font = EditorSettings.HIGHLIGHT_FONT;
+            color_backgroup = EditorSettings.HIGHLIGHT_BACKGROUP;
+            color_string = EditorSettings.HIGHLIGHT_STRING;
+            color_keyword = EditorSettings.HIGHLIGHT_KEYWORD;
+            color_comment = EditorSettings.HIGHLIGHT_COMMENT;
+            color_tag = EditorSettings.HIGHLIGHT_TAG;
+            color_attr_name = EditorSettings.HIGHLIGHT_ATTR_NAME;
+            color_function = EditorSettings.HIGHLIGHT_FUNCTION;
         } else {
             color_font = FONT_COLOR;
             color_backgroup = BACKGROUP_COLOR;
@@ -95,6 +74,26 @@ public class ColorScheme
             color_tag = TAG_COLOR;
             color_attr_name = ATTR_NAME_COLOR;
             color_function = FUNCTION_COLOR;
+            
+            String cs = EditorSettings.HIGHLIGHT_COLOR_SCHEME;
+            if(!cs.equals(""))
+            {
+                for(SchemeTable st:schemeTables)
+                {
+                    if(cs.equals(st.colors_name))
+                    {
+                        color_font = st.font;
+                        color_backgroup = st.backgroup;
+                        color_string = st.string;
+                        color_keyword = st.keyword;
+                        color_comment = st.comment;
+                        color_tag = st.tag;
+                        color_attr_name = st.attr_name;
+                        color_function = st.function;
+                        return;
+                    }
+                }
+            }
         }
     }
     
@@ -120,6 +119,7 @@ public class ColorScheme
             try
             {
                 FileInputStream fis = new FileInputStream(f);
+                @SuppressWarnings("resource")
                 BufferedReader br = new BufferedReader(new InputStreamReader(fis));
                 SchemeTable st = new SchemeTable();
                 while((line=br.readLine()) != null)

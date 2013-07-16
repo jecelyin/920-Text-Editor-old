@@ -15,9 +15,6 @@
 
 package com.jecelyin.editor;
 
-import java.util.Arrays;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +24,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class EncodingList
 {
@@ -38,6 +38,7 @@ public class EncodingList
         "BIG5",
         "BIG5-HKSCS",
         "CP866",
+        "CP852",
         "CP932",
         "EUC-JP",
         "EUC-JP-MS",

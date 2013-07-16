@@ -23,6 +23,9 @@
         <Preference
             android:key="project"
             android:title="@string/project_homepage" >
+            <intent android:action="android.intent.action.VIEW"
+            android:data="http://www.getlocalization.com/920TextEditor/" />
+            
         </Preference>
     </PreferenceCategory>
 

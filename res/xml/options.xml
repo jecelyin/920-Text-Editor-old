@@ -5,12 +5,10 @@
         android:key="donate"
         android:summary="@string/donate_summary"
         android:title="@string/donate" >
+        <intent android:action="android.intent.action.VIEW"
+            android:data="http://www.jecelyin.com/donate.html" />
     </Preference>
 
-    <Preference
-        android:key="opt_view"
-        android:title="@string/view" />
-    
     <Preference
         android:key="opt_editors"
         android:title="@string/editors" />
@@ -18,10 +16,6 @@
     <Preference
         android:key="opt_highlight"
         android:title="@string/highlight" />
-
-    <Preference
-        android:key="opt_search"
-        android:title="@string/search" />
 
     <Preference
         android:key="opt_other"
@@ -36,5 +30,7 @@
         android:key="opt_help"
         android:title="@string/help" >
     </Preference>
+    <Preference android:title="@string/check_for_updates" android:key="opt_checkupdate"/>
+    <!-- <Preference android:key="opt_custom_toolbar" android:title="@string/custom_toolbar"/> -->
 
 </PreferenceScreen>

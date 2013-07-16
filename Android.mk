@@ -18,16 +18,16 @@ include $(CLEAR_VARS)
 LOCAL_MODULE_TAGS := optional
 
 LOCAL_SRC_FILES := $(call all-subdir-java-files)
-LOCAL_PACKAGE_NAME := JecEditor
+LOCAL_PACKAGE_NAME := 920-Text-Editor
 
-#LOCAL_JNI_SHARED_LIBRARIES := libuniversalchardet
-
-#引用的包的别名
-#LOCAL_STATIC_JAVA_LIBRARIES := universalchardet
-#LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := universalchardet:assets/juniversalchardet.jar
+LOCAL_JNI_SHARED_LIBRARIES := libgrep \
+	libCharsetDetector \
+	libhighlight
 
 include $(BUILD_PACKAGE)
 
-#include $(LOCAL_PATH)/jni/Android.mk
+include $(LOCAL_PATH)/jni/highlight/Android.mk \
+    $(LOCAL_PATH)/jni/charset-detector/Android.mk  \
+    $(LOCAL_PATH)/jni/grep/Android.mk
 #自动加载所有目录下的Android.mk
-include $(call all-subdir-makefiles)
+#include $(call all-subdir-makefiles)

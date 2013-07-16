@@ -16,8 +16,6 @@
 
 package com.jecelyin.widget;
 
-import com.jecelyin.editor.R;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
@@ -27,6 +25,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import com.jecelyin.editor.R;
 
 /**
  *

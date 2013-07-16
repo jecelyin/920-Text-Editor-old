@@ -15,10 +15,6 @@
 
 package com.jecelyin.editor;
 
-import java.util.ArrayList;
-
-import com.jecelyin.highlight.Highlight;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +24,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import com.jecelyin.highlight.Highlight;
+
+import java.util.ArrayList;
 
 public class LangList
 {

@@ -16,8 +16,10 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := highlight
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/src
+LOCAL_MODULE    := libhighlight
+LOCAL_MODULE_TAGS := optional
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/src \
+    $(JNI_H_INCLUDE)
 LOCAL_SRC_FILES := \
 src/file.c \
 src/hashtab.c \
@@ -28,13 +30,10 @@ src/mbyte.c \
 com_jecelyin_highlight_Highlight.c
 
 
-LOCAL_LDLIBS := -llog
+LOCAL_LDLIBS += -llog
 LOCAL_CFLAGS += -O3 
 
 LOCAL_ARM_MODE := arm
-#LOCAL_C_INCLUDES += $(JNI_H_INCLUDE)
-#LOCAL_C_INCLUDES += external/icu4c/common
-#LOCAL_PRELINK_MODULE := false
+LOCAL_PRELINK_MODULE := false
 
 include $(BUILD_SHARED_LIBRARY)
-

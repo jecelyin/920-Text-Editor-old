@@ -83,18 +83,6 @@
                     android:src="@drawable/save_sel2" >
                 </ImageButton>
 
-                <!--
-                    <ImageButton
-                        android:id="@+id/saveas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="8dip"
-                        android:background="#00000000"
-                        android:src="@drawable/saveas_sel2" >
-                    </ImageButton>
-                -->
-
                 <ImageButton
                     android:id="@+id/undo"
                     android:layout_width="wrap_content"
@@ -155,9 +143,9 @@
                     android:background="#00000000"
                     android:src="@drawable/forward_edit_location_d2" >
                 </ImageButton>
-                
+
                 <ImageButton
-                    android:id="@+id/folder_search"
+                    android:id="@+id/search_file"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -195,35 +183,60 @@
             android:id="@+id/findlinearLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:visibility="gone" >
 
-            <EditText
-                android:id="@+id/find_editText"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" >
-            </EditText>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal" >
 
-            <ImageButton
-                android:id="@+id/find_next_imageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/find_forward" >
-            </ImageButton>
+                <CheckBox
+                    android:id="@+id/search_regex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_regex" />
 
-            <ImageButton
-                android:id="@+id/find_back_imageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/find_back" >
-            </ImageButton>
+                <CheckBox
+                    android:id="@+id/search_ignore_case"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_ignore_case" />
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/show_replace_button"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/replace" >
-            </Button>
+                android:orientation="horizontal" >
+
+                <EditText
+                    android:id="@+id/find_editText"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" >
+                </EditText>
+
+                <ImageButton
+                    android:id="@+id/find_next_imageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/find_forward" >
+                </ImageButton>
+
+                <ImageButton
+                    android:id="@+id/find_back_imageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/find_back" >
+                </ImageButton>
+
+                <Button
+                    android:id="@+id/show_replace_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/replace" >
+                </Button>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

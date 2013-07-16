@@ -5,7 +5,7 @@
         android:key="date_format"
         android:title="@string/date_format" >
         <ListPreference
-            android:key="sys_format"
+            android:key="sys_date_format"
             android:title="@string/use_selected_format" />
 
         <CheckBoxPreference

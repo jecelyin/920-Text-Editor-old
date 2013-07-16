@@ -18,9 +18,9 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE    := libCharsetDetector
 LOCAL_MODULE_TAGS := optional
-LOCAL_C_INCLUDES += $(JNI_H_INCLUDE) 
-# LOCAL_C_INCLUDES += external/icu4c/common
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/src/tables \
+
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/src/tables \
+    $(JNI_H_INCLUDE) \
     $(LOCAL_PATH)/src \
     $(LOCAL_PATH)/include
 
@@ -57,7 +57,6 @@ LOCAL_CPPFLAGS += -O3 \
 	-fno-rtti -fno-exceptions -nostdinc++ \
 	-D_REENTRANT
 LOCAL_ARM_MODE := arm
-
 LOCAL_PRELINK_MODULE := false
 
 include $(BUILD_SHARED_LIBRARY)
