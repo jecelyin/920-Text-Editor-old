@@ -1,3 +1,10 @@
+Version 13.7.18
+     *) Fixed: Fixed line number display ....
+     *) Fixed: Some characters can not be displayed on the right ....
+     *) Fixed: Fixed newline char save BUG
+     *) Change: performance optimization.
+     *) Feature: add default encoding settings
+
 Version 13.7.16
     *) Fixed: Some Bug....
     *) Change: Performance Optimization.

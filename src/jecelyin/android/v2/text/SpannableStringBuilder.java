@@ -1080,10 +1080,10 @@ implements CharSequence, GetChars, Spannable, Editable, Appendable,
         float ret;
 
         if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH ){
-        if (end <= mGapStart) {
-            ret = p.measureText(mText, start, end - start);
-        } else if (start >= mGapStart) {
-            ret = p.measureText(mText, start + mGapLength, end - start);
+            if (end <= mGapStart) {
+                ret = p.measureText(mText, start, end - start);
+            } else if (start >= mGapStart) {
+                ret = p.measureText(mText, start + mGapLength, end - start);
             } else {
                 char[] buf = TextUtils.obtain(end - start);
 
@@ -1112,18 +1112,18 @@ implements CharSequence, GetChars, Spannable, Editable, Appendable,
         int ret;
 
         if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH ){
-        if (end <= mGapStart) {
-            ret = p.getTextWidths(mText, start, end - start, widths);
-        } else if (start >= mGapStart) {
-            ret = p.getTextWidths(mText, start + mGapLength, end - start,
-                                  widths);
-        } else {
-            char[] buf = TextUtils.obtain(end - start);
-
-            getChars(start, end, buf, 0);
-            ret = p.getTextWidths(buf, 0, end - start, widths);
-            TextUtils.recycle(buf);
-        }
+            if (end <= mGapStart) {
+                ret = p.getTextWidths(mText, start, end - start, widths);
+            } else if (start >= mGapStart) {
+                ret = p.getTextWidths(mText, start + mGapLength, end - start,
+                                      widths);
+            } else {
+                char[] buf = TextUtils.obtain(end - start);
+    
+                getChars(start, end, buf, 0);
+                ret = p.getTextWidths(buf, 0, end - start, widths);
+                TextUtils.recycle(buf);
+            }
         }else{
             char[] buf = TextUtils.obtain(end - start);
 

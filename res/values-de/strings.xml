@@ -54,9 +54,6 @@ Dieses Programm ist freie Software. Sie können es unter den Bedingungen der GNU
 920 Text Editor wird veröffentlicht in der Hoffnung, daß es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.
 Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem Programm erhalten haben. Falls nicht, siehe http://www.gnu.org/licenses. "</string>
     <string name="about">Über</string>
-    <string name="myname">Jecelyin</string>
-    <string name="myemail">jecelyin@gmail.com</string>
-    <string name="myhomepage">http://www.jecelyin.com/</string>
     <string name="loading">Lade...</string>
     <string name="highlight_stop_msg">Hervorhebung ist gestoppt, weil die maximale Dateigröße überschritten ist.</string>
     <string name="search">Suche</string>

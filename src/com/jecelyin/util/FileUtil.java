@@ -15,18 +15,26 @@
 
 package com.jecelyin.util;
 
-import android.util.Log;
-
-import com.jecelyin.editor.JecEditor;
-import com.stericson.RootTools.RootTools;
-
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import jecelyin.android.v2.text.SpannableStringBuilder;
+
+import com.jecelyin.editor.JecEditor;
+import com.stericson.RootTools.RootTools;
 
 public class FileUtil
 {
@@ -98,7 +106,7 @@ public class FileUtil
      */
     public static boolean remove(File path)
     {
-        if (!path.exists())
+        if (path == null || !path.exists())
             return false;
         boolean ret = true;
         if (path.isDirectory())
@@ -111,9 +119,9 @@ public class FileUtil
         return ret && path.delete();
     }
 
-    public static String readFile(String filename) throws IOException
+    public static SpannableStringBuilder readFile(String filename) throws IOException
     {
-        return readFile(filename, "UTF-8");
+        return readFile(filename, "UTF-8", LineBreak.NORMAL);
     }
 
     /**
@@ -126,39 +134,118 @@ public class FileUtil
      * @return
      * @throws IOException 
      */
-    public static String readFile(String filename, String encoding) throws IOException
+    public static String readFileAsString(String filename, String encoding) throws IOException
     {
-        return readFile(new File(filename), encoding);
+        return readFileAsString(new File(filename), encoding);
     }
 
-    public static String readFile(File filename, String encoding) throws IOException
+    public static String readFileAsString(File filename, String encoding) throws IOException
     {
         FileInputStream fis = new FileInputStream(filename);
-        return readFile(fis, encoding);
+        return readFileAsString(fis, encoding);
     }
 
-    public static String readFile(InputStream input, String encoding) throws IOException
+    public static String readFileAsString(InputStream input, String encoding) throws IOException
     {
         StringBuilder output = new StringBuilder();
-        Log.d("FileUtil", "encoding="+encoding);
+
         InputStreamReader isr = new InputStreamReader(input, Charset.forName(encoding));
         int n = 0;
         char[] buffer = new char[DEFAULT_BUFFER_SIZE];
 
         while (EOF != (n = isr.read(buffer)))
-        {
-            output.append(buffer, 0, n);
-        }
+            output.append(new String(buffer, 0, n));
 
         if (input != null)
             input.close();
 
         return output.toString();
     }
+    
+    public static SpannableStringBuilder readFile(String filename, String encoding, int lineBreak) throws IOException
+    {
+        return readFile(new File(filename), encoding, lineBreak);
+    }
+
+    public static SpannableStringBuilder readFile(File filename, String encoding, int lineBreak) throws IOException
+    {
+        FileInputStream fis = new FileInputStream(filename);
+        return readFile(fis, encoding, lineBreak);
+    }
+
+    public static SpannableStringBuilder readFile(InputStream input, String encoding, int lineBreak) throws IOException
+    {
+        SpannableStringBuilder output = new SpannableStringBuilder();
+
+        InputStreamReader isr = new InputStreamReader(input, Charset.forName(encoding));
+        int n = 0;
+        char[] buffer = new char[DEFAULT_BUFFER_SIZE];
+
+        while (EOF != (n = isr.read(buffer)))
+        {
+            if(lineBreak != LineBreak.NORMAL)
+            {
+                output.append(convertLineBreak(buffer, n, lineBreak));
+            }else{
+                output.append(new String(buffer, 0, n));
+            }
+        }
+
+        if (input != null)
+            input.close();
+
+        return output;
+    }
+    
+    private static String convertLineBreak(char[] buffer, int bufferLength, int lineBreak)
+    {
+        char[] buffer2 = new char[bufferLength*2];
+        int k=0;
+        for(int i=0; i<bufferLength; i++)
+        {
+            if(buffer[i] == '\r')
+            {
+                if(i+1<bufferLength)
+                {
+                    if(lineBreak == LineBreak.WIN)
+                    {
+                        if(buffer[i+1] == '\n'){
+                            buffer2[k] = buffer[i];
+                            buffer2[++k] = buffer[++i];
+                        }else{
+                            buffer2[k] = buffer[i];
+                            buffer2[++k] = '\n'; //补齐\r\n
+                        }
+                    }else{
+                        if(lineBreak == LineBreak.MAC)
+                            buffer2[k] = '\r'; //mac保留这个\r, unix如果下个字符为\n则移除掉它
+                        if(buffer[i+1] == '\n')
+                            i++;
+                        else if(lineBreak == LineBreak.UNIX)
+                            buffer2[k] = '\n'; //replace \r to \n
+                    }
+                    
+                }
+            }else if(buffer[i] == '\n'){
+                if(LineBreak.MAC==lineBreak)
+                {
+                    buffer2[k] = '\r';
+                }else if(LineBreak.WIN==lineBreak){
+                    buffer2[k] = '\r';
+                    buffer2[++k] = '\n';
+                }
+                
+            }else{
+                buffer2[k] = buffer[i];
+            }
+            k++;
+        }
+        return new String(buffer2, 0, k);
+    }
 
     public static void writeFile(String path, String text) throws IOException
     {
-        writeFile(path, text, "UTF-8", true);
+        writeFile(path, text, "UTF-8", LineBreak.NORMAL, true);
     }
 
     /**
@@ -170,8 +257,7 @@ public class FileUtil
      * @return
      * @throws IOException
      */
-    public static boolean writeFile(String path, String text, String encoding,
-            boolean isRoot) throws IOException
+    public static boolean writeFile(String path, String text, String encoding, int lineBreak, boolean isRoot) throws IOException
     {
         File file = new File(path);
         String tempFile = JecEditor.TEMP_PATH + "/root_file_buffer.tmp";
@@ -184,17 +270,24 @@ public class FileUtil
             root = true;
         }
         BufferedWriter bw = null;
-        bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-                fileString), encoding));
-        bw.write(text);
+        bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileString), encoding));
+        
+        if(lineBreak == LineBreak.NORMAL)
+        {
+            bw.write(text);
+        }else if(lineBreak == LineBreak.WIN){
+            bw.write(text.replaceAll("\r\n|\n|\r", "\r\n"));
+        }else if(lineBreak == LineBreak.MAC){
+            bw.write(text.replaceAll("\r\n|\n", "\r"));
+        }else if(lineBreak == LineBreak.UNIX){
+            bw.write(text.replaceAll("\r\n|\r", "\n"));
+        }
+        
         bw.close();
         if (root)
         {
-            // RootTools.remount(path, "RW");
-            // RootTools.sendShell("busybox cat " + fileString + " > " +
-            // LinuxShell.getCmdPath(path), 1000);
-            RootTools.copyFile(fileString, LinuxShell.getCmdPath(path), true,
-                    true);
+
+            RootTools.copyFile(fileString, LinuxShell.getCmdPath(path), true, true);
             if (RootTools.lastExitCode != 0)
                 return false;
             new File(tempFile).delete();

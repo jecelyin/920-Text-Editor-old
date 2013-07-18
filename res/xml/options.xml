@@ -18,6 +18,10 @@
         android:title="@string/highlight" />
 
     <Preference
+        android:key="opt_project"
+        android:title="@string/project" />
+    
+    <Preference
         android:key="opt_other"
         android:title="@string/Other" />
 

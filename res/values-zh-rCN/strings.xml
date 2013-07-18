@@ -207,5 +207,7 @@
     <string name="linebreak">换行符: </string>
     <string name="encoding2">编码: </string>
     <string name="cursor_width">光标宽度</string>
-    <string name="try_root">你可能没有权限打开该文件，系统临时启用了ROOT模式，请重新打开它！</string>
+    <string name="try_root">你可能没有权限打开该文件，编辑器自动启用了ROOT模式，请重新打开它！</string>
+    <string name="project">项目</string>
+    <string name="default_encoding">默认编码</string>
 </resources>

@@ -54,8 +54,6 @@
 இந்த தொகுப்புடன் GNU பொது மக்கள் உரிமத்தின் நகல் கிடைக்கும்; இல்லை என்றால், http://www.gnu.org/licenses பார்க்க ".</string>
     <string name="about">தகவல்</string>
     <string name="myname">ஜெசெலின்</string>
-    <string name="myemail">jecelyin@gmail.com</string>
-    <string name="myhomepage">http://www.jecelyin.com/</string>
     <string name="loading">ஏற்றப்படுகிறது...</string>
     <string name="highlight_stop_msg">அனுமதிக்கப்பட்ட அளவைவிட பெரிதாக இருப்பதால் சிறப்புகூறுதல் நிறுத்தப்பட்டது.</string>
     <string name="search">தேடு</string>

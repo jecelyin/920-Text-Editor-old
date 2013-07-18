@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jecelyin.editor"
     android:installLocation="auto"
-    android:versionCode="45"
-    android:versionName="13.7.16" >
+    android:versionCode="46"
+    android:versionName="13.7.18" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />

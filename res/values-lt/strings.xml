@@ -53,9 +53,6 @@
 920 Teksto Redaguotojas  buvo sukurtas tam kad būtų naudingas, bet be jokių garantijų; be garantijų, kad ji veiks be klaidų ir bus mechanizuota. Daugiau informacijos : "GNU General Public License".
 Reikėtų visada turėti su savimi "GNU General Public License" kol ne problema. http://www.gnu.org/licenses."</string>
     <string name="about">Apie</string>
-    <string name="myname">Jecelyin</string>
-    <string name="myemail">jecelyin@gmail.com</string>
-    <string name="myhomepage">http://www.jecelyin.com/</string>
     <string name="loading">Kraunama...</string>
     <string name="highlight_stop_msg">Sintaksė nespalvinama, nes viršytas failo dydžio limitas</string>
     <string name="search">Ieškoti</string>

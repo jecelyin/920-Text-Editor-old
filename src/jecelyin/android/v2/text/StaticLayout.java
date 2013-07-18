@@ -25,7 +25,6 @@ import android.text.style.LeadingMarginSpan;
 import android.text.style.LineHeightSpan;
 import android.text.style.MetricAffectingSpan;
 import android.text.style.ReplacementSpan;
-import android.util.Log;
 
 import com.android.internal.util.ArrayUtils;
 import com.jecelyin.editor.EditorSettings;
@@ -126,7 +125,6 @@ extends Layout
                         boolean breakOnlyAtSpaces,
                         float ellipsizedWidth, TextUtils.TruncateAt where) {
         mLineCount = 0;
-        mBreakLineCount = 0; //jec+
 
         int v = 0;
         boolean needMultiply = (spacingmult != 1 || spacingadd != 0);
@@ -155,7 +153,6 @@ extends Layout
             spanned = (Spanned) source;
 
         int DEFAULT_DIR = DIR_LEFT_TO_RIGHT; // XXX
-        boolean hasbreak = false; //jec+
 
         for (int start = bufstart; start <= bufend; start = end) {
             if (first)
@@ -309,7 +306,6 @@ extends Layout
             int fitascent = 0, fitdescent = 0, fittop = 0, fitbottom = 0;
 
             boolean tab = false;
-            hasbreak = false; //jec+
 
             int next;
             for (int i = start; i < end; i = next) {
@@ -348,23 +344,22 @@ extends Layout
                 int fmbottom = fm.bottom;
                 int fmascent = fm.ascent;
                 int fmdescent = fm.descent;
-
-                if (false) {
-                    StringBuilder sb = new StringBuilder();
-                    for (int j = i; j < next; j++) {
-                        sb.append(widths[j - start + (end - start)]);
-                        sb.append(' ');
-                    }
-
-                    Log.e("text", sb.toString());
-                }
+// jec-
+//                if (false) {
+//                    StringBuilder sb = new StringBuilder();
+//                    for (int j = i; j < next; j++) {
+//                        sb.append(widths[j - start + (end - start)]);
+//                        sb.append(' ');
+//                    }
+//
+//                    Log.e("text", sb.toString());
+//                }
 
                 for (int j = i; j < next; j++) {
                     char c = chs[j - start];
                     float before = w;
 
                     if (c == '\n') {
-                        hasbreak = true; //jec+
                         tab = EditorSettings.SHOW_WHITESPACE; //jec+
                     } else if (c == '\t') {
                         w = Layout.nextTab(sub, start, end, w, null);
@@ -471,8 +466,7 @@ extends Layout
                                     ok == bufend, includepad, trackpad,
                                     widths, start, end - start,
                                     where, ellipsizedWidth, okwidth,
-//                                    paint); //jec-
-                                    paint, hasbreak); //jec+
+                                    paint);
 
                             here = ok;
                         } else {
@@ -508,8 +502,7 @@ extends Layout
                                     ok == bufend, includepad, trackpad,
                                     widths, start, end - start,
                                     where, ellipsizedWidth, okwidth,
-//                                    paint); //jec-
-                                    paint, hasbreak); //jec+
+                                    paint);
                             here = ok;
                         } else if (fit != here) {
                             // Log.e("text", "output fit " + here + " to " +fit);
@@ -524,8 +517,7 @@ extends Layout
                                     fit == bufend, includepad, trackpad,
                                     widths, start, end - start,
                                     where, ellipsizedWidth, fitwidth,
-//                                    paint); //jec-
-                                    paint, hasbreak); //jec+
+                                    paint);
                             here = fit;
                         } else {
                             // Log.e("text", "output one " + here + " to " +(here + 1));
@@ -545,8 +537,7 @@ extends Layout
                                     trackpad,
                                     widths, start, end - start,
                                     where, ellipsizedWidth,
-//                                    widths[here - start], paint); //jec-
-                                    widths[here - start], paint, hasbreak); //jec+
+                                    widths[here - start], paint);
 
                             here = here + 1;
                         }
@@ -590,8 +581,7 @@ extends Layout
                         needMultiply, start, chdirs, dir, easy,
                         end == bufend, includepad, trackpad,
                         widths, start, end - start,
-//                        where, ellipsizedWidth, w, paint); //jec-
-                        where, ellipsizedWidth, w, paint, hasbreak); //jec+
+                        where, ellipsizedWidth, w, paint);
             }
 
             start = end;
@@ -600,8 +590,7 @@ extends Layout
                 break;
         }
 
-        //if (bufend == bufstart || source.charAt(bufend - 1) == '\n') { //jec-
-        if (bufend == bufstart || (hasbreak = source.charAt(bufend - 1) == '\n')) {
+        if (bufend == bufstart || source.charAt(bufend - 1) == '\n') {
             // Log.e("text", "output last " + bufend);
 
             paint.getFontMetricsInt(fm);
@@ -615,8 +604,7 @@ extends Layout
                     needMultiply, bufend, chdirs, DEFAULT_DIR, true,
                     true, includepad, trackpad,
                     widths, bufstart, 0,
-//                    where, ellipsizedWidth, 0, paint); //jec-
-                    where, ellipsizedWidth, 0, paint, hasbreak); //jec+
+                    where, ellipsizedWidth, 0, paint);
         }
     }
 
@@ -990,8 +978,7 @@ extends Layout
                       boolean includepad, boolean trackpad,
                       float[] widths, int widstart, int widoff,
                       TextUtils.TruncateAt ellipsize, float ellipsiswidth,
-//                      float textwidth, TextPaint paint) { //jec-
-                      float textwidth, TextPaint paint, boolean hasbreak) { //jec+
+                      float textwidth, TextPaint paint) {
         int j = mLineCount;
         int off = j * mColumns;
         int want = off + mColumns + TOP;
@@ -1073,13 +1060,7 @@ extends Layout
         v += (below - above) + extra;
         lines[off + mColumns + START] = end;
         lines[off + mColumns + TOP] = v;
-        //jec+
-        if(hasbreak){
-            lines[off + LINEBREAK] = ++mBreakLineCount;
-        }else{
-            lines[off + LINEBREAK] = mBreakLineCount;
-        }
-        //end
+
         if (tab)
             lines[off + TAB] |= TAB_MASK;
 
@@ -1271,14 +1252,6 @@ extends Layout
     public boolean getLineContainsTab(int line) {
         return (mLines[mColumns * line + TAB] & TAB_MASK) != 0;
     }
-    
-	//jec+
-    @Override
-    public int getBreakLineCount(int line)
-    {
-        return mLines[mColumns * line + LINEBREAK];
-    }
-	//end
 
     public final Directions getLineDirections(int line) {
         return mLineDirections[line];
@@ -1316,26 +1289,19 @@ extends Layout
     }
 
     private int mLineCount;
-    private int mBreakLineCount; //jec+
     private int mTopPadding, mBottomPadding;
     private int mColumns;
     private int mEllipsizedWidth;
-//jec-
-//    private static final int COLUMNS_NORMAL = 3;
-//    private static final int COLUMNS_ELLIPSIZE = 5;
 
-    private static final int COLUMNS_NORMAL = 4; //jec+
-    private static final int COLUMNS_ELLIPSIZE = 6; //jec+
+    private static final int COLUMNS_NORMAL = 3;
+    private static final int COLUMNS_ELLIPSIZE = 5;
     private static final int START = 0;
     private static final int DIR = START;
     private static final int TAB = START;
     private static final int TOP = 1;
     private static final int DESCENT = 2;
-    private static final int LINEBREAK = 3; //jec+
-//    private static final int ELLIPSIS_START = 3; //jec-
-//    private static final int ELLIPSIS_COUNT = 4; //jec-
-    private static final int ELLIPSIS_START = 4; //jec+
-    private static final int ELLIPSIS_COUNT = 5; //jec+
+    private static final int ELLIPSIS_START = 3;
+    private static final int ELLIPSIS_COUNT = 4;
 
     private int[] mLines;
     private Directions[] mLineDirections;

@@ -1,6 +1,6 @@
 package com.jecelyin.editor;
 
-import java.lang.Thread.UncaughtExceptionHandler;
+//import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,7 +13,7 @@ import android.app.Application;
 
 public class JecApp extends Application
 {
-    private static UncaughtExceptionHandler mDefaultHandler;
+    //private static UncaughtExceptionHandler mDefaultHandler;
     private static volatile boolean mCrashing = false;
     private final static ArrayList<WeakReference<Activity>> activitys = new ArrayList<WeakReference<Activity>>();
 
@@ -22,7 +22,7 @@ public class JecApp extends Application
     {
         super.onCreate();
         JecLog.init(this);
-        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+        //mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         // 捕捉未知异常
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtHandler());
         EditorSettings.initialize(this);

@@ -57,9 +57,6 @@ You should have received a copy of the GNU General Public License along with thi
 920 Text Editor はフリーソフトウェアです。利用者はフリーソフトウェア財団が発行するGNU General Public License（version 3 またはそれ以上の版）に定められる範囲内でこのソフトウェアを改変または再配布することができます。
 920 Text Editor は有用であることを願って配布されていますが、個々の目的への合致や商用利用性への暗黙の保証を含め、完全に無保証です。詳細はGNU General Public License を参照してください。あなたはこのコピー(ソフトウェア)とともにGNU General Public Licenseをうけとっているはずですが、もしそうでない場合、http://www.gnu.org/licensesを参照してください。）</string>
     <string name="about">このソフトについて</string>
-    <string name="myname">Jecelyin</string>
-    <string name="myemail">jecelyin@gmail.com</string>
-    <string name="myhomepage">http://www.jecelyin.com/</string>
     <string name="loading">読み込み中...</string>
     <string name="highlight_stop_msg">ファイルサイズが上限に達したためハイライト表示を中止しました</string>
     <string name="search">検索設定</string>

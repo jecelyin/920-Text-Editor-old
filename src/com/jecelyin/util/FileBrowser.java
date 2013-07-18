@@ -89,12 +89,16 @@ public class FileBrowser extends ListActivity
         String[] lists = EncodingList.list;
         lists[0] = getString(R.string.auto_detection);
         encoding_list.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, lists));
-        /*int sysver = android.os.Build.VERSION.SDK_INT;
-        if(sysver >= 7)
-        {
-            linebreakLinearLayout.setVisibility(View.GONE);
-        }*/
-        
+        int position = 0;
+        if(!"".equals(EditorSettings.DEFAULT_ENCODING))
+        for(int i=0; i<lists.length; i++)
+            if(EditorSettings.DEFAULT_ENCODING.equals(lists[i]))
+            {
+                position = i;
+                break;
+            }
+        encoding_list.setSelection(position);
+        JecLog.d("pos="+position);
         File file = android.os.Environment.getExternalStorageDirectory();
         current_path = EditorSettings.HIGHLIGHT_LAST_PATH.length()==0 ? file.getPath() : EditorSettings.HIGHLIGHT_LAST_PATH;
         //获取传来的数据
@@ -304,7 +308,7 @@ public class FileBrowser extends ListActivity
     public void finish()
     {
         //记住最后打开的路径
-        EditorSettings.setLastPath(current_path);
+        EditorSettings.setString("last_path", current_path);
         super.finish();
     }
 

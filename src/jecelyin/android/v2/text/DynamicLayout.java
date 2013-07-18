@@ -338,7 +338,6 @@ extends Layout
                 ints[ELLIPSIS_START] = reflowed.getEllipsisStart(i);
                 ints[ELLIPSIS_COUNT] = reflowed.getEllipsisCount(i);
             }
-            ints[LINEBREAK] = reflowed.getBreakLineCount(i); //jec+
 
             mInts.insertAt(startline + i, ints);
             mObjects.insertAt(startline + i, objects);
@@ -385,14 +384,6 @@ extends Layout
     public boolean getLineContainsTab(int line) {
         return (mInts.getValue(line, TAB) & TAB_MASK) != 0;
     }
-    
-	//jec+
-    @Override
-    public int getBreakLineCount(int line)
-    {
-        return mInts.getValue(line, LINEBREAK);
-    }
-	//end
 
     public int getParagraphDirection(int line) {
         return mInts.getValue(line, DIR) >> DIR_SHIFT;
@@ -503,17 +494,11 @@ extends Layout
     private static final int TAB = START;
     private static final int TOP = 1;
     private static final int DESCENT = 2;
-//    private static final int COLUMNS_NORMAL = 3;
-    private static final int COLUMNS_NORMAL = 4;
-    private static final int LINEBREAK = 3; //jec+
-//jec-
-//    private static final int ELLIPSIS_START = 3;
-//    private static final int ELLIPSIS_COUNT = 4;
-//    private static final int COLUMNS_ELLIPSIZE = 5;
-//jec+
-    private static final int ELLIPSIS_START = 4;
-    private static final int ELLIPSIS_COUNT = 5;
-    private static final int COLUMNS_ELLIPSIZE = 6;
+    private static final int COLUMNS_NORMAL = 3;
+
+    private static final int ELLIPSIS_START = 3;
+    private static final int ELLIPSIS_COUNT = 4;
+    private static final int COLUMNS_ELLIPSIZE = 5;
 
     private static final int START_MASK = 0x1FFFFFFF;
     private static final int DIR_MASK   = 0xC0000000;

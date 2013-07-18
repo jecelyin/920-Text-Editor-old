@@ -66,6 +66,9 @@ public class EditorPreference extends PreferenceActivity
             case R.xml.other:
                 initOther();
                 break;
+            case R.xml.project:
+                initProject();
+                break;
         }
     }
     
@@ -225,6 +228,16 @@ public class EditorPreference extends PreferenceActivity
         initView();
         setOptionsPreference("date_format", R.xml.date_format);
     }
+    
+    private void initProject()
+    {
+        ListPreference encoding = (ListPreference) findPreference("encoding");
+        String[] lists = EncodingList.list;
+        lists[0] = getString(R.string.auto_detection);
+        encoding.setEntries(lists);
+        encoding.setEntryValues(lists);
+        encoding.setDefaultValue(EditorSettings.DEFAULT_ENCODING);
+    }
 
     private void initDateFormat()
     {
@@ -274,6 +287,7 @@ public class EditorPreference extends PreferenceActivity
     private void init()
     {
         setOptionsPreference("opt_editors", R.xml.editors);
+        setOptionsPreference("opt_project", R.xml.project);
         setOptionsPreference("opt_highlight", R.xml.highlight);
         setOptionsPreference("opt_other", R.xml.other);
         setOptionsPreference("opt_help", R.xml.help);

@@ -42,6 +42,7 @@ import com.android.internal.util.ArrayUtils;
 import com.jecelyin.editor.EditorSettings;
 import com.jecelyin.highlight.Highlight;
 import com.jecelyin.util.JecLog;
+import com.jecelyin.util.TextUtil;
 
 /**
  * A base class that manages text layout in visual elements on 
@@ -287,9 +288,26 @@ public abstract class Layout {
         {
             mHighlight.render((Spannable)mText, previousLineEnd2, getLineStart(last + 3 > lineCount ? lineCount : last + 3));
         }
-        int[] linebreak = new int[2];
-        linebreak[0] = first>1 ? getBreakLineCount(first-2) : 0;
-        linebreak[1] = first>0 ? getBreakLineCount(first-1) : 0;
+        
+        if(mFirstLine == first){
+            mBreakLineCount = mLastLineCount;
+        }else if(mLineNumberWidth != 0 && previousLineEnd != 0)
+        {
+            mFirstLine = first; //cache
+//          first=8 mBreakLineCount=3 text=1<?php\n
+//          2//echo "test".c;\n
+//          3/*请用手机访问 https://netpay.cmbchina.com/m?140374w6GUgxysayvQ0N 进行支付。[招商银行]\n
+//          4if (!empty( $_SERVER["REMOTE_ADDR"] != 
+//          mBreakLineCount=3 break=false text="74.12.9.248") //me,angela
+
+            mBreakLineCount = TextUtil.countMatches(buf, '\n', 0, previousLineEnd);
+            if(buf.charAt(previousLineEnd-1) != '\n')
+                mBreakLineCount++; //像上面这个例子，只有3个换行符，但是应该为4开始
+            mLastLineCount = mBreakLineCount;
+        }else{
+            mBreakLineCount = 0;
+        }
+        
         //end
 
         Alignment align = mAlignment;
@@ -397,7 +415,6 @@ public abstract class Layout {
             //jec+
             if(mLineNumberPaint != null)
             {
-                mBreakLineCount  = getBreakLineCount(i);
                 int linebottom=0;
                 if ( i < getLineCount() - 1){
                     linebottom = getLineTop(i+1);
@@ -409,15 +426,16 @@ public abstract class Layout {
                 // Paint paint)
                 c.drawLine(mLineNumberWidth-4, getLineTop(i), mLineNumberWidth-4, linebottom, mLineNumberPaint);
                 //JecLog.d("lb[0]="+linebreak[0]+" lb[1]="+linebreak[1]+" i="+i+" mBreakLineCount="+mBreakLineCount);
-                if(linebreak[0] != linebreak[1] || i == 0)
+                if(start==0 || buf.charAt(start-1)=='\n')
                 {
-                    String lineString = "            " + (linebreak[1]+1);
-                    int mLineNumberLength = (int)(Math.log10(mLineCount)+1);
+                    mBreakLineCount++;
+                    String lineString = "            " + mBreakLineCount;
+                    int mLineNumberLength = (int)(Math.log10(mTotalBreakLineCount)+1); //留点空隙
+                    
                     //Log.d("Layout", "startx:"+(lineString.length()-mLineNumberLength)+" endx:"+mLineNumberWidth+" lc:"+mLineCount+" lnl:"+mLineNumberLength);
                     c.drawText(lineString, lineString.length()-mLineNumberLength, lineString.length(), x, lbaseline, mLineNumberPaint);
                 }
-                linebreak[0] = linebreak[1];
-                linebreak[1] = mBreakLineCount;
+
                 c.translate(mLineNumberWidth, 0);
             }
             //end
@@ -572,12 +590,6 @@ public abstract class Layout {
      */
     public abstract boolean getLineContainsTab(int line);
 
-    /**
-     * 真实行数
-     */
-    public abstract int getBreakLineCount(int line);
-    
-    
     /**
      * Returns the directional run information for the specified line.
      * The array alternates counts of characters in left-to-right
@@ -1048,12 +1060,12 @@ public abstract class Layout {
             if (line == 0)
                 return best;
             else
-                return getOffsetForHorizontal(line - 1, 10000);
+                return getOffsetForHorizontal(line - 1, VERY_WIDE);
         } else {
             if (line == getLineCount() - 1)
                 return best;
             else
-                return getOffsetForHorizontal(line + 1, 10000);
+                return getOffsetForHorizontal(line + 1, VERY_WIDE);
         }
     }
 
@@ -1148,12 +1160,12 @@ public abstract class Layout {
             if (line == getLineCount() - 1)
                 return best;
             else
-                return getOffsetForHorizontal(line + 1, -10000);
+                return getOffsetForHorizontal(line + 1, -VERY_WIDE);
         } else {
             if (line == 0)
                 return best;
             else
-                return getOffsetForHorizontal(line - 1, -10000);
+                return getOffsetForHorizontal(line - 1, -VERY_WIDE);
         }
     }
 
@@ -1489,7 +1501,6 @@ public abstract class Layout {
 
                     if (j != there && buf[j] == '\t')
 //                        h = dir * nextTab(text, start, end, h * dir, parspans); //jec-
-                    //jec+
                     {
                         //jecelyin+
                         if(mWhiteSpacePaint != null)
@@ -1501,6 +1512,7 @@ public abstract class Layout {
                         //end
                         h = dir * nextTab(text, start, end, h * dir, parspans);
                     }
+                    //jec+
                     else if(j == there && end < text.length() && text.charAt(end) == '\n')
                     {
                         if(mWhiteSpacePaint != null)
@@ -2057,6 +2069,8 @@ public abstract class Layout {
                                        new Directions(new short[] { 0, 32767 });
 
     //jec+: start --------------------------------------
+    final private static int VERY_WIDE = 16384*4;
+    
     private void init()
     {
         float textHeight;
@@ -2107,16 +2121,19 @@ public abstract class Layout {
         mTabPath.lineTo(path_width * 0.3F, -textHeight * 0.2F);
     }
     
+    private int mTotalBreakLineCount = 1;
     private int mBreakLineCount = 0;
+    private int mLastLineCount = -1;
+    private int mFirstLine = -1;
     private Path mLineBreakPath = new Path();
     private Path mTabPath = new Path();
     private Path[] mWhiteSpacePaths = new Path[]{ mTabPath, mLineBreakPath };
 
-    private int mLineNumberWidth=20, mLineCount=1;
+    private int mLineNumberWidth=20;
     public void setLineNumberWidth(int w, int lineCount)
     {
         mLineNumberWidth = w;
-        mLineCount = lineCount < 1 ? 1 : lineCount;//不能为0,不然log10会溢出
+        mTotalBreakLineCount = lineCount;
     }
     //end
 }

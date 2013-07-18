@@ -11,5 +11,5 @@
     android:gravity="top|left"
     android:inputType="textMultiLine"
     android:maxLength="99999999"
-    android:scrollbars="vertical"
+    android:padding="3dp"
     android:textSize="12sp" />

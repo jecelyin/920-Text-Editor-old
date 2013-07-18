@@ -23,7 +23,7 @@ public class Help
         String text;
         try
         {
-            text = FileUtil.readFile(mContext.getAssets().open(file), "utf-8");
+            text = FileUtil.readFileAsString(mContext.getAssets().open(file), "utf-8");
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             builder.setIcon(0).setTitle(title).setMessage(text).setPositiveButton(android.R.string.ok, null);
 

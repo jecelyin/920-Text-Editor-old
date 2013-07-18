@@ -23,7 +23,6 @@ import com.jecelyin.colorschemes.ColorScheme;
 import com.jecelyin.editor.EditorSettings;
 import com.jecelyin.editor.JecEditor;
 import com.jecelyin.util.FileUtil;
-import com.jecelyin.util.JecLog;
 import com.jecelyin.widget.ForegroundColorSpan;
 
 import java.io.File;
@@ -222,7 +221,7 @@ public class Highlight
 
         try
         {
-            String mData = FileUtil.readFile(langfile, "utf-8");
+            String mData = FileUtil.readFileAsString(langfile, "utf-8");
             String[] lines = mData.split("\n");
             String[] cols;
             for(String line:lines)

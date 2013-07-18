@@ -2,7 +2,6 @@ package com.jecelyin.editor;
 
 import java.util.ArrayList;
 
-import android.R.integer;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 
 import com.jecelyin.util.JecLog;
 import com.jecelyin.util.LinuxShell;
+import com.jecelyin.util.MathUtils;
 
 public class EditorSettings
 {
@@ -67,6 +67,7 @@ public class EditorSettings
     public static int FONT_SIZE = 12;
     public static int LIMIT_HIGHLIGHT_LENGTH = 400 * 1024; // unit: kb
     public static int CURSOR_WIDTH = 2;
+    public static String DEFAULT_ENCODING = "";
 
     private static ArrayList<OnSharedPreferenceChangeListener> mListeners = new ArrayList<SharedPreferences.OnSharedPreferenceChangeListener>();
     public static void initialize(final Context context)
@@ -122,7 +123,7 @@ public class EditorSettings
 
         if (key == null || INDENT_STRING == null || "indent_size".equals(key))
         {
-            int size = Integer.valueOf(mPrefs.getString("indent_size", "4"));
+            int size = MathUtils.toInt(mPrefs.getString("indent_size", "4"),4);
             INDENT_SIZE = size > 0 && size < 12 ? size : 4;
             INDENT_STRING = USE_SPACE_FOR_TAB ? new String(new char[INDENT_SIZE]).replace("\0", " ") : "\t";
         }
@@ -227,17 +228,20 @@ public class EditorSettings
             SCREEN_ORIENTATION = mPrefs.getString("screen_orientation", SCREEN_ORIENTATION);
 
         if (key == null || "font_size".equals(key))
-            FONT_SIZE = Integer.valueOf(mPrefs.getString("font_size", String.valueOf(FONT_SIZE)));
+            FONT_SIZE = MathUtils.toInt(mPrefs.getString("font_size", String.valueOf(FONT_SIZE)),FONT_SIZE);
 
         if (key == null || "highlight_limit".equals(key))
-            LIMIT_HIGHLIGHT_LENGTH = Integer.valueOf(mPrefs.getString("highlight_limit", String.valueOf(LIMIT_HIGHLIGHT_LENGTH))); // 1M
+            LIMIT_HIGHLIGHT_LENGTH = MathUtils.toInt(mPrefs.getString("highlight_limit", String.valueOf(LIMIT_HIGHLIGHT_LENGTH)),LIMIT_HIGHLIGHT_LENGTH); // 1M
 
         if (key == null || "cursor_width".equals(key))
         {
-            CURSOR_WIDTH = Integer.valueOf(mPrefs.getString("cursor_width", String.valueOf(CURSOR_WIDTH)));
+            CURSOR_WIDTH = MathUtils.toInt(mPrefs.getString("cursor_width", String.valueOf(CURSOR_WIDTH)), CURSOR_WIDTH);
             if (CURSOR_WIDTH < 1)
                 CURSOR_WIDTH = 2;
         }
+        
+        if (key == null || "encoding".equals(key))
+            DEFAULT_ENCODING = mPrefs.getString("encoding", String.valueOf(DEFAULT_ENCODING));
     }
 
     public static String getVersion()
@@ -245,146 +249,20 @@ public class EditorSettings
         return mPrefs.getString("version", "-1");
     }
 
-    public static boolean setVersion(String version)
+    public static boolean setString(String key, String value)
     {
-        return mPrefs.edit().putString("version", version).commit();
+        boolean result = mPrefs.edit().putString(key, value).commit();
+        if(result)
+            onPreferenceChanged(mPrefs, key);
+        return result;
+    }
+    
+    public static boolean setBoolean(String key, boolean value)
+    {
+        boolean result = mPrefs.edit().putBoolean(key, value).commit();
+        if(result)
+            onPreferenceChanged(mPrefs, key);
+        return result;
     }
 
-    public static boolean setLastPath(String path)
-    {
-        return mPrefs.edit().putString("last_path", path).commit();
-    }
-
-    /*
-     * public static boolean isUseDefaultToolbarSetting() { return
-     * mPrefs.getBoolean("use_default_toolbar_settings", true); }
-     * 
-     * public static boolean isInsertSpaceForTabs() { return
-     * mPrefs.getBoolean("use_space_for_tab", false); }
-     * 
-     * public static boolean isUseCustomColor() { return
-     * mPrefs.getBoolean("use_custom_hl_color", false); }
-     * 
-     * public static String getString(String key, String defValue) { return
-     * mPrefs.getString(key, defValue); }
-     * 
-     * public static int getIndentSize() { int size =
-     * Integer.valueOf(mPrefs.getString("indent_size", "4")); return size > 0 ?
-     * size : 4; }
-     * 
-     * public static String getIndentString() { int size = getIndentSize();
-     * if(indentSize != size || indentString == null) { indentString =
-     * isInsertSpaceForTabs() ? new String(new char[size]).replace("\0", " ") :
-     * "\t"; } return indentString; }
-     * 
-     * public static String getVersion() { return mPrefs.getString("version",
-     * "-1"); }
-     * 
-     * public static boolean setVersion(String version) { return
-     * mPrefs.edit().putString("version", version).commit(); }
-     * 
-     * public static boolean setLastPath(String path) { return
-     * mPrefs.edit().putString("last_path", path).commit(); }
-     * 
-     * public static boolean isOpenLastFile() { return
-     * mPrefs.getBoolean("open_last_file", false); }
-     * 
-     * public static boolean isRoot() { return mPrefs.getBoolean("get_root",
-     * false); }
-     * 
-     * public static boolean isTouchZoom() { return
-     * mPrefs.getBoolean("touch_zoom", true); }
-     * 
-     * public static boolean isHideKeyboard() { return
-     * mPrefs.getBoolean("hide_soft_Keyboard", false); }
-     * 
-     * public static boolean isAutoSave() { return mPrefs.getBoolean("autosave",
-     * false); }
-     * 
-     * public static boolean isPressBackButtonToExit() { return
-     * mPrefs.getBoolean("back_button_exit", true); }
-     * 
-     * public static boolean isUseCustomDateFormat() { return
-     * mPrefs.getBoolean("custom_format", false); }
-     * 
-     * public static boolean isEnableHighlight() { return
-     * mPrefs.getBoolean("enable_highlight", true); }
-     * 
-     * public static boolean isWordWrap() { return mPrefs.getBoolean("wordwrap",
-     * true); }
-     * 
-     * public static boolean isShowLineNumber() { return
-     * mPrefs.getBoolean("show_line_num", true); }
-     * 
-     * public static boolean isShowWhitespace() { return
-     * mPrefs.getBoolean("show_tab", false); }
-     * 
-     * public static boolean isAutoIndent() { return
-     * mPrefs.getBoolean("auto_indent", false); }
-     * 
-     * public static boolean isKeepScreenOn() { return
-     * mPrefs.getBoolean("keep_screen_on", false); }
-     * 
-     * public static boolean isDisableSpellCheck() { return
-     * mPrefs.getBoolean("spellcheck", true); }
-     * 
-     * public static boolean isAutoCapitalize() { return
-     * mPrefs.getBoolean("auto_capitalize", false); }
-     * 
-     * public static boolean isUseCustomHighlight() { return
-     * mPrefs.getBoolean("use_custom_hl_color", false); }
-     * 
-     * public static String getHighlightFont(String def) { return
-     * mPrefs.getString("hlc_font", def); }
-     * 
-     * public static String getHighlightBackgroup(String def) { return
-     * mPrefs.getString("hlc_backgroup", def); }
-     * 
-     * public static String getHighlightString(String def) { return
-     * mPrefs.getString("hlc_string", def); }
-     * 
-     * public static String getHighlightKeyword(String def) { return
-     * mPrefs.getString("hlc_keyword", def); }
-     * 
-     * public static String getHighlightComment(String def) { return
-     * mPrefs.getString("hlc_comment", def); }
-     * 
-     * public static String getHighlightTag(String def) { return
-     * mPrefs.getString("hlc_tag", def); }
-     * 
-     * public static String getHighlightAttrName(String def) { return
-     * mPrefs.getString("hlc_attr_name", def); }
-     * 
-     * public static String getHighlightFunction(String def) { return
-     * mPrefs.getString("hlc_function", def); }
-     * 
-     * public static String getLastPath(String def) { return
-     * mPrefs.getString("last_path", def); }
-     * 
-     * public static String getColorScheme() { return
-     * mPrefs.getString("hl_colorscheme", ""); }
-     * 
-     * public static String getFontName() { return mPrefs.getString("font",
-     * "Monospace"); }
-     * 
-     * public static String getSystemDateFormat() { return
-     * mPrefs.getString("sys_format", "0"); }
-     * 
-     * public static String getCustomDateFormat() { return
-     * mPrefs.getString("custom_date_format", "0"); }
-     * 
-     * public static String getScreenOrientation() { return
-     * mPrefs.getString("screen_orientation", "auto"); }
-     * 
-     * public static float getFontSize() { return
-     * Float.valueOf(mPrefs.getString("font_size", "12")); }
-     * 
-     * public static int getHighlightLimit(int def) { return
-     * Integer.valueOf(mPrefs.getString("highlight_limit",
-     * String.valueOf(def))); }
-     * 
-     * public static int getCursorWidth() { int w =
-     * Integer.valueOf(mPrefs.getString("cursor_width", "1")); if(w < 1) w = 1;
-     * return w; }
-     */
 }

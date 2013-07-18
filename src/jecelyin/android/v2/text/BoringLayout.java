@@ -327,13 +327,6 @@ public class BoringLayout extends Layout implements TextUtils.EllipsizeCallback 
     @Override public boolean getLineContainsTab(int line) {
         return false;
     }
-	
-    //jec+
-    @Override
-    public int getBreakLineCount(int line) {
-        return 0;
-    }
-	//end
 
     @Override public float getLineMax(int line) {
         return mMax;

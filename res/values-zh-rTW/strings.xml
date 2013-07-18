@@ -204,4 +204,7 @@
     <string name="linebreak">換行符: </string>
     <string name="encoding2">編碼: </string>
     <string name="cursor_width">光標寬度</string>
+    <string name="try_root">你可能沒有權限打開該文件，編輯器自動啟用了ROOT模式，請重新打開它！</string>
+    <string name="project">項目</string>
+    <string name="default_encoding">默認編碼</string>
 </resources>

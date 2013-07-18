@@ -21,8 +21,8 @@ public class TestActivity extends Activity
         String data="";
         try
         {
-            data = FileUtil.readFile("/storage/sdcard0/jecelyin/moodlelib.php", "utf-8");
-            //data = FileUtil.readFile("/sdcard/moodlelib.php", "utf-8");
+            data = FileUtil.readFileAsString("/storage/sdcard0/jecelyin/moodlelib.php", "utf-8");
+            //data = FileUtil.readFileAsString("/sdcard/moodlelib.php", "utf-8");
         } catch (IOException e)
         {
             // TODO Auto-generated catch block

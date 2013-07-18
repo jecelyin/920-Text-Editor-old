@@ -44,6 +44,9 @@ if [ "$product" = "full" ];then
 fi
 
 sed -i 's/android:debuggable="true"/android:debuggable="false"/' AndroidManifest.xml
+cp project.properties project.properties.tmp
+echo "target=android-8" > project.properties
+
 mm
 cp -f ${AOSP}/out/target/product/$product/obj/APPS/${app_name}_intermediates/package.apk.unsigned ./JecEditor.apk
 jarsigner -keystore ${SIGN_PATH}/JecEditor.cer -storepass `cat ${SIGN_PATH}/password` ./JecEditor.apk jeceditor
@@ -58,3 +61,4 @@ rm -f JecEditor.apk
 sed -i 's/android:debuggable="false"/android:debuggable="true"/' AndroidManifest.xml
 rm -rf gen
 mv /tmp/gen ./
+mv -f project.properties.tmp project.properties

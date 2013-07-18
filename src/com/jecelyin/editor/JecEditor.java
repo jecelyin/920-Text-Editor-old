@@ -68,7 +68,6 @@ import com.jecelyin.util.ColorPicker;
 import com.jecelyin.util.FileBrowser;
 import com.jecelyin.util.FileUtil;
 import com.jecelyin.util.JecLog;
-import com.jecelyin.util.LinuxShell;
 import com.jecelyin.widget.JecMenu;
 import com.jecelyin.widget.JecMenu.OnMenuItemSelectedListener;
 import com.jecelyin.widget.SymbolGrid;
@@ -87,7 +86,6 @@ public class JecEditor extends BaseActivity
     public final static int FILE_BROWSER_OPEN_CODE = 0; // 打开
     public final static int FILE_BROWSER_SAVEAS_CODE = 1; // 另存为
     public final static int SEARCH_CODE = 3;
-    private final static String TAG = "JecEditor";
     public final static String PREF_HISTORY = "history"; // 保存打开文件记录
     private final static String PREF_LAST_FILE = "last_files"; // 最后打开的文件
     private final static String SYNTAX_SIGN = "25";
@@ -347,12 +345,6 @@ public class JecEditor extends BaseActivity
             }
         });
 
-        /*
-         * RelativeLayout mainLayout =
-         * (RelativeLayout)findViewById(R.id.mainLayout);
-         * mainLayout.addView(mSymbolGrid);
-         * mainLayout.bringChildToFront(mSymbolGrid);
-         */
         // 设置符号图标点击事件
         ImageButton symbolButton = (ImageButton) findViewById(R.id.symbol);
         symbolButton.setOnClickListener(new OnClickListener() {
@@ -371,7 +363,7 @@ public class JecEditor extends BaseActivity
         if(!version.equals(prefVer))
         {
             Help.showChangesLog(this);
-            EditorSettings.setVersion(version);
+            EditorSettings.setString("version", version);
         }
         onNewIntent(getIntent());
         
@@ -522,11 +514,11 @@ public class JecEditor extends BaseActivity
                 // return;
             }else
             {
-                FileUtil.writeFile(synfilestr, SYNTAX_SIGN, "utf-8", false);
+                FileUtil.writeFile(synfilestr, SYNTAX_SIGN);
             }
         }else
         {
-            if(!SYNTAX_SIGN.equals(FileUtil.readFile(synfilestr, "utf-8")))
+            if(!SYNTAX_SIGN.equals(FileUtil.readFileAsString(synfilestr, "utf-8")))
             {
                 if(!unpackSyntax())
                 {
@@ -534,7 +526,7 @@ public class JecEditor extends BaseActivity
                     // return;
                 }else
                 {
-                    FileUtil.writeFile(synfilestr, SYNTAX_SIGN, "utf-8", false);
+                    FileUtil.writeFile(synfilestr, SYNTAX_SIGN);
                 }
             }
         }
@@ -1046,14 +1038,6 @@ public class JecEditor extends BaseActivity
             return;
         
         String content = mEditText.getString();
-        if(linebreak == 2)
-        {// unix
-            content = content.replaceAll("\r\n|\r", "\n");
-        }else if(linebreak == 3)
-        {
-            // CR Only(Macintosh)
-            content = content.replaceAll("\r\n|\r", "\r");
-        }
         if("".equals(encoding))
             encoding = "utf-8";
         boolean ok = true;
@@ -1062,7 +1046,7 @@ public class JecEditor extends BaseActivity
         
         try
         {
-            ok = FileUtil.writeFile(mEditText.getPath(), content, encoding, EditorSettings.TRY_ROOT);
+            ok = FileUtil.writeFile(mEditText.getPath(), content, encoding, linebreak, EditorSettings.TRY_ROOT);
         }catch (Exception e)
         {
             failMsg = e.getMessage();
@@ -1232,7 +1216,7 @@ public class JecEditor extends BaseActivity
             {
                 selstart = Integer.valueOf(selinfo[0]);
                 selend = Integer.valueOf(selinfo[1]);
-                if(selstart >= mEditText.length() || selend >= mEditText.length()){
+                if(selstart >= mEditText.length() || selend >= mEditText.length() || selstart < 0 || selend < 0){
                     selstart = 0;
                     selend = 0;
                 }

@@ -4655,6 +4655,7 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
                 return super.onKeyUp(keyCode, event);
                 
             case KeyEvent.KEYCODE_ENTER:
+                updateLineNumberWidth(); //jec+
                 mEnterKeyIsDown = false;
                 if (mInputContentType != null
                         && mInputContentType.onEditorActionListener != null
@@ -5297,6 +5298,9 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
 
         // CursorControllers need a non-null mLayout
         prepareCursorControllers();
+        
+        //jec+
+        updateLineNumberWidth();
     }
 
     private boolean compressText(float width) {
@@ -5467,15 +5471,20 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
 
         if (mHorizontallyScrolling)
             want = VERY_WIDE;
+        
+        if(mWhiteSpaceWidth > 0)
+            want -= mWhiteSpaceWidth;
 
         int hintWidth = mHintLayout == null ? hintWant : mHintLayout.getWidth();
 
         if (mLayout == null) {
             makeNewLayout(want, hintWant, boring, hintBoring,
-                          width - getCompoundPaddingLeft() - getCompoundPaddingRight(), false);
+//                    width - getCompoundPaddingLeft() - getCompoundPaddingRight(), false); //jec-
+                    want, false); //jec+
         } else if ((mLayout.getWidth() != want) || (hintWidth != hintWant) ||
                    (mLayout.getEllipsizedWidth() !=
-                        width - getCompoundPaddingLeft() - getCompoundPaddingRight())) {
+//                   width - getCompoundPaddingLeft() - getCompoundPaddingRight())) { //jec-
+                     want)) { //jec+
             if (mHint == null && mEllipsize == null &&
                     want > mLayout.getWidth() &&
                     (mLayout instanceof BoringLayout ||
@@ -5483,7 +5492,8 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
                 mLayout.increaseWidthTo(want);
             } else {
                 makeNewLayout(want, hintWant, boring, hintBoring,
-                              width - getCompoundPaddingLeft() - getCompoundPaddingRight(), false);
+//                        width - getCompoundPaddingLeft() - getCompoundPaddingRight(), false); //jec-
+                            want, false); //jec+
             }
         } else {
             // Width has not changed.
@@ -6386,9 +6396,6 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
      */
     protected void onTextChanged(CharSequence text,
                                  int start, int before, int after) {
-        //jec+
-        updateLineNumberWidth();
-        //end
     }
 
     /**
@@ -7556,6 +7563,9 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
         // it may not be called (if the user/ discards the context menu with the back key).
         mDPadCenterIsDown = mEnterKeyIsDown = false;
         MenuHandler handler = new MenuHandler(); //jec+
+        int selStart = getSelectionStart(); //jec+
+        int selEnd = getSelectionEnd(); //jec+
+        
         if (mIsInTextSelectionMode) {
 //            MenuHandler handler = new MenuHandler();
             
@@ -7597,8 +7607,8 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
             }
 
             if (mText instanceof Spanned) {
-                int selStart = getSelectionStart();
-                int selEnd = getSelectionEnd();
+//                int selStart = getSelectionStart(); //jec-
+//                int selEnd = getSelectionEnd();
 
                 int min = Math.min(selStart, selEnd);
                 int max = Math.max(selStart, selEnd);
@@ -7636,14 +7646,17 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
         }
         //jec+
         // 重复行或选中的文本
-        int menu_line = mIsInTextSelectionMode ? R.string.duplicate_selected_text : R.string.duplicate_line;
+        int menu_line = selStart!=selEnd ? R.string.duplicate_selected_text : R.string.duplicate_line;
         menu.add(0, R.id.duplicate_line, 0, menu_line).setOnMenuItemClickListener(handler);
-        // 转为小写
-        menu.add(0, R.id.to_lower, 0, R.string.to_lower).setOnMenuItemClickListener(handler);
-        // 转为大写
-        menu.add(0, R.id.to_upper, 0, R.string.to_upper).setOnMenuItemClickListener(handler);
-        //首字母大写
-        menu.add(0, R.string.convert_to_titlecase, 0, R.string.convert_to_titlecase).setOnMenuItemClickListener(handler);
+        if(selStart != selEnd)
+        {
+            // 转为小写
+            menu.add(0, R.id.to_lower, 0, R.string.to_lower).setOnMenuItemClickListener(handler);
+            // 转为大写
+            menu.add(0, R.id.to_upper, 0, R.string.to_upper).setOnMenuItemClickListener(handler);
+            //首字母大写
+            menu.add(0, R.string.convert_to_titlecase, 0, R.string.convert_to_titlecase).setOnMenuItemClickListener(handler);
+        }
         // 跳转到指定行
         menu.add(0, R.id.go_to_begin, 0, R.string.go_to_begin).setOnMenuItemClickListener(handler);
         // 跳转到指定行
@@ -7795,6 +7808,7 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
             case R.id.to_lower:
             case R.id.to_upper:
             case R.string.convert_to_titlecase:
+                if(selEnd == selStart)break;
                 Editable mText2 = getEditableText();
                 char[] dest = new char[selEnd - selStart];
                 mText2.getChars(selStart, selEnd, dest, 0);
@@ -9014,6 +9028,7 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
         mWhiteSpacePaint.setStrokeWidth(0.75F);
         mWhiteSpacePaint.setStyle(Paint.Style.STROKE);
         mWhiteSpacePaint.setColor(Color.GRAY);
+        mWhiteSpaceWidth = (int)mWhiteSpacePaint.measureText("n");
         
         mHighlight = new Highlight();
         
@@ -9132,14 +9147,24 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
     
     private int mLineNumberWidth = 0; // 行数栏宽度
     private int mLineCount = 0; //总行数
+    private int mWhiteSpaceWidth = 0;
     
     public void updateLineNumberWidth()
     {
         mLineNumberWidth = 0;
         if(EditorSettings.SHOW_LINENUM && mLineNumberPaint != null)
         {
-            mLineCount = mLayout!=null ? mLayout.getBreakLineCount(mLayout.getLineCount()-1) : 1;
-            mLineNumberWidth = (int) mLineNumberPaint.measureText(mLineCount + "|");
+            mLineCount = 1;
+            if(mLayout!=null)
+            {
+                int lineCount = mLayout.getLineCount();
+                if(lineCount>0){
+                    int bottom = mLayout.getLineTop(lineCount);
+                    mLineCount = mLayout.getLineForVertical(bottom)+1;
+                }
+            }
+
+            mLineNumberWidth = (int) mLineNumberPaint.measureText(Integer.toString(mLineCount))+8; //留点空隙
             ArrowKeyMovementMethod.setLineNumberWidth(mLineNumberWidth);
             Touch.setLineNumberWidth(mLineNumberWidth);
         }
@@ -9149,7 +9174,7 @@ public class TextView extends TextViewBase implements ViewTreeObserver.OnPreDraw
     {
         if(mLineNumberPaint!=null)
         {
-            mLineNumberPaint.setTextSize(size-2.0f>1 ? size-2.0f : 1);
+            mLineNumberPaint.setTextSize(size-5.0f>1 ? size-5.0f : 1);
             updateLineNumberWidth();
         }
     }

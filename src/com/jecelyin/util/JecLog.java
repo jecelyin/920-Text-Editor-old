@@ -1,13 +1,16 @@
 package com.jecelyin.util;
 
-import java.io.File;
 import java.util.HashMap;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.app.ActivityManager.MemoryInfo;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
-import android.os.StatFs;
+import android.graphics.Point;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.jecelyin.editor.JecEditor;
@@ -83,19 +86,20 @@ public class JecLog
         crashReportData.put("APP_VERSION_NAME", JecEditor.version);
 
         // Device model
-        crashReportData.put("PHONE_MODEL", android.os.Build.MODEL);
+        crashReportData.put("PHONE_MODEL", android.os.Build.BRAND+" "+android.os.Build.MODEL);
 
         // Android version
         crashReportData.put("ANDROID_VERSION", android.os.Build.VERSION.RELEASE);
 
-        // Device Brand (manufacturer)
-        crashReportData.put("BRAND", android.os.Build.BRAND);
-        crashReportData.put("PRODUCT", android.os.Build.PRODUCT);
-
+        WindowManager wm = (WindowManager) mApp.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        crashReportData.put("SCREEN", display.getWidth()+"x"+display.getHeight());
+        
         // Device Memory
-        crashReportData.put("TOTAL_MEM_SIZE", Long.toString(getTotalInternalMemorySize()/1024/1024));
-
-        crashReportData.put("AVAILABLE_MEM_SIZE", Long.toString(getAvailableInternalMemorySize()/1024/1024));
+        ActivityManager activityManager = (ActivityManager) mApp.getSystemService(Context.ACTIVITY_SERVICE);
+        MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+        activityManager.getMemoryInfo(memoryInfo);
+        crashReportData.put("FREE_MEM", Long.toString(memoryInfo.availMem/1024/1024)+"M");
         
         crashReportData.put("STACK_TRACE", getStackTrace(th));
 
@@ -132,7 +136,7 @@ public class JecLog
         StringBuilder sb = new StringBuilder();
         for (StackTraceElement element : th.getStackTrace()) {
             if(element.toString().indexOf("jecelyin") > -1)
-                sb.append("\tat " + element + "\n");
+                sb.append("\tat ").append(element).append("\n");
         }
 
         // If the exception was thrown in a background thread inside
@@ -140,44 +144,15 @@ public class JecLog
         Throwable cause = th.getCause();
         while (cause != null)
         {
+            sb.append("Caused by: ").append(cause.toString()).append("\n");
             for (StackTraceElement element : cause.getStackTrace()) {
-                if(element.toString().indexOf("com.jecelyin") > -1)
-                    sb.append("\tat " + element + "\n");
+                if(element.toString().indexOf("jecelyin") > -1)
+                    sb.append("\tat ").append(element).append("\n");
             }
             cause = cause.getCause();
         }
 
         return sb.toString();
-    }
-
-    /**
-     * Calculates the free memory of the device. This is based on an inspection
-     * of the filesystem, which in android devices is stored in RAM.
-     * 
-     * @return Number of bytes available.
-     */
-    public static long getAvailableInternalMemorySize()
-    {
-        final File path = Environment.getDataDirectory();
-        final StatFs stat = new StatFs(path.getPath());
-        final long blockSize = stat.getBlockSize();
-        final long availableBlocks = stat.getAvailableBlocks();
-        return availableBlocks * blockSize;
-    }
-
-    /**
-     * Calculates the total memory of the device. This is based on an inspection
-     * of the filesystem, which in android devices is stored in RAM.
-     * 
-     * @return Total number of bytes.
-     */
-    public static long getTotalInternalMemorySize()
-    {
-        final File path = Environment.getDataDirectory();
-        final StatFs stat = new StatFs(path.getPath());
-        final long blockSize = stat.getBlockSize();
-        final long totalBlocks = stat.getBlockCount();
-        return totalBlocks * blockSize;
     }
 
 }

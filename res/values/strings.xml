@@ -56,7 +56,7 @@
     <string name="about">About</string>
     <string name="myname">Jecelyin</string>
     <string name="myemail">jecelyin@gmail.com</string>
-    <string name="myhomepage">http://www.jecelyin.com/</string>
+    <string name="myhomepage">https://github.com/jecelyin/920-Text-Editor</string>
     <string name="loading">Loading...</string>
     <string name="highlight_stop_msg">Highlighting has stopped beacause the file size exceeds the limit.</string>
     <string name="search">Search</string>
@@ -215,6 +215,8 @@
     <string name="linebreak">Line Break: </string>
     <string name="encoding2">Encoding: </string>
     <string name="cursor_width">Cursor Width</string>
-    <string name="try_root">You might not have permission to open the file, the system temporarily enable the ROOT mode, please re-open it!</string>
+    <string name="try_root">You might not have permission to open the file, the editor auto enable the ROOT mode, please re-open it!</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="project">Project</string>
+    <string name="default_encoding">Default Encoding</string>
 </resources>
