@@ -61,4 +61,4 @@ rm -f JecEditor.apk
 sed -i 's/android:debuggable="false"/android:debuggable="true"/' AndroidManifest.xml
 rm -rf gen
 mv /tmp/gen ./
-mv -f project.properties.tmp project.properties
+mv project.properties.tmp project.properties
