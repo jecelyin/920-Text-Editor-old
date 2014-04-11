@@ -94,7 +94,7 @@
     <string name="confirm_delete">Are you sure you wish to delete this file?</string>
     <string name="save_failed">Save failed!</string>
     <string name="can_not_create_temp_path">Can not create temporary directory, please check your SDCard!</string>
-    <string name="donate_summary">Open donate page via browser</string>
+    <string name="donate_summary">Open donate page via web browser</string>
     <string name="get_root_summary">*You may need to use other tools to mount the partition as rw</string>
     <string name="volume_up_toolbar_msg">Toolbar has been hidden, you can press the volume down key to display it</string>
     <string name="volume_up_fullscreen_msg">You have gone full screen. Press the Volume Down key to return.</string>
@@ -128,14 +128,14 @@
         <item>No change</item>
         <item>CR+LF (Windows)</item>
         <item>LF Only(Unix/Android)</item>
-        <item>CR Only(Macintosh)</item>
+        <item>CR Only(Mac OS)</item>
     </string-array>
 
     <string name="hide_ime">Hide Input Method</string>
     <string name="changelog">Change Log</string>
     <string name="open_pipe">Open With</string>
     <string name="donate_info">Donate us if you like this App!</string>
-    <string name="share">Share(Send Text)</string>
+    <string name="share">Share (Send Text)</string>
     <string name="open_mode">Open Mode</string>
     <string name="auto_detection">Auto detect</string>
     <string name="tab_close_other">Close Other Tabs</string>
@@ -185,7 +185,7 @@
     <string name="find_result">Found %s results!</string>
     <string name="line_num">Line %s: </string>
     <string name="check_for_updates">Check for Updates</string>
-    <string name="invalid_sign">Invalid signature! Please re-download 920 Text Editor in Google Play!</string>
+    <string name="invalid_sign">Invalid signature! Please re-download 920 Text Editor!</string>
     <string name="recurse">Recurse</string>
     <string name="ignore_case">Ignore case</string>
     <string name="use_regex">Use Regex</string>
