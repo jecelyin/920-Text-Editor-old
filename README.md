@@ -1,5 +1,5 @@
 ## 920 Text Editor
-**920 Text Editor is a run on the Android phone a powerful text editor, anywhere, you can easily view or edit your code,**
+**920 Text Editor is a powerful Android text editing app that enables you to edit your code anywhere and at anytime**
 **you can also use it as e-book reader to open text novel, it is like on Windows EmEditor, EditPlus so powerful.**
  
 ### Features:
