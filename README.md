@@ -4,7 +4,7 @@
  
 ### Features:
 1. Multi Tab, you can open different files in different tabs to facilitate you in a different text of this switch to edit
-1. syntax highlighting:ASP, ActionScript, C/C++, C#, Erlang, Frink, HTML/XML/WML, CSS, Javascript
+1. syntax highlighting:ASP, ActionScript, C/C++, C#, Erlang, Frink, HTML/XML/WML, CSS, JavaScript
        , Java, JSP, Perl, PowerShell , PHP, Python, Shell/Bash, Lua, SQL, VB/VBS, Tcl, TeX/LaTeX, Verilog, AutoHotKey
        , AutoLisp, Pascal, Fortran, ColdFusion, VHDL
 1. show line numbers
@@ -40,7 +40,7 @@
  
 ### 特色功能:
 1. 多标签，你可以在不同的标签打开不同的文件，方便你在不同的文本之本切换编辑
-1. 语法高亮:ASP, ActionScript, C/C++, C#, Erlang, Frink, HTML/XML/WML, CSS, Javascript, Java, JSP, Perl, PowerShell
+1. 语法高亮:ASP, ActionScript, C/C++, C#, Erlang, Frink, HTML/XML/WML, CSS, JavaScript, Java, JSP, Perl, PowerShell
        , PHP, Python, Shell/Bash, Lua, SQL, VB/VBS, Tcl, TeX/LaTeX, Verilog, AutoHotKey, AutoLisp, Pascal
 1. 显示行号
 1. 显示空白字符（制表符，换行符）
@@ -102,5 +102,11 @@
 * ...
 
 You can download from:
+<<<<<<< HEAD
+* [https://play.google.com/store/apps/details?id=com.jecelyin.editor](https://play.google.com/store/apps/details?id=com.jecelyin.editor)
+* [https://github.com/jecelyin/920-Text-Editor/tree/master/apk](https://github.com/jecelyin/920-Text-Editor/tree/master/apk)
+* [https://f-droid.org/repository/browse/?fdid=com.jecelyin.editor](https://f-droid.org/repository/browse/?fdid=com.jecelyin.editor)
+=======
 * [https://market.android.com/details?id=com.jecelyin.editor](https://market.android.com/details?id=com.jecelyin.editor)
 * [https://github.com/jecelyin/920-Text-Editor/tree/master/apk](https://github.com/jecelyin/920-Text-Editor/tree/master/apk)
+>>>>>>> master
