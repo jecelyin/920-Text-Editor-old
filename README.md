@@ -102,11 +102,4 @@
 * ...
 
 You can download from:
-<<<<<<< HEAD
-* [https://play.google.com/store/apps/details?id=com.jecelyin.editor](https://play.google.com/store/apps/details?id=com.jecelyin.editor)
 * [https://github.com/jecelyin/920-Text-Editor/tree/master/apk](https://github.com/jecelyin/920-Text-Editor/tree/master/apk)
-* [https://f-droid.org/repository/browse/?fdid=com.jecelyin.editor](https://f-droid.org/repository/browse/?fdid=com.jecelyin.editor)
-=======
-* [https://market.android.com/details?id=com.jecelyin.editor](https://market.android.com/details?id=com.jecelyin.editor)
-* [https://github.com/jecelyin/920-Text-Editor/tree/master/apk](https://github.com/jecelyin/920-Text-Editor/tree/master/apk)
->>>>>>> master
